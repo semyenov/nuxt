@@ -4,6 +4,7 @@ export default defineConfig({
   presets: [presetUno(), presetAttributify(), presetIcons()],
   rules: [['custom-rule', { color: 'red' }]],
   shortcuts: {
-    'custom-shortcut': 'text-2xl font-bold text-#41B883 hover:text-teal',
+    'custom-shortcut':
+      'text-2xl font-bold cursor-pointer text-#41B883 hover:text-teal',
   },
 })
