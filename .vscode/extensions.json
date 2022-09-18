@@ -1,7 +1,8 @@
 {
   "recommendations": [
-    "Vue.volar",
+    "vue.volar",
     "stylelint.vscode-stylelint",
-    "dbaeumer.vscode-eslint"
+    "dbaeumer.vscode-eslint",
+    "antfu.iconify"
   ]
 }
