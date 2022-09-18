@@ -1,0 +1,11 @@
+{
+    "editor.tabCompletion": "on",
+    "diffEditor.codeLens": true,
+    "eslint.alwaysShowStatus": true,
+    "stylelint.validate": [
+        "css",
+        "less",
+        "postcss",
+        "vue" // necessary for stylelint diagnostics in .vue <style> tag
+    ]
+}
