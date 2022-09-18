@@ -16,6 +16,6 @@ export default defineConfig({
   ],
   shortcuts: {
     'custom-shortcut':
-      'text-2xl font-bold cursor-pointer text-#41B883 hover:text-teal',
+      'text-2xl font-bold cursor-pointer text-#41B883 mb-2 hover:text-teal',
   },
 })
