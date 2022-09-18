@@ -1,8 +1,4 @@
 {
   // https://v3.nuxtjs.org/concepts/typescript
-  "compilerOptions": {
-    "strict": true,
-    "forceConsistentCasingInFileNames": true
-  },
   "extends": "./.nuxt/tsconfig.json"
 }

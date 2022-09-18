@@ -1,11 +1,17 @@
 {
-    "editor.tabCompletion": "on",
-    "diffEditor.codeLens": true,
-    "eslint.alwaysShowStatus": true,
-    "stylelint.validate": [
-        "css",
-        "less",
-        "postcss",
-        "vue" // necessary for stylelint diagnostics in .vue <style> tag
-    ]
+  "editor.tabCompletion": "on",
+  "diffEditor.codeLens": true,
+  "eslint.alwaysShowStatus": true,
+  "eslint.format.enable": false,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "stylelint.validate": [
+    "css",
+    "less",
+    "postcss",
+    "vue" // necessary for stylelint diagnostics in .vue <style> tag
+  ],
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
