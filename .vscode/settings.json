@@ -1,10 +1,14 @@
 {
   "editor.tabCompletion": "on",
-  "diffEditor.codeLens": true,
-  "eslint.alwaysShowStatus": true,
-  "eslint.format.enable": false,
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "eslint.alwaysShowStatus": true,
+  "eslint.format.enable": false,
+  "volar.codeLens.scriptSetupTools": true,
+  "volar.completion.preferredTagNameCase": "pascal",
+  "volar.completion.preferredAttrNameCase": "kebab",
+  "volar.preview.port": 3000,
+  "volar.vueserver.useSecondServer": true,
   "stylelint.validate": [
     "css",
     "less",
