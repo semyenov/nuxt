@@ -3668,6 +3668,17 @@ lru-cache@^6.0.0:
   dependencies:
     yallist "^4.0.0"
 
+magic-regexp@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/magic-regexp/-/magic-regexp-0.5.0.tgz#e8ac3d090d916b7b73769f726ea0bfb09b947b57"
+  integrity sha512-zP6wG5tnDX2FYgnFco4KEG+Qg2ujBIgO1VP+d6ScabRndZAyvR34PdwmRPnDqXiXLCReNXH406NyKyXgrWqTqQ==
+  dependencies:
+    estree-walker "^3.0.1"
+    magic-string "^0.26.3"
+    mlly "^0.5.14"
+    ufo "^0.8.5"
+    unplugin "^0.9.5"
+
 magic-string@^0.25.7:
   version "0.25.9"
   resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.25.9.tgz#de7f9faf91ef8a1c91d02c2e5314c8277dbcdd1c"
