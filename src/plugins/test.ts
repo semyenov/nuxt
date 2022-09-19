@@ -1,4 +1,4 @@
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin(({ payload }) => {
   const logger = useLogger()
-  logger.info('Test', nuxtApp.globalName)
+  logger.info('Test', payload.pinia)
 })

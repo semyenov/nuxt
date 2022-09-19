@@ -18,7 +18,7 @@ export default defineNuxtConfig({
     ],
   },
   imports: {
-    dirs: ['stores'],
+    dirs: ['store'],
   },
   css: ['@unocss/reset/antfu.css'],
   modules: ['@unocss/nuxt', '@vueuse/nuxt', '@pinia/nuxt', 'magic-regexp/nuxt'],
