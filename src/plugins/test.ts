@@ -1,4 +1,4 @@
-export default defineNuxtPlugin(({ payload }) => {
+export default defineNuxtPlugin((_nuxtApp) => {
   const logger = useLogger()
-  logger.info('Test', payload.pinia)
+  logger.success('Test plugin succeded')
 })

@@ -12,14 +12,14 @@ const mouseStore = useMouseStore()
     <div class="flex flex-col text-gray-400 text-xs">
       {{ mouseStore.x }}:{{ mouseStore.y }}
     </div>
-    <Title>Index Page</Title>
+    <PageTitle>Index Page</PageTitle>
     <div class="flex flex-row gap-1 text-3xl">
       <div
         class="i-twemoji:grinning-face-with-smiling-eyes hover:i-twemoji:face-with-tears-of-joy"
       />
       <i class="i-mdi:alarm text-orange-400 hover:text-blue-400" />
-      <i class="i-logos:vue text-5xl" />
-      <i class="i-ph:anchor-simple" />
+      <i class="i-logos:vue text-6xl" />
+      <NuxtLink to="/test" class="i-ph:anchor-simple" />
       <button class="i-carbon:sun dark:i-carbon:moon" @click="toggleDark()" />
     </div>
     <NuxtLink class="text-xs mt-4 text-gray-500 dark:text-gray-300" to="/about">

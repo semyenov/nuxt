@@ -1,12 +1,20 @@
-import { resolve } from 'path'
+import { resolve } from 'pathe'
 import { defineNuxtConfig } from 'nuxt/config'
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
+  telemetry: false,
+
   srcDir: resolve(__dirname, 'src'),
+
   typescript: {
     shim: false,
   },
+
+  imports: {
+    dirs: ['stores', 'composables'],
+  },
+
   meta: {
     title: 'A Better Nuxt 3 Starter',
     link: [
@@ -17,9 +25,15 @@ export default defineNuxtConfig({
       },
     ],
   },
-  imports: {
-    dirs: ['store'],
-  },
+
   css: ['@unocss/reset/antfu.css'],
-  modules: ['@unocss/nuxt', '@vueuse/nuxt', '@pinia/nuxt', 'magic-regexp/nuxt'],
+
+  modules: [
+    '@unocss/nuxt',
+    '@vueuse/nuxt',
+    '@pinia/nuxt',
+    'magic-regexp/nuxt',
+
+    '@/modules/test/index',
+  ],
 })

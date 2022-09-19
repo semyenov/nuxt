@@ -1,3 +1,6 @@
-export default defineEventHandler((event) => {
-  console.log('New request: ' + event.req.url)
+import { useLogger } from '@nuxt/kit'
+
+export default defineEventHandler((_event) => {
+  const logger = useLogger('server/middleware/test')
+  logger.success('Test middleware succeded')
 })

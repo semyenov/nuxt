@@ -1,4 +1,4 @@
 'src/**/*.{js,ts,vue}':
   - 'eslint --fix'
 'src/**/*.{vue,css,postcss}':
-  - 'stylelint'
+  - 'stylelint --fix'

@@ -2,8 +2,8 @@ import {
   defineConfig,
   presetAttributify,
   presetIcons,
-  presetUno,
   presetTypography,
+  presetUno,
 } from 'unocss'
 
 export default defineConfig({
@@ -11,8 +11,8 @@ export default defineConfig({
   presets: [
     presetAttributify(),
     presetIcons(),
-    presetUno(),
     presetTypography(),
+    presetUno(),
   ],
   shortcuts: {
     'custom-shortcut':
