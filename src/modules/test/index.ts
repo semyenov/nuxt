@@ -1,19 +1,17 @@
 import { resolve } from 'pathe'
-import { defineNuxtModule, extendPages, useLogger } from '@nuxt/kit'
+import { defineNuxtModule, useLogger } from '@nuxt/kit'
 
 const logger = useLogger('modules/test')
 
 export default defineNuxtModule({
   setup(_options, nuxt) {
-    nuxt.hooks.hookOnce('nitro:config', (config) => {
-      logger.info('Nitro config')
-      logger.log(config)
-    })
-
     logger.success('Test module succeded')
 
-    extendPages((pages) => {
-      // Add /test page
+    nuxt.hooks.hookOnce('nitro:config', (config) => {
+      logger.info('Nitro preset', config.preset)
+    })
+
+    nuxt.hooks.hookOnce('pages:extend', (pages) => {
       logger.info('Add test page', resolve(__dirname, 'pages/test.vue'))
       pages.push({
         name: 'Test',
