@@ -12,7 +12,7 @@ export default defineNuxtConfig({
   },
 
   imports: {
-    dirs: ['stores', 'composables'],
+    dirs: ['store', 'composables'],
   },
 
   meta: {
