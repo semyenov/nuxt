@@ -6,10 +6,9 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "lint": "eslint --ext .ts,.vue src && stylelint **/*.vue",
-    "postinstall": "nuxt prepare",
-    "prepare": "husky install",
+    "postinstall": "husky install && nuxt prepare",
     "preview": "nuxt preview",
-    "typecheck": "vue-tsc --noEmit"
+    "typecheck": "nuxt typecheck"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.27.0",
