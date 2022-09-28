@@ -8,7 +8,7 @@ const mouseStore = useMouseStore()
 </script>
 
 <template>
-  <div class="flex gap-1 p-10">
+  <div class="flex flex-col gap-1 p-10">
     <div class="flex flex-col text-gray-400 text-xs">
       {{ mouseStore.x }}:{{ mouseStore.y }}
     </div>

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col items-center justify-center text-center w-screen h-screen"
+    class="flex flex-col items-center justify-start text-center w-full h-full"
   >
     <slot />
   </div>

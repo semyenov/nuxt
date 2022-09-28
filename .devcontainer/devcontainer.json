@@ -4,7 +4,7 @@
   "service": "app",
   "workspaceFolder": "/workspace",
   "forwardPorts": [
-    4000
+    3000
   ],
   "extensions": [
     "aaron-bond.better-comments",

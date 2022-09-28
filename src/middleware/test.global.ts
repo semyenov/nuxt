@@ -1,5 +1,6 @@
-export default defineNuxtRouteMiddleware((to, from) => {
-  const logger = useLogger()
+const logger = useLogger()
+
+export default defineNuxtRouteMiddleware(async (to, from) => {
   logger.log('From', from.fullPath)
   logger.log('To', to.fullPath)
 })

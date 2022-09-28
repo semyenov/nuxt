@@ -26,7 +26,7 @@ export default defineNuxtConfig({
     ],
   },
 
-  css: ['@unocss/reset/antfu.css'],
+  css: ['@unocss/reset/antfu.css', '@/assets/styles/main.css'],
 
   modules: [
     '@unocss/nuxt',
