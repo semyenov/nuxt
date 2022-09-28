@@ -95,6 +95,7 @@ export default class Virtual {
     range.end = this.range.end
     range.padFront = this.range.padFront
     range.padBehind = this.range.padBehind
+
     return range
   }
 
@@ -117,12 +118,13 @@ export default class Virtual {
     if (this.param && key in this.param) {
       // if uniqueIds change, find out deleted id and remove from size map
       if (key === 'uniqueIds') {
-        this.sizes.forEach((v, key) => {
+        this.sizes.forEach((_val, key) => {
           if (!value.includes(key)) {
             this.sizes.delete(key)
           }
         })
       }
+
       this.param[key] = value
     }
   }
@@ -156,17 +158,19 @@ export default class Virtual {
         this.sizes.size <
         Math.min(this.param.keeps, this.param.uniqueIds.length)
       ) {
-        this.firstRangeTotalSize = [...this.sizes.values()].reduce(
+        this.firstRangeTotalSize = Array.from(this.sizes.values()).reduce(
           (acc, val) => acc + val,
           0
         )
         this.firstRangeAverageSize = Math.round(
           this.firstRangeTotalSize / this.sizes.size
         )
-      } else {
-        // it's done using
-        delete this.firstRangeTotalSize
+
+        return
       }
+
+      // it's done using
+      delete this.firstRangeTotalSize
     }
   }
 
@@ -202,10 +206,14 @@ export default class Virtual {
       return
     }
 
-    if (this.direction === DIRECTION_TYPE.FRONT) {
-      this.handleFront()
-    } else if (this.direction === DIRECTION_TYPE.BEHIND) {
-      this.handleBehind()
+    switch (this.direction) {
+      case DIRECTION_TYPE.FRONT:
+        this.handleFront()
+        break
+
+      case DIRECTION_TYPE.BEHIND:
+        this.handleBehind()
+        break
     }
   }
 
@@ -348,7 +356,9 @@ export default class Virtual {
   getPadFront() {
     if (this.isFixedType()) {
       return this.getEstimateSize() * this.range.start
-    } else return this.getIndexOffset(this.range.start)
+    }
+
+    return this.getIndexOffset(this.range.start)
   }
 
   // return total behind offset
@@ -356,13 +366,16 @@ export default class Virtual {
     const end = this.range.end
     const lastIndex = this.getLastIndex()
 
-    if (this.isFixedType() && this.fixedSizeValue)
+    if (this.isFixedType() && this.fixedSizeValue) {
       return (lastIndex - end) * this.fixedSizeValue
+    }
 
     // if it's all calculated, return the exactly offset
-    if (this.lastCalcIndex === lastIndex)
+    if (this.lastCalcIndex === lastIndex) {
       return this.getIndexOffset(lastIndex) - this.getIndexOffset(end)
-    else return (lastIndex - end) * this.getEstimateSize()
+    }
+
+    return (lastIndex - end) * this.getEstimateSize()
   }
 
   // get the item estimate size

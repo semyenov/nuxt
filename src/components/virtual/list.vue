@@ -132,7 +132,13 @@ const emit = defineEmits([
 ])
 const slots = useSlots()
 
-const vr = ref<VirtualRange>()
+const vr = ref<VirtualRange>({
+  start: props.start,
+  end: props.keeps,
+  padFront: 0,
+  padBehind: 0,
+})
+
 const v = new Virtual(
   {
     slotHeaderSize: 0,
@@ -228,9 +234,9 @@ function getOffset() {
       document.documentElement[directionKey.value] ||
       document.body[directionKey.value]
     )
-  } else {
-    return root.value ? Math.ceil(root.value[directionKey.value]) : 0
   }
+
+  return root.value ? Math.ceil(root.value[directionKey.value]) : 0
 }
 
 // return client viewport size
@@ -238,7 +244,9 @@ function getClientSize() {
   const key = isHorizontal.value ? 'clientWidth' : 'clientHeight'
   if (props.pageMode) {
     return document.documentElement[key] || document.body[key]
-  } else return root.value ? Math.ceil(root.value[key]) : 0
+  }
+
+  return root.value ? Math.ceil(root.value[key]) : 0
 }
 
 // return all scroll size
@@ -246,7 +254,9 @@ function getScrollSize() {
   const key = isHorizontal.value ? 'scrollWidth' : 'scrollHeight'
   if (props.pageMode) {
     return document.documentElement[key] || document.body[key]
-  } else return root.value ? Math.ceil(root.value[key]) : 0
+  }
+
+  return root.value ? Math.ceil(root.value[key]) : 0
 }
 
 // set current scroll position to a expectant offset
@@ -254,7 +264,11 @@ function scrollToOffset(offset: number) {
   if (props.pageMode) {
     document.body[directionKey.value] = offset
     document.documentElement[directionKey.value] = offset
-  } else if (root.value) {
+
+    return
+  }
+
+  if (root.value) {
     root.value[directionKey.value] = offset
   }
 }
@@ -263,7 +277,11 @@ function scrollToOffset(offset: number) {
 function scrollToIndex(index: number) {
   if (index < props.dataIds.length) {
     scrollToOffset(v.getOffset(index))
-  } else scrollToBottom()
+
+    return
+  }
+
+  scrollToBottom()
 }
 
 // set current scroll position to bottom
@@ -300,26 +318,6 @@ function updatePageModeFront() {
   }
 }
 
-// // reset all state back to initial
-// function reset() {
-//   virtual.updateParam('uniqueIds', props.dataIds)
-//   virtual.updateParam('estimateSize', props.estimateSize)
-
-//   // virtual = new Virtual(
-//   //   {
-//   //     slotHeaderSize: 0,
-//   //     slotFooterSize: 0,
-//   //     keeps: props.keeps,
-//   //     estimateSize: props.estimateSize,
-//   //     buffer: Math.round(props.keeps / 2),
-//   //     uniqueIds: props.dataIds,
-//   //   },
-//   //   onRangeChanged,
-//   // )
-// }
-
-// ----------- public method end -----------
-
 // event called when each item mounted or size changed
 function onItemResized(id: string, size: number) {
   v.saveSize(id, size)
@@ -328,10 +326,14 @@ function onItemResized(id: string, size: number) {
 
 // event called when slot mounted or size changed
 function onSlotResized(type: string, size: any, hasInit: boolean) {
-  if (type === 'thead') {
-    v.updateParam('slotHeaderSize', size)
-  } else if (type === 'tfoot') {
-    v.updateParam('slotFooterSize', size)
+  switch (type) {
+    case 'thead':
+      v.updateParam('slotHeaderSize', size)
+      break
+
+    case 'tfoot':
+      v.updateParam('slotFooterSize', size)
+      break
   }
 
   if (hasInit) {
@@ -341,7 +343,7 @@ function onSlotResized(type: string, size: any, hasInit: boolean) {
 
 // here is the rerendering entry
 function onRangeChanged(r: VirtualRange) {
-  vr.value = r
+  vr.value = Object.create(r)
 }
 
 function onScroll(evt: any) {
@@ -371,32 +373,37 @@ function emitScrollEvent(
     v.isFront() &&
     props.dataIds.length > 0 &&
     offset - props.topThreshold <= 0
-  )
+  ) {
     emit('totop')
-  else if (
+
+    return
+  }
+
+  if (
     v.isBehind() &&
     offset + clientSize + props.bottomThreshold >= scrollSize
-  )
+  ) {
     emit('tobottom')
+  }
 }
 
 const wrapperStyle = computed(() => ({
   ...props.wrapStyle,
   padding: isHorizontal.value
-    ? `0px ${vr.value?.padBehind}px 0px ${vr.value?.padFront}px`
-    : `${vr.value?.padFront}px 0px ${vr.value?.padBehind}px`,
+    ? `0px ${vr.value.padBehind}px 0px ${vr.value.padFront}px`
+    : `${vr.value.padFront}px 0px ${vr.value.padBehind}px`,
 }))
 </script>
 
 <template>
   <Component
     :is="props.rootTag"
-    :key="`${props.dataKey}_listitem_root}`"
+    :key="`${props.dataKey}_list_root`"
     ref="root"
-    @scroll="!pageMode && onScroll()"
+    @scroll="!props.pageMode && onScroll()"
   >
     <VirtualListSlot
-      :key="`${props.dataKey}_header`"
+      :key="`${props.dataKey}_list_header`"
       data-id="thead"
       :tag="props.headerTag"
       :class="props.headerClass"
@@ -408,16 +415,14 @@ const wrapperStyle = computed(() => ({
 
     <Component
       :is="props.wrapTag"
-      v-if="vr"
-      :key="`${props.dataKey}_listitem_wrap}`"
-      role="group"
+      :key="`${props.dataKey}_listitem_wrap`"
       :class="props.wrapClass"
       :style="wrapperStyle"
+      role="group"
     >
       <VirtualListItem
-        v-for="index in range(vr.start, vr.end + 1, 1)"
-        :key="`${props.dataKey}_listitem_${index}`"
-        role="listitem"
+        v-for="index in range(vr.start, vr.end + 1)"
+        :key="`${props.dataKey}_listitem_component_${props.dataIds[index]}`"
         :index="index"
         :tag="props.itemTag"
         :horizontal="isHorizontal"
@@ -438,7 +443,7 @@ const wrapperStyle = computed(() => ({
     </Component>
 
     <VirtualListSlot
-      :key="`${props.dataKey}_footer`"
+      :key="`${props.dataKey}_list_footer`"
       data-id="tfoot"
       :class="props.footerClass"
       :style="props.footerStyle"
@@ -449,9 +454,3 @@ const wrapperStyle = computed(() => ({
     </VirtualListSlot>
   </Component>
 </template>
-
-<style lang="postcss">
-.virtual-list--cards {
-  @apply flex flex-col h-full p-4 overflow-auto;
-}
-</style>

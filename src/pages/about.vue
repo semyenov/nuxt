@@ -21,11 +21,11 @@ const dataGetter = backendStore.itemGetter<{ _id: string; name: string }>(
 
 <template>
   <VirtualList
-    v-if="dataIds"
     key="data-virtuallist"
+    data-key="data-virtuallist"
     class="flex flex-col p-10"
     item-class="pb-4"
-    :keeps="300"
+    :keeps="30"
     :page-mode="true"
     :data-ids="dataIds"
     :data-getter="dataGetter"

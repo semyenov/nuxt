@@ -11,28 +11,20 @@ export const backendStoreKey = 'backend' as const
 export const useBackendStore = defineStore('backend', () => {
   const appConfig = useAppConfig()
 
-  const store = ref<Map<string, Map<string, unknown>>>(new Map())
+  const store = ref<Map<string, Map<string, any>>>(new Map())
   const authorization = ref<string>('test')
 
-  const itemGetter =
-    <T extends IWithIdentificator>(scope: ScopeType) =>
-    (id: string) =>
-      computed(() => {
-        const storeItemsMap = store.value.get(scope) as Map<string, T>
+  const itemGetter = <T extends IWithIdentificator>(scope: ScopeType) => {
+    const storeItemsMap = store.value.get(scope) as Map<string, T>
+
+    return (id: string) =>
+      computed<T>(() => {
         return storeItemsMap.has(id) ? storeItemsMap.get(id) : undefined
       })
+  }
 
   const itemsGetter = (scope: ScopeType) =>
-    computed(() => {
-      const res: string[] = []
-      const entries = store.value.get(scope).entries()
-
-      for (const entry of entries) {
-        res.push(entry[0])
-      }
-
-      return res
-    })
+    computed(() => Array.from(store.value.get(scope).keys()))
 
   function setItems<T extends IWithIdentificator>(scope: string, items: T[]) {
     if (!store.value.has(scope)) {
@@ -67,7 +59,7 @@ export const useBackendStore = defineStore('backend', () => {
       ...opts,
     })
 
-    if (res.data.value) {
+    if (res.data.value && res.data.value.length > 0) {
       setItems(scope, res.data.value)
     }
 

@@ -7,6 +7,8 @@ export default defineNuxtConfig({
 
   srcDir: resolve(__dirname, 'src'),
 
+  appDir: resolve(__dirname, 'src', 'app'),
+
   typescript: {
     shim: false,
   },
@@ -26,7 +28,7 @@ export default defineNuxtConfig({
     ],
   },
 
-  css: ['@unocss/reset/antfu.css', '@/assets/styles/main.css'],
+  css: ['@unocss/reset/antfu.css', 'assets/styles/main.css'],
 
   modules: [
     '@unocss/nuxt',
