@@ -4,6 +4,8 @@ import {
   presetIcons,
   presetTypography,
   presetUno,
+  transformerDirectives,
+  transformerVariantGroup,
 } from 'unocss'
 
 export default defineConfig({
@@ -18,4 +20,5 @@ export default defineConfig({
     'custom-shortcut':
       'text-2xl font-bold cursor-pointer text-#41B883 mb-2 hover:text-teal',
   },
+  transformers: [transformerDirectives(), transformerVariantGroup()],
 })

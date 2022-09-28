@@ -2,65 +2,80 @@ import type { UseFetchOptions } from '#app'
 import type { NitroFetchRequest } from 'nitropack'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
-type FetchFunctionType = 'data' | 'objects'
-interface ObjectWithIdentificator {
+type ScopeType = 'data' | 'objects'
+interface IWithIdentificator {
   _id: string
 }
 
 export const backendStoreKey = 'backend' as const
 export const useBackendStore = defineStore('backend', () => {
+  const appConfig = useAppConfig()
+
   const store = ref<Map<string, Map<string, unknown>>>(new Map())
-  const authorization = ref<string>('')
+  const authorization = ref<string>('test')
 
-  const setItems = <T extends ObjectWithIdentificator>(
-    type: string,
-    items: T[]
-  ) => {
-    if (!store.value.has(type)) {
-      store.value.set(type, new Map(items.map((item) => [item._id, item])))
+  const itemGetter =
+    <T extends IWithIdentificator>(scope: ScopeType) =>
+    (id: string) =>
+      computed(() => {
+        const storeItemsMap = store.value.get(scope) as Map<string, T>
+        return storeItemsMap.has(id) ? storeItemsMap.get(id) : undefined
+      })
 
-      return items
+  const itemsGetter = (scope: ScopeType) =>
+    computed(() => {
+      const res: string[] = []
+      const entries = store.value.get(scope).entries()
+
+      for (const entry of entries) {
+        res.push(entry[0])
+      }
+
+      return res
+    })
+
+  function setItems<T extends IWithIdentificator>(scope: string, items: T[]) {
+    if (!store.value.has(scope)) {
+      store.value.set(scope, new Map(items.map((item) => [item._id, item])))
+
+      return true
     }
 
-    const storeItems = store.value.get(type) as Map<string, T>
+    const storeItemsMap = store.value.get(scope) as Map<string, T>
     for (const item of items) {
-      storeItems.set(item._id, item)
+      storeItemsMap.set(item._id, item)
     }
 
-    return storeItems
+    return true
   }
 
-  const getItems = async <T extends ObjectWithIdentificator>(
+  async function getItems<T extends IWithIdentificator>(
     request: NitroFetchRequest,
     opts?: UseFetchOptions<T[]>
-  ) => {
-    const [type, ...command] = getUrl(request.toString())
+  ): Promise<ReturnType<typeof useFetch<T[]>>> {
+    const [scope, ...command] = request
+      .toString()
+      .split('/')
+      .filter((item) => item !== '')
+      .slice(1) as [ScopeType, ...string[]]
+
     const res = await useFetch<T[]>(request, {
-      key: `${type}-${command.join('.')}`,
+      key: `${scope}-${command.join('.')}`,
+      baseURL: appConfig.apiUri,
+      headers: [['Authorization', `Bearer ${authorization.value}`]],
       method: 'get',
-      // baseURL: 'http://localhost:3000',
-      headers: new Headers([
-        ['authorization', `bearer ${authorization.value}`],
-      ]),
       ...opts,
     })
 
-    if (res.data && res.data.value) {
-      setItems(type, res.data.value)
+    if (res.data.value) {
+      setItems(scope, res.data.value)
     }
 
     return res
   }
 
-  return { store, getItems }
+  return { getItems, store, itemsGetter, itemGetter }
 })
-
-function getUrl(str: string) {
-  return str
-    .split('/')
-    .filter((item) => item !== '')
-    .slice(1) as [FetchFunctionType, ...string[]]
-}
 
 if (import.meta.hot) {
   import.meta.hot.accept(acceptHMRUpdate(useBackendStore, import.meta.hot))

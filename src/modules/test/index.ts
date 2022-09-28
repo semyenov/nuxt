@@ -13,6 +13,7 @@ export default defineNuxtModule({
 
     nuxt.hooks.hookOnce('pages:extend', (pages) => {
       logger.info('Add test page', resolve(__dirname, 'pages/test.vue'))
+
       pages.push({
         name: 'Test',
         path: '/test',

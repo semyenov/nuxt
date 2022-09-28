@@ -1,16 +1,8 @@
+import { range } from '@antfu/utils'
+
 export default defineEventHandler((_event) => {
-  return [
-    {
-      _id: '4',
-      name: 'Test 4',
-    },
-    {
-      _id: '5',
-      name: 'Test 5',
-    },
-    {
-      _id: '6',
-      name: 'Test 6',
-    },
-  ]
+  return range(101, 1000).map((i) => ({
+    _id: `${i}`,
+    name: `Test ${i}`,
+  }))
 })
