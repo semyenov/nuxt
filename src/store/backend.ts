@@ -15,18 +15,20 @@ export const useBackendStore = defineStore('backend', () => {
   const authorization = ref<string>('test')
 
   const itemGetter = <T extends IWithIdentificator>(scope: ScopeType) => {
-    const storeItemsMap = store.value.get(scope) as Map<string, T>
+    const storeItemsMap = store.value.get(scope) as Map<string, T> | undefined
 
     return (id: string) =>
-      computed<T>(() => {
-        return storeItemsMap.has(id) ? storeItemsMap.get(id) : undefined
+      computed<T | undefined>(() => {
+        return storeItemsMap && storeItemsMap.has(id)
+          ? storeItemsMap.get(id)
+          : undefined
       })
   }
 
   const itemsGetter = (scope: ScopeType) =>
     computed(() => {
       if (store.value.has(scope)) {
-        return Array.from(store.value.get(scope).keys())
+        return Array.from(store.value.get(scope)!.keys())
         // .sort((a, b) =>
         //   parseInt(a) - parseInt(b) > 0 ? 1 : -1
         // )

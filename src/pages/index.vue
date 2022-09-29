@@ -15,7 +15,7 @@ const { data } = await useFetch('/api/test')
       <span>About Page</span>
       <i class="i-carbon:arrow-right inline-block relative top-0.5 ml-1" />
     </NuxtLink>
-    <PageProse>{{ data.text }}</PageProse>
+    <PageProse v-if="data">{{ data.text }}</PageProse>
     <div class="flex flex-row gap-2 text-3xl justify-center">
       <div
         class="i-twemoji:grinning-face-with-smiling-eyes hover:i-twemoji:face-with-tears-of-joy"

@@ -14,9 +14,11 @@ const props = defineProps({
   },
   dataGetter: {
     type: Function as PropType<
-      (id: string) => ComputedRef<Record<string, any> & { _id: string }>
+      (
+        id: string
+      ) => ComputedRef<(Record<string, any> & { _id: string }) | undefined>
     >,
-    required: true,
+    default: () => {},
   },
   dataComponent: {
     type: [Object, Function] as PropType<DefineComponent<any, any, any>>,
@@ -241,6 +243,8 @@ function getOffset() {
   if (rootRef.value) {
     return rootRef.value ? Math.ceil(rootRef.value[directionKey.value]) : 0
   }
+
+  return 0
 }
 
 // return client viewport size

@@ -35,19 +35,42 @@ export default class Virtual {
   public firstRangeTotalSize?: number
   public firstRangeAverageSize: number
   public lastCalcIndex: number
-  public fixedSizeValue?: number
+  public fixedSizeValue: number
   public calcType: CALC_TYPE
   public offset: number
   public direction: DIRECTION_TYPE | ''
   public range: VirtualRange
-  public callUpdate: (range: VirtualRange) => void
+  public callUpdate: ((range: VirtualRange) => void) | undefined
   public param: VirtualParam
 
   constructor(param: VirtualParam, callUpdate: (range: VirtualRange) => void) {
-    this.init(param, callUpdate)
+    this.param = param
+    this.callUpdate = callUpdate
+
+    // size data
+    this.sizes = new Map()
+    this.firstRangeTotalSize = 0
+    this.firstRangeAverageSize = 0
+    this.lastCalcIndex = 0
+    this.fixedSizeValue = 0
+    this.calcType = CALC_TYPE.INIT
+
+    // scroll data
+    this.offset = 0
+    this.direction = ''
+
+    // range data
+    this.range = Object.create(null)
+    if (param) {
+      this.checkRange(0, param.keeps - 1)
+    }
+
+    // benchmark test data
+    // this.__bsearchCalls = 0
+    // this.__getIndexOffsetCalls = 0
   }
 
-  init(param: VirtualParam, callUpdate: (range: VirtualRange) => void) {
+  init(param: VirtualParam, callUpdate?: (range: VirtualRange) => void) {
     // param data
     this.param = param
     this.callUpdate = callUpdate
@@ -76,7 +99,23 @@ export default class Virtual {
   }
 
   destroy() {
-    this.init(null, null)
+    // this.param = null
+    this.callUpdate = undefined
+
+    // size data
+    this.sizes = new Map()
+    this.firstRangeTotalSize = 0
+    this.firstRangeAverageSize = 0
+    this.lastCalcIndex = 0
+    this.fixedSizeValue = 0
+    this.calcType = CALC_TYPE.INIT
+
+    // scroll data
+    this.offset = 0
+    this.direction = ''
+
+    // range data
+    this.range = Object.create(null)
   }
 
   // return current render range
@@ -133,8 +172,6 @@ export default class Virtual {
       this.fixedSizeValue !== size
     ) {
       this.calcType = CALC_TYPE.DYNAMIC
-      // it's no use at all
-      delete this.fixedSizeValue
     }
 
     // calculate the average size only in the first range
@@ -182,7 +219,7 @@ export default class Virtual {
   }
 
   // calculating range on scroll
-  handleScroll(offset) {
+  handleScroll(offset: number) {
     this.direction =
       offset < this.offset ? DIRECTION_TYPE.FRONT : DIRECTION_TYPE.BEHIND
     this.offset = offset
@@ -259,13 +296,13 @@ export default class Virtual {
 
   // return a scroll offset from given index, can efficiency be improved more here?
   // although the call frequency is very high, its only a superposition of numbers
-  getIndexOffset(givenIndex) {
+  getIndexOffset(givenIndex: number) {
     if (!givenIndex) {
       return 0
     }
 
     let offset = 0
-    let indexSize = 0
+    let indexSize: number | undefined = 0
     for (let index = 0; index < givenIndex; index++) {
       // this.__getIndexOffsetCalls++
       indexSize = this.sizes.get(this.param.uniqueIds[index])
@@ -293,7 +330,7 @@ export default class Virtual {
 
   // in some conditions range is broke, we need correct it
   // and then decide whether need update to next range
-  checkRange(start, end) {
+  checkRange(start: number, end: number) {
     const keeps = this.param.keeps
     const total = this.param.uniqueIds.length
 
@@ -312,16 +349,18 @@ export default class Virtual {
   }
 
   // setting to a new range and rerender
-  updateRange(start, end) {
+  updateRange(start: number, end: number) {
     this.range.start = start
     this.range.end = end
     this.range.padFront = this.getPadFront()
     this.range.padBehind = this.getPadBehind()
-    this.callUpdate(this.getRange())
+    if (this.callUpdate) {
+      this.callUpdate(this.getRange())
+    }
   }
 
   // return end base on start
-  getEndByStart(start) {
+  getEndByStart(start: number) {
     const theoryEnd = start + this.param.keeps - 1
     const truelyEnd = Math.min(theoryEnd, this.getLastIndex())
     return truelyEnd
