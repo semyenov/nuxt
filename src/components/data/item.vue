@@ -22,5 +22,8 @@ const { index, item } = toRefs(props)
     <template #default>
       {{ item }}
     </template>
+    <template #footer>
+      {{ item }}
+    </template>
   </Card>
 </template>
