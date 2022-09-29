@@ -4,9 +4,9 @@ const logger = useLogger('modules/test')
 
 export default defineNuxtModule({
   setup(_options, nuxt) {
-    logger.success('Test module loaded')
-
     const { resolve } = createResolver(import.meta.url)
+
+    logger.success('Test module loaded')
 
     nuxt.hooks.hookOnce('nitro:config', (config) => {
       logger.info('Nitro preset', config.preset)

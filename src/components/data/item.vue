@@ -19,7 +19,7 @@ const item = toRef(props, 'item')
   <div v-if="item" class="flex flex-col text-xs text-gray-400">
     <Card>
       <template #header>
-        {{ `#${index}.${item._id}` }}
+        {{ `# ${index}.${item._id}` }}
       </template>
       <template #default>
         {{ item }}
