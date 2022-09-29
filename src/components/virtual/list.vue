@@ -148,7 +148,7 @@ const v = new Virtual(
     slotFooterSize: 0,
     keeps: props.keeps,
     estimateSize: props.estimateSize,
-    buffer: Math.round(props.keeps / 2),
+    buffer: Math.round(props.keeps / 3),
     uniqueIds: props.dataIds.slice(),
   },
   onRangeChanged
