@@ -9,7 +9,7 @@ const { data } = await useFetch('/api/test')
 </script>
 
 <template>
-  <div class="flex flex-col gap-6 p-10">
+  <div class="flex flex-col items-center gap-6 p-10">
     <PageTitle> Index Page </PageTitle>
     <NuxtLink class="text-xs text-gray-500" un-dark="text-gray-300" to="/about">
       <span>About Page</span>

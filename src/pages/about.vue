@@ -8,7 +8,6 @@ definePageMeta({
   title: 'Page Title',
 })
 
-const mouseStore = useMouseStore()
 const backendStore = useBackendStore()
 
 await backendStore.getItems('/api/data/items')
@@ -20,7 +19,7 @@ const dataGetter = backendStore.itemGetter<{ _id: string; name: string }>(
 </script>
 
 <template>
-  <div class="flex flex-col items-center p-10 gap-4">
+  <div class="flex flex-col items-center p-10 gap-6">
     <PageTitle>About Page</PageTitle>
     <VirtualList
       key="data-virtuallist"
@@ -36,13 +35,21 @@ const dataGetter = backendStore.itemGetter<{ _id: string; name: string }>(
     >
       <template #header>
         <button
+          class="text-xs text-gray-500"
+          un-dark="text-gray-300"
+          @click.prevent="backendStore.getItems('/api/data/others')"
+        >
+          <i class="i-carbon:arrow-down inline-block relative top-0.5 mr-1" />
+          <span>Load Others</span>
+        </button>
+        <!-- <button
           class="flex flex-row gap-1 items-center justify-center text-gray-500 bg-gray-100 border border-gray-300 px-2 py-1 rounded text-xs"
           un-dark="bg-gray-800 text-gray-400 border-gray-600"
           @click.prevent="backendStore.getItems('/api/data/others')"
         >
           <i class="i-carbon:download inline-block" />
           <span>{{ dataIds.length }}</span>
-        </button>
+        </button> -->
       </template>
       <template #footer>
         <NuxtLink class="text-xs text-gray-500" un-dark="text-gray-300" to="/">

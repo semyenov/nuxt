@@ -22,7 +22,10 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['resize'])
+const emit = defineEmits<{
+  (event: 'resize', id: string, size: number, init: boolean): void
+}>()
+
 const slots = useSlots()
 
 const rootRef = ref<HTMLElement | null>(null)

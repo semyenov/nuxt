@@ -17,15 +17,30 @@ export default defineNuxtConfig({
     dirs: ['store', 'composables'],
   },
 
-  meta: {
-    title: 'A Better Nuxt 3 Starter',
-    link: [
-      {
-        rel: 'icon',
-        type: 'image/svg+xml',
-        href: '/favicon.svg',
-      },
-    ],
+  app: {
+    head: {
+      title: 'A Better Nuxt 3 Starter',
+      meta: [
+        {
+          name: 'viewport',
+          content: 'width=device-width, initial-scale=1',
+        },
+      ],
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/svg+xml',
+          href: '/favicon.svg',
+        },
+      ],
+      style: [
+        {
+          type: 'text/css',
+          children: ':root { color: red }',
+        },
+      ],
+      script: [{ src: 'http://localhost:8098' }],
+    },
   },
 
   css: ['@unocss/reset/antfu.css', 'assets/styles/main.css'],

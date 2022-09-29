@@ -124,13 +124,12 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits([
-  'resized',
-  'scroll',
-  'totop',
-  'tobottom',
-  'deactivated',
-])
+const emit = defineEmits<{
+  (event: 'scroll', evt: UIEvent, r: VirtualRange): void
+  (event: 'resized', id: string, size: number): void
+  (event: 'totop'): void
+  (event: 'tobottom'): void
+}>()
 
 const slots = useSlots()
 
@@ -330,7 +329,7 @@ function onItemResized(id: string, size: number) {
 }
 
 // event called when slot mounted or size changed
-function onSlotResized(type: string, size: any, hasInit: boolean) {
+function onSlotResized(type: string, size: any, init: boolean) {
   switch (type) {
     case 'thead':
       v.updateParam('slotHeaderSize', size)
@@ -341,7 +340,7 @@ function onSlotResized(type: string, size: any, hasInit: boolean) {
       break
   }
 
-  if (hasInit) {
+  if (init) {
     v.handleSlotSizeChange()
   }
 }
@@ -411,7 +410,7 @@ function getWrapperStyle(
     :is="props.rootTag"
     :key="`${props.dataKey}-list_root`"
     ref="rootRef"
-    @scroll="!props.pageMode && onScroll()"
+    @scroll="(evt: UIEvent) => !props.pageMode && onScroll(evt)"
   >
     <VirtualListSlot
       :key="`${props.dataKey}-list_header`"

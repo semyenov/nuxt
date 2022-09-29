@@ -30,7 +30,7 @@ const slots = useSlots()
     </div>
     <div
       v-if="slots.footer"
-      class="rounded-b flex-grow flex flex-row w-full text-xs text-gray-500 gap-1 py-2 px-4 last-rounded-b first-rounded-t"
+      class="flex-grow flex flex-row w-full text-xs text-gray-500 gap-1 py-2 px-4 last-rounded-b first-rounded-t"
       un-dark="text-gray-400"
     >
       <slot name="footer" />

@@ -52,7 +52,9 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['resize'])
+const emit = defineEmits<{
+  (event: 'resize', id: string, size: number, init: boolean): void
+}>()
 
 const index = toRef(props, 'index')
 const dataId = toRef(props, 'dataId')
@@ -66,7 +68,9 @@ const shapeKey = computed<'width' | 'height'>(() =>
 )
 
 const resizeObserver = useResizeObserver(rootRef, (entries) => {
-  emitResize(entries[0].contentRect[shapeKey.value])
+  if (entries.length > 0) {
+    emit('resize', dataId.value, entries[0].contentRect[shapeKey.value], false)
+  }
 })
 
 onMounted(dispatchSizeChange)
@@ -78,12 +82,10 @@ onUnmounted(resizeObserver.stop)
 function dispatchSizeChange() {
   if (rootRef.value) {
     const entries = rootRef.value.getClientRects()
-    emitResize(entries[0][shapeKey.value], true)
+    if (entries.length > 0) {
+      emit('resize', dataId.value, entries[0][shapeKey.value], true)
+    }
   }
-}
-
-function emitResize(size: number, init = false) {
-  emit('resize', dataId.value, size, init)
 }
 </script>
 
