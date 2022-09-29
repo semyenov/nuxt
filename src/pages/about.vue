@@ -12,7 +12,6 @@ const mouseStore = useMouseStore()
 const backendStore = useBackendStore()
 
 await backendStore.getItems('/api/data/items')
-await backendStore.getItems('/api/data/others')
 
 const dataIds = backendStore.itemsGetter('data')
 const dataGetter = backendStore.itemGetter<{ _id: string; name: string }>(
@@ -26,23 +25,15 @@ const dataGetter = backendStore.itemGetter<{ _id: string; name: string }>(
       {{ mouseStore.x }}:{{ mouseStore.y }}
     </div>
     <PageTitle> About Page</PageTitle>
-    <PageProse
-      >Hello, ${name}! Vue.js makes the animations and transitions incredibly
-      easy to implement. So you should really use this opportunity to give a
-      little spark to your application/website to shine. Nuxt.js already builds
-      on the provided capabilities of Vue.js. It gives you a possibility to
-      create a very simple transitions between the pages very fast and almost
-      for no effort.</PageProse
-    >
     <button
-      class="flex flex-col items-center text-green-500 text-2xl dark:text-green-300 p-4"
+      class="flex flex-col items-center text-green-500 text-2xl dark:text-green-300"
       @click.prevent="backendStore.getItems('/api/data/others')"
     >
       <i class="i-mdi:sync inline-block" />
     </button>
     <VirtualList
       key="data-virtuallist"
-      class="flex flex-col items-center"
+      class="flex flex-col items-center mt-4"
       :keeps="40"
       :page-mode="true"
       item-class="pb-4"

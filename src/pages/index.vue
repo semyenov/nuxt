@@ -5,6 +5,7 @@ definePageMeta({
 })
 
 const mouseStore = useMouseStore()
+const { data } = await useFetch('/api/test')
 </script>
 
 <template>
@@ -13,7 +14,8 @@ const mouseStore = useMouseStore()
       {{ mouseStore.x }}:{{ mouseStore.y }}
     </div>
     <PageTitle>Index Page</PageTitle>
-    <div class="flex flex-row gap-1 text-3xl">
+    <PageProse>{{ data.text }}</PageProse>
+    <div class="flex flex-row gap-1 text-3xl justify-center mt-4">
       <div
         class="i-twemoji:grinning-face-with-smiling-eyes hover:i-twemoji:face-with-tears-of-joy"
       />

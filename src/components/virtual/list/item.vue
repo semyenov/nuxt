@@ -63,20 +63,20 @@ const itemRef = ref<HTMLElement | null>(null)
 const shapeKey = ref<'width' | 'height'>(props.horizontal ? 'width' : 'height')
 
 const resizeObserver = useResizeObserver(itemRef, (entries) => {
-  dispatchSizeChange(entries[0].contentRect[shapeKey.value])
+  emit('resize', dataId, entries[0].contentRect[shapeKey.value], false)
 })
 
-onDeactivated(() => {
-  resizeObserver.stop()
-})
+onMounted(dispatchSizeChange)
+onActivated(dispatchSizeChange)
 
-onUnmounted(() => {
-  resizeObserver.stop()
-})
+onDeactivated(resizeObserver.stop)
+onUnmounted(resizeObserver.stop)
 
 // tell parent current size identify by unqiue key
-function dispatchSizeChange(size: number) {
-  emit('resize', dataId, size, false)
+function dispatchSizeChange() {
+  if (itemRef.value) {
+    itemRef.value.dispatchEvent(new Event('resize'))
+  }
 }
 </script>
 

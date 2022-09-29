@@ -151,7 +151,7 @@ const v = new Virtual(
     slotFooterSize: 0,
     keeps: props.keeps,
     estimateSize: props.estimateSize,
-    buffer: Math.round(props.keeps / 3),
+    buffer: Math.round(props.keeps / 2),
     uniqueIds: props.dataIds.slice(),
   },
   onRangeChanged
@@ -172,9 +172,7 @@ onMounted(() => {
   }
 
   // set position
-  // const offset = getOffset()
   onScroll()
-  nextTick(() => {})
 })
 
 // set back offset when awake from keep-alive
@@ -187,8 +185,7 @@ onActivated(() => {
     })
   }
 
-  const offset = getOffset()
-  scrollToOffset(offset)
+  onScroll()
 })
 
 onDeactivated(() => {
