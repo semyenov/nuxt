@@ -172,8 +172,9 @@ onMounted(() => {
   }
 
   // set position
-  const offset = getOffset()
-  scrollToOffset(offset)
+  // const offset = getOffset()
+  onScroll()
+  nextTick(() => {})
 })
 
 // set back offset when awake from keep-alive
@@ -440,9 +441,9 @@ function getWrapperStyle(
         :data-id="props.dataIds.at(i)"
         :estimate-size="v.getEstimateSize()"
         :data-key="props.dataKey"
-        :getter="props.dataGetter"
+        :data-getter="props.dataGetter"
         :extra-props="props.extraProps"
-        :component="props.dataComponent"
+        :data-component="props.dataComponent"
         :slot-component="slots && slots.item"
         :scoped-slots="props.itemScopedSlots"
         :item-class="

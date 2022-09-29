@@ -4,6 +4,7 @@ import type { ComputedRef, DefineComponent, PropType } from 'vue'
 const props = defineProps({
   index: {
     type: Number,
+    required: true,
   },
   tag: {
     type: String,
@@ -11,16 +12,7 @@ const props = defineProps({
   },
   horizontal: {
     type: Boolean,
-  },
-  getter: {
-    type: Function as PropType<
-      (id: string) => ComputedRef<Record<string, any> & { _id: string }>
-    >,
-    required: true,
-  },
-  component: {
-    type: [Object, Function] as PropType<DefineComponent<any, any, any>>,
-    required: true,
+    default: false,
   },
   slotComponent: {
     type: Function,
@@ -29,6 +21,7 @@ const props = defineProps({
     type: Number,
     default: 100,
   },
+
   dataId: {
     type: String,
     required: true,
@@ -37,6 +30,17 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  dataGetter: {
+    type: Function as PropType<
+      (id: string) => ComputedRef<Record<string, any> & { _id: string }>
+    >,
+    required: true,
+  },
+  dataComponent: {
+    type: [Object, Function] as PropType<DefineComponent<any, any, any>>,
+    required: false,
+  },
+
   extraProps: {
     type: Object,
   },
@@ -53,7 +57,7 @@ const emit = defineEmits(['resize'])
 const index = toRef(props, 'index')
 const dataId = toRef(props, 'dataId')
 
-const item = props.getter(dataId.value)
+const item = computed(() => props.dataGetter(dataId.value))
 
 const itemRef = ref<HTMLElement | null>(null)
 const shapeKey = ref<'width' | 'height'>(props.horizontal ? 'width' : 'height')
@@ -93,8 +97,8 @@ function dispatchSizeChange(size: number) {
           index,
           item,
         }"
-        :is="props.component"
-        v-if="props.component"
+        :is="props.dataComponent"
+        v-if="props.dataComponent"
         :key="`${props.dataKey}-listitem_component-${dataId}-${index}`"
       />
       <Component

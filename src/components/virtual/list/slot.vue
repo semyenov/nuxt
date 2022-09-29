@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { MaybeElementRef } from '@vueuse/core'
-
 const props = defineProps({
   dataId: {
     type: String,
@@ -13,10 +11,7 @@ const props = defineProps({
   },
   horizontal: {
     type: Boolean,
-  },
-  getter: {
-    type: Function,
-    default: () => {},
+    default: false,
   },
   estimateSize: {
     type: Number,
@@ -28,18 +23,24 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['resize'])
-
-const el: MaybeElementRef = ref(null)
 const slots = useSlots()
-const shapeKey = ref<'width' | 'height'>(props.horizontal ? 'width' : 'height')
-const resizeObserver = useResizeObserver(el, (entries) => {
+
+const rootRef = ref<HTMLElement | null>(null)
+
+const horizontal = toRef(props, 'horizontal')
+const shapeKey = computed((): 'width' | 'height' =>
+  horizontal.value ? 'width' : 'height'
+)
+
+const resizeObserver = useResizeObserver(rootRef, (entries) => {
   dispatchSizeChange(entries[0].contentRect[shapeKey.value], true)
 })
 
-onDeactivated(() => {
+onUnmounted(() => {
   resizeObserver.stop()
 })
-onUnmounted(() => {
+
+onDeactivated(() => {
   resizeObserver.stop()
 })
 
@@ -49,5 +50,5 @@ function dispatchSizeChange(size: number, hasInit: boolean) {
 </script>
 
 <template>
-  <Component :is="slots.default" v-if="slots.default" :ref="el" />
+  <Component :is="slots.default" v-if="slots.default" :ref="rootRef" />
 </template>

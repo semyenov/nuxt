@@ -12,6 +12,7 @@ const mouseStore = useMouseStore()
 const backendStore = useBackendStore()
 
 await backendStore.getItems('/api/data/items')
+await backendStore.getItems('/api/data/others')
 
 const dataIds = backendStore.itemsGetter('data')
 const dataGetter = backendStore.itemGetter<{ _id: string; name: string }>(
@@ -41,15 +42,15 @@ const dataGetter = backendStore.itemGetter<{ _id: string; name: string }>(
     </button>
     <VirtualList
       key="data-virtuallist"
-      data-key="data-virtuallist"
       class="flex flex-col items-center"
-      item-class="pb-4"
-      :keeps="20"
+      :keeps="40"
       :page-mode="true"
+      item-class="pb-4"
       :data-ids="dataIds"
+      data-key="data-virtuallist"
       :data-getter="dataGetter"
       :data-component="DataItem"
-      :estimate-size="50"
+      :estimate-size="90"
     />
     <NuxtLink class="text-xs mt-4 text-gray-500 dark:text-gray-300" to="/">
       <i class="i-carbon:arrow-left inline-block relative top-0.5 mr-1" />
