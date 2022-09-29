@@ -32,6 +32,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  dataKey: {
+    type: String,
+    default: '',
+  },
   extraProps: {
     type: Object,
   },
@@ -45,7 +49,10 @@ const props = defineProps({
 
 const emit = defineEmits(['resize'])
 
-const item = await props.getter(props.dataId)
+const index = toRef(props, 'index')
+const dataId = toRef(props, 'dataId')
+
+const item = props.getter(dataId.value)
 
 const itemRef: MaybeElementRef = ref(null)
 const shapeKey = ref<'width' | 'height'>(props.horizontal ? 'width' : 'height')
@@ -64,45 +71,45 @@ onUnmounted(() => {
 
 // tell parent current size identify by unqiue key
 function dispatchSizeChange(size: number) {
-  emit('resize', props.dataId, size, false)
+  emit('resize', dataId, size, false)
 }
 </script>
 
 <template>
-  <!-- <KeepAlive :key="`listitem_keepalive_${props.dataId}`"> -->
-  <Component
-    :is="props.tag"
-    v-if="item"
-    ref="itemRef"
-    :key="`listitem_tag_${props.dataId}`"
-    :class="props.itemClass"
-    role="listitem"
-  >
+  <KeepAlive :key="`${props.dataKey}-listitem_keepapive-${dataId}-${index}`">
     <Component
-      v-bind="{
-        scopedSlots: props.scopedSlots,
-        extraProps: props.extraProps,
-        index: props.index,
-        item,
+      :is="props.tag"
+      v-if="item"
+      ref="itemRef"
+      :key="`${props.dataKey}-listitem_tag-${dataId}-${index}`"
+      :class="props.itemClass"
+      role="listitem"
+    >
+      <Component
+        v-bind="{
+          scopedSlots: props.scopedSlots,
+          extraProps: props.extraProps,
+          index,
+          item,
+        }"
+        :is="props.component"
+        v-if="props.component"
+        :key="`${props.dataKey}-listitem_component-${dataId}-${index}`"
+      />
+      <Component
+        :is="props.slotComponent"
+        v-else-if="props.slotComponent"
+        :key="`${props.dataKey}-listitem_slotcomponent-${dataId}-${index}`"
+      />
+    </Component>
+    <Component
+      :is="props.tag"
+      v-else
+      :key="`${props.dataKey}-listitem_placeholder-${dataId}-${index}`"
+      :style="{
+        display: 'block',
+        height: `${props.estimateSize}px`,
       }"
-      :is="props.component"
-      v-if="props.component"
-      :key="`listitem_component_${props.dataId}`"
     />
-    <Component
-      :is="props.slotComponent"
-      v-else-if="props.slotComponent"
-      :key="`listitem_slotcomponent_${props.dataId}`"
-    />
-  </Component>
-  <Component
-    :is="props.tag"
-    v-else
-    :key="`listitem_placeholder_${props.dataId}`"
-    :style="{
-      display: 'block',
-      height: `${props.estimateSize}px`,
-    }"
-  />
-  <!-- </KeepAlive> -->
+  </KeepAlive>
 </template>

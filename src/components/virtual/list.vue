@@ -2,8 +2,8 @@
 import { range } from '@antfu/utils'
 
 import type { DefineComponent, PropType } from 'vue'
-import type { VirtualRange } from '@/composables/virtual'
 
+import type { VirtualRange } from '@/composables/virtual'
 import Virtual from '@/composables/virtual'
 
 const props = defineProps({
@@ -132,12 +132,15 @@ const emit = defineEmits([
 ])
 const slots = useSlots()
 
-const vr = ref<VirtualRange>({
-  start: props.start,
-  end: props.keeps,
-  padFront: 0,
-  padBehind: 0,
-})
+const rootRef = ref<HTMLElement | null>(null)
+const shepherdRef = ref<HTMLElement | null>(null)
+
+const isHorizontal = ref(props.direction === 'horizontal')
+const wrapperStyle = ref<Record<string, any>>({})
+const vr = ref<[number, number]>([
+  Math.max(props.start, 0),
+  Math.min(props.start + props.keeps, props.dataIds.length - 1),
+])
 
 const v = new Virtual(
   {
@@ -146,18 +149,60 @@ const v = new Virtual(
     keeps: props.keeps,
     estimateSize: props.estimateSize,
     buffer: Math.round(props.keeps / 2),
-    uniqueIds: props.dataIds,
+    uniqueIds: props.dataIds.slice(),
   },
   onRangeChanged
 )
 
-const root = ref<HTMLElement | null>(null)
-const shepherd = ref<HTMLElement | null>(null)
+const directionKey = ref<'scrollLeft' | 'scrollTop'>(
+  isHorizontal.value ? 'scrollLeft' : 'scrollTop'
+)
+
+onMounted(() => {
+  // in page mode we bind scroll event to document
+  if (props.pageMode) {
+    updatePageModeFront()
+
+    document.addEventListener('scroll', onScroll, {
+      passive: false,
+    })
+  }
+
+  // set position
+  const offset = getOffset()
+  scrollToOffset(offset)
+})
+
+// set back offset when awake from keep-alive
+onActivated(() => {
+  if (props.pageMode) {
+    updatePageModeFront()
+
+    document.addEventListener('scroll', onScroll, {
+      passive: false,
+    })
+  }
+
+  const offset = getOffset()
+  scrollToOffset(offset)
+})
+
+onDeactivated(() => {
+  if (props.pageMode) {
+    document.removeEventListener('scroll', onScroll)
+  }
+})
+
+onUnmounted(() => {
+  if (props.pageMode) {
+    document.removeEventListener('scroll', onScroll)
+  }
+})
 
 watch(
   () => props.dataIds,
   (dataIds) => {
-    v.updateParam('uniqueIds', dataIds)
+    v.updateParam('uniqueIds', dataIds.slice())
     v.handleDataSourcesChange()
   }
 )
@@ -181,52 +226,6 @@ watch(
   }
 )
 
-const isHorizontal = ref(props.direction === 'horizontal')
-const directionKey = ref<'scrollLeft' | 'scrollTop'>(
-  isHorizontal.value ? 'scrollLeft' : 'scrollTop'
-)
-
-onMounted(() => {
-  // in page mode we bind scroll event to document
-  if (props.pageMode) {
-    updatePageModeFront()
-
-    document.addEventListener('scroll', onScroll, {
-      passive: false,
-    })
-  }
-
-  // set position
-  const offset = getOffset()
-  v.handleScroll(offset)
-})
-
-// set back offset when awake from keep-alive
-onActivated(() => {
-  if (props.pageMode) {
-    updatePageModeFront()
-
-    document.addEventListener('scroll', onScroll, {
-      passive: false,
-    })
-  }
-
-  const offset = getOffset()
-  v.handleScroll(offset)
-})
-
-onDeactivated(() => {
-  if (props.pageMode) {
-    document.removeEventListener('scroll', onScroll)
-  }
-})
-
-onUnmounted(() => {
-  if (props.pageMode) {
-    document.removeEventListener('scroll', onScroll)
-  }
-})
-
 // return current scroll offset
 function getOffset() {
   if (props.pageMode) {
@@ -236,7 +235,7 @@ function getOffset() {
     )
   }
 
-  return root.value ? Math.ceil(root.value[directionKey.value]) : 0
+  return rootRef.value ? Math.ceil(rootRef.value[directionKey.value]) : 0
 }
 
 // return client viewport size
@@ -246,7 +245,7 @@ function getClientSize() {
     return document.documentElement[key] || document.body[key]
   }
 
-  return root.value ? Math.ceil(root.value[key]) : 0
+  return rootRef.value ? Math.ceil(rootRef.value[key]) : 0
 }
 
 // return all scroll size
@@ -256,7 +255,7 @@ function getScrollSize() {
     return document.documentElement[key] || document.body[key]
   }
 
-  return root.value ? Math.ceil(root.value[key]) : 0
+  return rootRef.value ? Math.ceil(rootRef.value[key]) : 0
 }
 
 // set current scroll position to a expectant offset
@@ -268,8 +267,8 @@ function scrollToOffset(offset: number) {
     return
   }
 
-  if (root.value) {
-    root.value[directionKey.value] = offset
+  if (rootRef.value) {
+    rootRef.value[directionKey.value] = offset
   }
 }
 
@@ -286,9 +285,9 @@ function scrollToIndex(index: number) {
 
 // set current scroll position to bottom
 function scrollToBottom() {
-  if (shepherd.value) {
+  if (shepherdRef.value) {
     scrollToOffset(
-      shepherd.value[isHorizontal.value ? 'offsetLeft' : 'offsetTop']
+      shepherdRef.value[isHorizontal.value ? 'offsetLeft' : 'offsetTop']
     )
 
     // check if it's really scrolled to the bottom
@@ -305,9 +304,9 @@ function scrollToBottom() {
 // when using page mode we need update slot header size manually
 // taking root offset relative to the browser as slot header size
 function updatePageModeFront() {
-  if (root.value) {
-    const rect = root.value.getBoundingClientRect()
-    const { defaultView } = root.value.ownerDocument
+  if (rootRef.value) {
+    const rect = rootRef.value.getBoundingClientRect()
+    const { defaultView } = rootRef.value.ownerDocument
 
     if (defaultView) {
       const offsetFront = isHorizontal.value
@@ -343,10 +342,11 @@ function onSlotResized(type: string, size: any, hasInit: boolean) {
 
 // here is the rerendering entry
 function onRangeChanged(r: VirtualRange) {
-  vr.value = Object.create(r)
+  vr.value = [r.start, r.end + 1]
+  wrapperStyle.value = getWrapperStyle(r.padBehind, r.padFront)
 }
 
-function onScroll(evt: any) {
+function onScroll(evt?: any) {
   const offset = getOffset()
   const clientSize = getClientSize()
   const scrollSize = getScrollSize()
@@ -387,23 +387,28 @@ function emitScrollEvent(
   }
 }
 
-const wrapperStyle = computed(() => ({
-  ...props.wrapStyle,
-  padding: isHorizontal.value
-    ? `0px ${vr.value.padBehind}px 0px ${vr.value.padFront}px`
-    : `${vr.value.padFront}px 0px ${vr.value.padBehind}px`,
-}))
+function getWrapperStyle(
+  padBehind: number,
+  padFront: number
+): Record<string, any> {
+  return {
+    ...props.wrapStyle,
+    padding: isHorizontal.value
+      ? `0px ${padBehind}px 0px ${padFront}px`
+      : `${padFront}px 0px ${padBehind}px`,
+  }
+}
 </script>
 
 <template>
   <Component
     :is="props.rootTag"
-    :key="`${props.dataKey}_list_root`"
-    ref="root"
+    :key="`${props.dataKey}-list_root`"
+    ref="rootRef"
     @scroll="!props.pageMode && onScroll()"
   >
     <VirtualListSlot
-      :key="`${props.dataKey}_list_header`"
+      :key="`${props.dataKey}-list_header`"
       data-id="thead"
       :tag="props.headerTag"
       :class="props.headerClass"
@@ -415,35 +420,36 @@ const wrapperStyle = computed(() => ({
 
     <Component
       :is="props.wrapTag"
-      :key="`${props.dataKey}_listitem_wrap`"
+      :key="`${props.dataKey}_list_wrap`"
       :class="props.wrapClass"
       :style="wrapperStyle"
       role="group"
     >
       <VirtualListItem
-        v-for="index in range(vr.start, vr.end + 1)"
-        :key="`${props.dataKey}_listitem_component_${props.dataIds[index]}`"
-        :index="index"
+        v-for="i in range(...vr).slice()"
+        :key="`${props.dataKey}-list_component-${props.dataIds.at(i)}-${i}`"
+        :index="i"
         :tag="props.itemTag"
+        :style="props.itemStyle"
         :horizontal="isHorizontal"
-        :data-id="props.dataIds[index]"
+        :data-id="props.dataIds.at(i)"
         :estimate-size="v.getEstimateSize()"
+        :data-key="props.dataKey"
         :getter="props.dataGetter"
         :extra-props="props.extraProps"
         :component="props.dataComponent"
         :slot-component="slots && slots.item"
         :scoped-slots="props.itemScopedSlots"
-        :style="props.itemStyle"
         :item-class="
           props.itemClass +
-          (props.itemClassAdd ? ` ${props.itemClassAdd(index)}` : '')
+          (props.itemClassAdd ? ` ${props.itemClassAdd(i)}` : '')
         "
         @resize="onItemResized"
       />
     </Component>
 
     <VirtualListSlot
-      :key="`${props.dataKey}_list_footer`"
+      :key="`${props.dataKey}-list_footer`"
       data-id="tfoot"
       :class="props.footerClass"
       :style="props.footerStyle"

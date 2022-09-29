@@ -10,16 +10,19 @@ const props = defineProps({
     type: Object as PropType<{ _id: string; name: string }>,
   },
 })
+
+const index = toRef(props, 'index')
+const item = toRef(props, 'item')
 </script>
 
 <template>
-  <div v-if="props.item" class="flex flex-col text-xs text-gray-400">
+  <div v-if="item" class="flex flex-col text-xs text-gray-400">
     <Card>
       <template #header>
-        {{ `${props.item._id}. ${props.item.name}` }}
+        {{ `${item._id}.${index}# ${item.name}` }}
       </template>
       <template #default>
-        {{ props.item }}
+        {{ item }}
       </template>
     </Card>
   </div>

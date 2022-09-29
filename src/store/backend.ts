@@ -24,7 +24,13 @@ export const useBackendStore = defineStore('backend', () => {
   }
 
   const itemsGetter = (scope: ScopeType) =>
-    computed(() => Array.from(store.value.get(scope).keys()))
+    computed(() =>
+      store.value.has(scope)
+        ? Array.from(store.value.get(scope).keys()).sort((a, b) =>
+            parseInt(a) - parseInt(b) > 0 ? 1 : -1
+          )
+        : []
+    )
 
   function setItems<T extends IWithIdentificator>(scope: string, items: T[]) {
     if (!store.value.has(scope)) {

@@ -23,14 +23,14 @@ const dataGetter = backendStore.itemGetter<{ _id: string; name: string }>(
   <VirtualList
     key="data-virtuallist"
     data-key="data-virtuallist"
-    class="flex flex-col p-10"
+    class="flex flex-col items-center p-10"
     item-class="pb-4"
     :keeps="30"
     :page-mode="true"
     :data-ids="dataIds"
     :data-getter="dataGetter"
     :data-component="DataItem"
-    :estimate-size="93"
+    :estimate-size="50"
   >
     <template #header>
       <div class="flex flex-col text-gray-400 text-xs">

@@ -11,7 +11,7 @@ enum CALC_TYPE {
   FIXED = 'FIXED',
   DYNAMIC = 'DYNAMIC',
 }
-const LEADING_BUFFER = 10
+const LEADING_BUFFER = 2
 
 export interface VirtualRange {
   start: number
@@ -228,7 +228,6 @@ export default class Virtual {
 
     // move up start by a buffer length, and make sure its safety
     const start = Math.max(overs - this.param.buffer, 0)
-
     this.checkRange(start, this.getEndByStart(start))
   }
 
