@@ -26,9 +26,10 @@ export const useBackendStore = defineStore('backend', () => {
   const itemsGetter = (scope: ScopeType) =>
     computed(() => {
       if (store.value.has(scope)) {
-        return Array.from(store.value.get(scope).keys()).sort((a, b) =>
-          parseInt(a) - parseInt(b) > 0 ? 1 : -1
-        )
+        return Array.from(store.value.get(scope).keys())
+        // .sort((a, b) =>
+        //   parseInt(a) - parseInt(b) > 0 ? 1 : -1
+        // )
       }
 
       return []
