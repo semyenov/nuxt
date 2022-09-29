@@ -59,11 +59,14 @@ const dataId = toRef(props, 'dataId')
 
 const item = computed(() => props.dataGetter(dataId.value))
 
-const itemRef = ref<HTMLElement | null>(null)
-const shapeKey = ref<'width' | 'height'>(props.horizontal ? 'width' : 'height')
+const rootRef = ref<HTMLElement | null>(null)
+const horizontal = toRef(props, 'horizontal')
+const shapeKey = computed<'width' | 'height'>(() =>
+  horizontal.value ? 'width' : 'height'
+)
 
-const resizeObserver = useResizeObserver(itemRef, (entries) => {
-  emit('resize', dataId, entries[0].contentRect[shapeKey.value], false)
+const resizeObserver = useResizeObserver(rootRef, (entries) => {
+  emitResize(entries[0].contentRect[shapeKey.value])
 })
 
 onMounted(dispatchSizeChange)
@@ -72,11 +75,15 @@ onActivated(dispatchSizeChange)
 onDeactivated(resizeObserver.stop)
 onUnmounted(resizeObserver.stop)
 
-// tell parent current size identify by unqiue key
 function dispatchSizeChange() {
-  if (itemRef.value) {
-    itemRef.value.dispatchEvent(new Event('resize'))
+  if (rootRef.value) {
+    const entries = rootRef.value.getClientRects()
+    emitResize(entries[0][shapeKey.value], true)
   }
+}
+
+function emitResize(size: number, init = false) {
+  emit('resize', dataId.value, size, init)
 }
 </script>
 
@@ -85,7 +92,7 @@ function dispatchSizeChange() {
     <Component
       :is="props.tag"
       v-if="item"
-      ref="itemRef"
+      ref="rootRef"
       :key="`${props.dataKey}-listitem_tag-${dataId}-${index}`"
       :class="props.itemClass"
       role="listitem"

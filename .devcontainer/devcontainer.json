@@ -1,33 +1,34 @@
 {
-  "name": "Vitesse",
-  "dockerComposeFile": "docker-compose.yml",
-  "service": "app",
-  "workspaceFolder": "/workspace",
-  "forwardPorts": [
-    3000
-  ],
-  "extensions": [
-    "aaron-bond.better-comments",
-    "alefragnani.bookmarks",
-    "antfu.iconify",
-    "antfu.vite",
-    "christian-kohler.npm-intellisense",
-    "coenraads.bracket-pair-colorizer-2",
-    "cpylua.language-postcss",
-    "dbaeumer.vscode-eslint",
-    "eamodio.gitlens",
-    "editorconfig.editorconfig",
-    "esbenp.prettier-vscode",
-    "foxundermoon.shell-format",
-    "howardzuo.vscode-npm-dependency",
-    "lokalise.i18n-ally",
-    "mikestead.dotenv",
-    "ms-vscode.vscode-js-profile-flame",
-    "oderwat.indent-rainbow",
-    "stylelint.vscode-stylelint",
-    "tombonnike.vscode-status-bar-format-toggle",
-    "vue.volar"
-  ],
-  "remoteUser": "node",
-  "onCreateCommand": "yarn"
+	"name": "Vitesse",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspace",
+	"forwardPorts": [
+		3000
+	],
+	"extensions": [
+		"aaron-bond.better-comments",
+		"alefragnani.bookmarks",
+		"antfu.iconify",
+		"antfu.vite",
+		"christian-kohler.npm-intellisense",
+		"coenraads.bracket-pair-colorizer-2",
+		"cpylua.language-postcss",
+		"dbaeumer.vscode-eslint",
+		"eamodio.gitlens",
+		"editorconfig.editorconfig",
+		"esbenp.prettier-vscode",
+		"foxundermoon.shell-format",
+		"howardzuo.vscode-npm-dependency",
+		"lokalise.i18n-ally",
+		"mikestead.dotenv",
+		"ms-vscode.vscode-js-profile-flame",
+		"oderwat.indent-rainbow",
+		"stylelint.vscode-stylelint",
+		"tombonnike.vscode-status-bar-format-toggle",
+		"vue.volar",
+		"antfu.unocss"
+	],
+	"remoteUser": "node",
+	"onCreateCommand": "yarn"
 }

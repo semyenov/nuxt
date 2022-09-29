@@ -131,6 +131,7 @@ const emit = defineEmits([
   'tobottom',
   'deactivated',
 ])
+
 const slots = useSlots()
 
 const rootRef = ref<HTMLElement | null>(null)
@@ -139,10 +140,12 @@ const shepherdRef = ref<HTMLElement | null>(null)
 const direction = toRef(props, 'direction')
 const isHorizontal = computed(() => direction.value === 'horizontal')
 
+const dataIds = toRef(props, 'dataIds')
+
 const wrapperStyle = ref<Record<string, any>>({})
 const vr = ref<[number, number]>([
   Math.max(props.start, 0),
-  Math.min(props.start + props.keeps, props.dataIds.length),
+  Math.min(props.start + props.keeps, dataIds.value.length),
 ])
 
 const v = new Virtual(
@@ -152,14 +155,14 @@ const v = new Virtual(
     keeps: props.keeps,
     estimateSize: props.estimateSize,
     buffer: Math.round(props.keeps / 2),
-    uniqueIds: props.dataIds.slice(),
+    uniqueIds: dataIds.value.slice(),
   },
   onRangeChanged
 )
 
-const directionKey = ref<'scrollLeft' | 'scrollTop'>(
-  isHorizontal.value ? 'scrollLeft' : 'scrollTop'
-)
+const directionKey = computed<'scrollLeft' | 'scrollTop'>(() => {
+  return isHorizontal.value ? 'scrollLeft' : 'scrollTop'
+})
 
 onMounted(() => {
   // in page mode we bind scroll event to document
@@ -172,7 +175,7 @@ onMounted(() => {
   }
 
   // set position
-  onScroll()
+  onScroll(new Event('scroll'))
 })
 
 // set back offset when awake from keep-alive
@@ -201,7 +204,7 @@ onUnmounted(() => {
 })
 
 watch(
-  () => props.dataIds,
+  () => dataIds.value,
   (dataIds) => {
     v.updateParam('uniqueIds', dataIds.slice())
     v.handleDataSourcesChange()
@@ -277,7 +280,7 @@ function scrollToOffset(offset: number) {
 
 // set current scroll position to a expectant index
 function scrollToIndex(index: number) {
-  if (index < props.dataIds.length) {
+  if (index < dataIds.value.length) {
     scrollToOffset(v.getOffset(index))
 
     return
@@ -374,7 +377,7 @@ function emitScrollEvent(
 
   if (
     v.isFront() &&
-    props.dataIds.length > 0 &&
+    dataIds.value.length > 0 &&
     offset - props.topThreshold <= 0
   ) {
     emit('totop')
@@ -430,12 +433,12 @@ function getWrapperStyle(
     >
       <VirtualListItem
         v-for="i in range(...vr).slice()"
-        :key="`${props.dataKey}-list_component-${props.dataIds.at(i)}-${i}`"
+        :key="`${props.dataKey}-list_component-${dataIds.at(i)}-${i}`"
         :index="i"
         :tag="props.itemTag"
         :style="props.itemStyle"
         :horizontal="isHorizontal"
-        :data-id="props.dataIds.at(i)"
+        :data-id="dataIds.at(i)"
         :estimate-size="v.getEstimateSize()"
         :data-key="props.dataKey"
         :data-getter="props.dataGetter"

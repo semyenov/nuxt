@@ -4,6 +4,7 @@ import {
   presetIcons,
   presetTypography,
   presetUno,
+  presetWebFonts,
   transformerDirectives,
   transformerVariantGroup,
 } from 'unocss'
@@ -15,10 +16,31 @@ export default defineConfig({
     presetIcons(),
     presetTypography(),
     presetUno(),
+    presetWebFonts({
+      provider: 'google', // default provider
+      fonts: {
+        // these will extend the default theme
+        sans: 'Roboto',
+        mono: ['Fira Code', 'Fira Mono:400,700'],
+        // custom ones
+        lobster: 'Lobster',
+        lato: [
+          {
+            name: 'Lato',
+            weights: ['400', '700'],
+            italic: true,
+          },
+          {
+            name: 'sans-serif',
+            provider: 'none',
+          },
+        ],
+      },
+    }),
   ],
   shortcuts: {
-    'custom-shortcut':
-      'text-2xl font-bold cursor-pointer text-#41B883 mb-2 hover:text-teal',
+    'test-shortcut':
+      'text-2xl font-bold cursor-pointer text-#41B883 hover:text-teal',
   },
   transformers: [transformerDirectives(), transformerVariantGroup()],
 })

@@ -1,41 +1,51 @@
 <script setup lang="ts">
-const props = defineProps({
-  odd: {
-    type: Boolean,
-    default: false,
-  },
-})
 const slots = useSlots()
 </script>
 
 <template>
   <div
-    class="divide-y border flex flex-col divide-gray-200 bg-opacity-80 border-gray-300 shadow-lg text-left min-w-75 transition-shadow shadow-gray-200 relative dark:divide-gray-700 dark:border-gray-800 dark:shadow-gray-900"
-    :class="props.odd ? 'odd' : 'even'"
+    class="c-card divide-y border flex flex-col divide-gray-200 bg-opacity-80 border-gray-300 shadow-xl text-left min-w-75 shadow-gray-200 relative"
+    un-dark="divide-gray-700 border-gray-600 shadow-gray-900"
   >
     <div
       v-if="slots.header"
-      class="flex flex-row flex-grow bg-green-600 text-base leading-snug py-2 px-4 text-gray-50 gap-4 justify-between items-center dark:border-gray-700 dark:bg-green-600 dark:text-gray-300 font-bold"
+      class="flex flex-row flex-grow bg-green-600 text-base leading-snug py-2 px-4 text-gray-50 gap-1 justify-between items-center font-semibold"
+      un-dark="border-gray-700 bg-green-500 text-gray-800"
     >
       <slot name="header" />
-      <slot name="menu" />
     </div>
     <div
       v-if="slots.panel"
-      class="border-b flex flex-row bg-light-400 border-gray-300 dark:bg-dark-800 py-2 px-4"
+      class="border-b flex flex-row bg-light-400 border-gray-300 py-2 px-4"
+      un-dark="text-gray-300 bg-gray-800"
     >
       <slot name="panel" />
     </div>
     <div
-      class="flex flex-col bg-gray-50 text-sm text-gray-800 dark:text-gray-300 dark:bg-gray-800 -800 items-stretch break-normal py-2 px-4 dark:text-gray-300"
+      v-if="slots.default"
+      class="flex flex-col bg-gray-50 text-xs text-gray-400 items-stretch break-normal px-4 py-2"
+      un-dark="text-gray-300 bg-gray-800"
     >
       <slot name="default" />
     </div>
     <div
       v-if="slots.footer"
-      class="rounded-b-md flex-grow flex flex-row w-full p-4 text-gray-500 gap-4 dark:text-gray-400"
+      class="rounded-b flex-grow flex flex-row w-full text-gray-500 gap-1 py-2 px-4"
+      un-dark="text-gray-400"
     >
       <slot name="footer" />
     </div>
   </div>
 </template>
+
+<style scoped lang="postcss">
+.c-card {
+  @apply rounded;
+}
+.c-card > :first-child {
+  @apply rounded-t;
+}
+.c-card > :last-child {
+  @apply rounded-b;
+}
+</style>

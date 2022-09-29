@@ -27,25 +27,31 @@ const slots = useSlots()
 
 const rootRef = ref<HTMLElement | null>(null)
 
+const dataId = toRef(props, 'dataId')
 const horizontal = toRef(props, 'horizontal')
-const shapeKey = computed((): 'width' | 'height' =>
+const shapeKey = computed<'width' | 'height'>(() =>
   horizontal.value ? 'width' : 'height'
 )
 
 const resizeObserver = useResizeObserver(rootRef, (entries) => {
-  dispatchSizeChange(entries[0].contentRect[shapeKey.value], true)
+  emitResize(entries[0].contentRect[shapeKey.value])
 })
 
-onUnmounted(() => {
-  resizeObserver.stop()
-})
+onMounted(dispatchSizeChange)
+onActivated(dispatchSizeChange)
 
-onDeactivated(() => {
-  resizeObserver.stop()
-})
+onDeactivated(resizeObserver.stop)
+onUnmounted(resizeObserver.stop)
 
-function dispatchSizeChange(size: number, hasInit: boolean) {
-  emit('resize', props.dataId, size, hasInit)
+function dispatchSizeChange() {
+  if (rootRef.value) {
+    const entries = rootRef.value.getClientRects()
+    emitResize(entries[0][shapeKey.value], true)
+  }
+}
+
+function emitResize(size: number, init = false) {
+  emit('resize', dataId.value, size, init)
 }
 </script>
 
