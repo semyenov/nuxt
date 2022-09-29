@@ -11,8 +11,8 @@ enum CALC_TYPE {
   FIXED = 'FIXED',
   DYNAMIC = 'DYNAMIC',
 }
-const LEADING_BUFFER = 2
 
+const LEADING_BUFFER = 5
 export interface VirtualRange {
   start: number
   end: number
@@ -362,7 +362,7 @@ export default class Virtual {
 
   // return total behind offset
   getPadBehind() {
-    const end = this.range.end
+    const end = this.range.end + 1
     const lastIndex = this.getLastIndex()
 
     if (this.isFixedType() && this.fixedSizeValue) {
