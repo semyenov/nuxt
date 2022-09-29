@@ -12,7 +12,6 @@ enum CALC_TYPE {
   DYNAMIC = 'DYNAMIC',
 }
 
-const LEADING_BUFFER = 5
 export interface VirtualRange {
   start: number
   end: number
@@ -29,6 +28,8 @@ export interface VirtualParam {
   uniqueIds: string[]
 }
 
+const LEADING_BUFFER = 0
+
 export default class Virtual {
   public sizes: Map<string, number>
   public firstRangeTotalSize?: number
@@ -37,12 +38,16 @@ export default class Virtual {
   public fixedSizeValue?: number
   public calcType: CALC_TYPE
   public offset: number
-  public direction: DIRECTION_TYPE
+  public direction: DIRECTION_TYPE | ''
   public range: VirtualRange
-  public callUpdate: Function
+  public callUpdate: (range: VirtualRange) => void
   public param: VirtualParam
 
-  constructor(param: VirtualParam, callUpdate: Function) {
+  constructor(param: VirtualParam, callUpdate: (range: VirtualRange) => void) {
+    this.init(param, callUpdate)
+  }
+
+  init(param: VirtualParam, callUpdate: (range: VirtualRange) => void) {
     // param data
     this.param = param
     this.callUpdate = callUpdate
@@ -57,45 +62,30 @@ export default class Virtual {
 
     // scroll data
     this.offset = 0
-    this.direction = DIRECTION_TYPE.FRONT
+    this.direction = ''
 
     // range data
     this.range = Object.create(null)
     if (param) {
       this.checkRange(0, param.keeps - 1)
     }
-  }
-
-  destroy() {
-    this.callUpdate = () => {}
-
-    // size data
-    this.sizes = new Map()
-    this.firstRangeTotalSize = 0
-    this.firstRangeAverageSize = 0
-    this.lastCalcIndex = 0
-    this.fixedSizeValue = 0
-    this.calcType = CALC_TYPE.INIT
-
-    // scroll data
-    this.offset = 0
-    this.direction = DIRECTION_TYPE.FRONT
-
-    // range data
-    this.range = Object.create(null)
 
     // benchmark test data
     // this.__bsearchCalls = 0
     // this.__getIndexOffsetCalls = 0
   }
 
+  destroy() {
+    this.init(null, null)
+  }
+
+  // return current render range
   getRange() {
     const range: VirtualRange = Object.create(null)
     range.start = this.range.start
     range.end = this.range.end
     range.padFront = this.range.padFront
     range.padBehind = this.range.padBehind
-
     return range
   }
 
@@ -118,13 +108,12 @@ export default class Virtual {
     if (this.param && key in this.param) {
       // if uniqueIds change, find out deleted id and remove from size map
       if (key === 'uniqueIds') {
-        this.sizes.forEach((_val, key) => {
+        this.sizes.forEach((v, key) => {
           if (!value.includes(key)) {
             this.sizes.delete(key)
           }
         })
       }
-
       this.param[key] = value
     }
   }
@@ -133,10 +122,9 @@ export default class Virtual {
   saveSize(id: string, size: number) {
     this.sizes.set(id, size)
 
-    // we assume size type is fixed at the beginning and remember
-    // first size value if there is no size value different
-    // from this at next comming saving we think it's a fixed
-    // size list, otherwise is dynamic size list
+    // we assume size type is fixed at the beginning and remember first size value
+    // if there is no size value different from this at next comming saving
+    // we think it's a fixed size list, otherwise is dynamic size list
     if (this.calcType === CALC_TYPE.INIT) {
       this.fixedSizeValue = size
       this.calcType = CALC_TYPE.FIXED
@@ -165,19 +153,15 @@ export default class Virtual {
         this.firstRangeAverageSize = Math.round(
           this.firstRangeTotalSize / this.sizes.size
         )
-
-        return
+      } else {
+        // it's done using
+        delete this.firstRangeTotalSize
       }
-
-      // it's done using
-      delete this.firstRangeTotalSize
     }
   }
 
-  // in some special situation (e.g. length change)
-  // we need to update in a row
-  // try goiong to render next range by a leading buffer
-  // according to current direction
+  // in some special situation (e.g. length change) we need to update in a row
+  // try goiong to render next range by a leading buffer according to current direction
   handleDataSourcesChange() {
     let start = this.range.start
 
@@ -188,6 +172,7 @@ export default class Virtual {
     }
 
     start = Math.max(start, 0)
+
     this.updateRange(this.range.start, this.getEndByStart(start))
   }
 
@@ -197,7 +182,7 @@ export default class Virtual {
   }
 
   // calculating range on scroll
-  handleScroll(offset: number) {
+  handleScroll(offset) {
     this.direction =
       offset < this.offset ? DIRECTION_TYPE.FRONT : DIRECTION_TYPE.BEHIND
     this.offset = offset
@@ -206,22 +191,18 @@ export default class Virtual {
       return
     }
 
-    switch (this.direction) {
-      case DIRECTION_TYPE.FRONT:
-        this.handleFront()
-        break
-
-      case DIRECTION_TYPE.BEHIND:
-        this.handleBehind()
-        break
+    if (this.direction === DIRECTION_TYPE.FRONT) {
+      this.handleFront()
+    } else if (this.direction === DIRECTION_TYPE.BEHIND) {
+      this.handleBehind()
     }
   }
 
   // ----------- public method end -----------
 
   handleFront() {
-    // should not change range if start doesn't exceed overs
     const overs = this.getScrollOvers()
+    // should not change range if start doesn't exceed overs
     if (overs > this.range.start) {
       return
     }
@@ -250,8 +231,9 @@ export default class Virtual {
     }
 
     // if is fixed type, that can be easily
-    if (this.isFixedType() && this.fixedSizeValue)
+    if (this.isFixedType()) {
       return Math.floor(offset / this.fixedSizeValue)
+    }
 
     let low = 0
     let middle = 0
@@ -260,8 +242,6 @@ export default class Virtual {
 
     while (low <= high) {
       // this.__bsearchCalls++
-      // console.log(low, middle, high)
-
       middle = low + Math.floor((high - low) / 2)
       middleOffset = this.getIndexOffset(middle)
 
@@ -277,11 +257,9 @@ export default class Virtual {
     return low > 0 ? --low : 0
   }
 
-  // return a scroll offset from given index,
-  // can efficiency be improved more here?
-  // although the call frequency is very high,
-  // its only a superposition of numbers
-  getIndexOffset(givenIndex: number) {
+  // return a scroll offset from given index, can efficiency be improved more here?
+  // although the call frequency is very high, its only a superposition of numbers
+  getIndexOffset(givenIndex) {
     if (!givenIndex) {
       return 0
     }
@@ -290,11 +268,13 @@ export default class Virtual {
     let indexSize = 0
     for (let index = 0; index < givenIndex; index++) {
       // this.__getIndexOffsetCalls++
-      indexSize =
-        this.sizes.get(this.param.uniqueIds[index]) || this.getEstimateSize()
-      offset = offset + indexSize
+      indexSize = this.sizes.get(this.param.uniqueIds[index])
+      offset =
+        offset +
+        (typeof indexSize === 'number' ? indexSize : this.getEstimateSize())
     }
 
+    // remember last calculate index
     this.lastCalcIndex = Math.max(this.lastCalcIndex, givenIndex - 1)
     this.lastCalcIndex = Math.min(this.lastCalcIndex, this.getLastIndex())
 
@@ -313,7 +293,7 @@ export default class Virtual {
 
   // in some conditions range is broke, we need correct it
   // and then decide whether need update to next range
-  checkRange(start: number, end: number) {
+  checkRange(start, end) {
     const keeps = this.param.keeps
     const total = this.param.uniqueIds.length
 
@@ -332,55 +312,52 @@ export default class Virtual {
   }
 
   // setting to a new range and rerender
-  updateRange(start: number, end: number) {
+  updateRange(start, end) {
     this.range.start = start
     this.range.end = end
     this.range.padFront = this.getPadFront()
     this.range.padBehind = this.getPadBehind()
-
-    if (this.callUpdate) {
-      this.callUpdate(this.getRange())
-    }
+    this.callUpdate(this.getRange())
   }
 
   // return end base on start
-  getEndByStart(start: number) {
+  getEndByStart(start) {
     const theoryEnd = start + this.param.keeps - 1
     const truelyEnd = Math.min(theoryEnd, this.getLastIndex())
-
     return truelyEnd
   }
 
   // return total front offset
   getPadFront() {
     if (this.isFixedType()) {
-      return this.getEstimateSize() * this.range.start
+      return this.fixedSizeValue * this.range.start
+    } else {
+      return this.getIndexOffset(this.range.start)
     }
-
-    return this.getIndexOffset(this.range.start)
   }
 
   // return total behind offset
   getPadBehind() {
-    const end = this.range.end + 1
+    const end = this.range.end
     const lastIndex = this.getLastIndex()
 
-    if (this.isFixedType() && this.fixedSizeValue) {
+    if (this.isFixedType()) {
       return (lastIndex - end) * this.fixedSizeValue
     }
 
     // if it's all calculated, return the exactly offset
     if (this.lastCalcIndex === lastIndex) {
       return this.getIndexOffset(lastIndex) - this.getIndexOffset(end)
+    } else {
+      // if not, use a estimated value
+      return (lastIndex - end) * this.getEstimateSize()
     }
-
-    return (lastIndex - end) * this.getEstimateSize()
   }
 
   // get the item estimate size
   getEstimateSize() {
     return this.isFixedType()
-      ? this.fixedSizeValue || this.param.estimateSize
+      ? this.fixedSizeValue
       : this.firstRangeAverageSize || this.param.estimateSize
   }
 }

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type { MaybeElementRef } from '@vueuse/core'
-import type { DefineComponent, PropType } from 'vue'
+import type { ComputedRef, DefineComponent, PropType } from 'vue'
 
 const props = defineProps({
   index: {
@@ -14,8 +13,10 @@ const props = defineProps({
     type: Boolean,
   },
   getter: {
-    type: Function,
-    default: () => {},
+    type: Function as PropType<
+      (id: string) => ComputedRef<Record<string, any> & { _id: string }>
+    >,
+    required: true,
   },
   component: {
     type: [Object, Function] as PropType<DefineComponent<any, any, any>>,
@@ -54,7 +55,7 @@ const dataId = toRef(props, 'dataId')
 
 const item = props.getter(dataId.value)
 
-const itemRef: MaybeElementRef = ref(null)
+const itemRef = ref<HTMLElement | null>(null)
 const shapeKey = ref<'width' | 'height'>(props.horizontal ? 'width' : 'height')
 
 const resizeObserver = useResizeObserver(itemRef, (entries) => {

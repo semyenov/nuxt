@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { range } from '@antfu/utils'
 
-import type { DefineComponent, PropType } from 'vue'
+import type { ComputedRef, DefineComponent, PropType } from 'vue'
 
 import type { VirtualRange } from '@/composables/virtual'
 import Virtual from '@/composables/virtual'
@@ -13,13 +13,14 @@ const props = defineProps({
     default: () => [],
   },
   dataGetter: {
-    type: Function,
-    default: () => {},
+    type: Function as PropType<
+      (id: string) => ComputedRef<Record<string, any> & { _id: string }>
+    >,
+    required: true,
   },
   dataComponent: {
     type: [Object, Function] as PropType<DefineComponent<any, any, any>>,
-    required: true,
-    default: () => {},
+    required: false,
   },
   dataKey: {
     type: String,
@@ -135,11 +136,13 @@ const slots = useSlots()
 const rootRef = ref<HTMLElement | null>(null)
 const shepherdRef = ref<HTMLElement | null>(null)
 
-const isHorizontal = ref(props.direction === 'horizontal')
+const direction = toRef(props, 'direction')
+const isHorizontal = computed(() => direction.value === 'horizontal')
+
 const wrapperStyle = ref<Record<string, any>>({})
 const vr = ref<[number, number]>([
   Math.max(props.start, 0),
-  Math.min(props.start + props.keeps, props.dataIds.length - 1),
+  Math.min(props.start + props.keeps, props.dataIds.length),
 ])
 
 const v = new Virtual(
@@ -235,7 +238,9 @@ function getOffset() {
     )
   }
 
-  return rootRef.value ? Math.ceil(rootRef.value[directionKey.value]) : 0
+  if (rootRef.value) {
+    return rootRef.value ? Math.ceil(rootRef.value[directionKey.value]) : 0
+  }
 }
 
 // return client viewport size
