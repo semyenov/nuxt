@@ -7,7 +7,7 @@ const props = defineProps({
     default: 0,
   },
   item: {
-    type: Object as PropType<{ _id: string; name: string }>,
+    type: Object as PropType<{ _id: string; name: string; height: string }>,
   },
 })
 
@@ -16,7 +16,12 @@ const item = toRef(props, 'item')
 </script>
 
 <template>
-  <Card v-if="item">
+  <Card
+    v-if="item"
+    :style="{
+      paddingBottom: item.height,
+    }"
+  >
     <template v-if="item.name" #header>
       {{ `# ${item.name}` }}
     </template>

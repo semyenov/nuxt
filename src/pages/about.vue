@@ -13,9 +13,11 @@ const backendStore = useBackendStore()
 await backendStore.getItems('/api/data/items')
 
 const dataIds = backendStore.itemsGetter('data')
-const dataGetter = backendStore.itemGetter<{ _id: string; name: string }>(
-  'data'
-)
+const dataGetter = backendStore.itemGetter<{
+  _id: string
+  name: string
+  height: string
+}>('data')
 </script>
 
 <template>
@@ -26,7 +28,8 @@ const dataGetter = backendStore.itemGetter<{ _id: string; name: string }>(
       class="flex flex-col items-center gap-6"
       :keeps="40"
       :page-mode="true"
-      wrap-class="flex flex-col gap-4"
+      wrap-class="flex flex-col"
+      item-class="mb-4"
       :data-ids="dataIds"
       data-key="data-virtuallist"
       :data-getter="dataGetter"

@@ -70,34 +70,6 @@ export default class Virtual {
     // this.__getIndexOffsetCalls = 0
   }
 
-  init(param: VirtualParam, callUpdate?: (range: VirtualRange) => void) {
-    // param data
-    this.param = param
-    this.callUpdate = callUpdate
-
-    // size data
-    this.sizes = new Map()
-    this.firstRangeTotalSize = 0
-    this.firstRangeAverageSize = 0
-    this.lastCalcIndex = 0
-    this.fixedSizeValue = 0
-    this.calcType = CALC_TYPE.INIT
-
-    // scroll data
-    this.offset = 0
-    this.direction = ''
-
-    // range data
-    this.range = Object.create(null)
-    if (param) {
-      this.checkRange(0, param.keeps - 1)
-    }
-
-    // benchmark test data
-    // this.__bsearchCalls = 0
-    // this.__getIndexOffsetCalls = 0
-  }
-
   destroy() {
     // this.param = null
     this.callUpdate = undefined
