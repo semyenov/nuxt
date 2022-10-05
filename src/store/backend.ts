@@ -1,5 +1,6 @@
 import type { UseFetchOptions } from '#app'
 import type { NitroFetchRequest } from 'nitropack'
+
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
 type ScopeType = 'data' | 'objects'
