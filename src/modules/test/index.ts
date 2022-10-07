@@ -8,8 +8,8 @@ export default defineNuxtModule({
 
     logger.success('Test module loaded')
 
-    nuxt.hooks.hookOnce('nitro:config', (config) => {
-      logger.info('Nitro preset', config.preset)
+    nuxt.hooks.hookOnce('nitro:build:before', (config) => {
+      logger.info('Nitro preset', config.options.preset)
     })
 
     nuxt.hooks.hookOnce('pages:extend', (pages) => {
