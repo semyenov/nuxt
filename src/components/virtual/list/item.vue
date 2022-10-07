@@ -73,8 +73,8 @@ const resizeObserver = useResizeObserver(rootRef, (entries) => {
   }
 })
 
-// onMounted(dispatchSizeChange)
-// onActivated(dispatchSizeChange)
+onMounted(dispatchSizeChange)
+onActivated(dispatchSizeChange)
 
 onDeactivated(resizeObserver.stop)
 onUnmounted(resizeObserver.stop)
@@ -114,6 +114,7 @@ function dispatchSizeChange() {
         :is="props.slotComponent"
         v-else-if="props.slotComponent"
         :key="`${props.dataKey}-listitem_slotcomponent-${dataId}-${index}`"
+        :class="props.itemClass"
       />
     </Component>
     <Component

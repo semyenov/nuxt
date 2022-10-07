@@ -16,20 +16,20 @@ const item = toRef(props, 'item')
 </script>
 
 <template>
-  <Card
-    v-if="item"
-    :style="{
-      paddingBottom: item.height,
-    }"
-  >
+  <Card v-if="item">
     <template v-if="item.name" #header>
       {{ `# ${item.name}` }}
     </template>
     <template #default>
-      {{ item }}
+      <pre>{{ item }}</pre>
     </template>
     <template #footer>
-      {{ item }}
+      <div
+        class="flex flex-col items-center justify-center"
+        :style="{ height: item.height }"
+      >
+        {{ `+${item.height}` }}
+      </div>
     </template>
   </Card>
 </template>
