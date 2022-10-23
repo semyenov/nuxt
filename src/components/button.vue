@@ -9,7 +9,11 @@ const props = defineProps({
   },
   size: {
     type: String as PropType<UnoSize>,
-    default: 'xs',
+    default: 'md',
+  },
+  rounded: {
+    type: String as PropType<UnoSize>,
+    default: 'md',
   },
 })
 
@@ -20,7 +24,7 @@ const attrs = useAttrs()
   <button
     v-bind="attrs"
     class="btn"
-    :class="`btn-${props.color} btn-${props.size}`"
+    :class="`btn-color__${props.color} btn-size__${props.size} btn-rounded__${props.rounded}`"
   >
     <slot />
   </button>

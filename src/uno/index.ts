@@ -76,17 +76,23 @@ export const createShortcuts = () =>
   unoColors.reduce(
     (p, c) => ({
       ...p,
-      [`btn-${c}`]: Object.entries(btn)
+      [`btn-color__${c}`]: Object.entries(btn)
         .map(([s, n]) => `${s}-${c}-${n}`)
         .join(' '),
     }),
     {
       btn: 'flex flex-row items-center justify-center border rounded-md transition-200',
-      'btn-xs': 'gap-1 px-2 py-1 text-xs shadow',
-      'btn-sm': 'gap-1.5 px-2.5 py-1.5 text-sm shadow-md',
-      'btn-md': 'gap-2 px-3 py-2 text-base shadow-lg dark:shadow-opacity-70',
-      'btn-lg':
+      'btn-size__xs': 'gap-1 px-2 py-1 text-xs shadow',
+      'btn-size__sm': 'gap-1.5 px-2.5 py-1.5 text-sm shadow-md',
+      'btn-size__md':
+        'gap-2 px-3 py-2 text-base shadow-lg dark:shadow-opacity-70',
+      'btn-size__lg':
         'gap-2.5 px-3.5 py-2.5 text-lg shadow-xl dark:shadow-opacity-50',
-      'btn-xl': 'gap-3 px-4 py-3 text-xl shadow-2xl',
+      'btn-size__xl': 'gap-3 px-4 py-3 text-xl shadow-2xl',
+      'btn-rounded__xs': 'rounded',
+      'btn-rounded__sm': 'rounded-sm',
+      'btn-rounded__md': 'rounded-md',
+      'btn-rounded__lg': 'rounded-lg',
+      'btn-rounded__xl': 'rounded-xl',
     }
   )
