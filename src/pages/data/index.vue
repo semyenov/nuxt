@@ -19,7 +19,7 @@ const dataGetter = backendStore.itemGetter<{
 
 <template>
   <div
-    class="page-data-index flex flex-col items-center gap-8 p-10 w-full max-w-200"
+    class="page-data-index flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-200"
   >
     <PageTitle>Data Page</PageTitle>
     <VirtualList
@@ -40,7 +40,7 @@ const dataGetter = backendStore.itemGetter<{
           class="flex flex-row flex-wrap items-center gap-1 w-full justify-center"
         >
           <Button
-            color="gray"
+            color="zinc"
             size="sm"
             @click.prevent="backendStore.getItems('/api/data/others')"
           >

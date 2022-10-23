@@ -9,7 +9,7 @@ const { data } = await useFetch('/api/test')
 
 <template>
   <div
-    class="page-index flex flex-col items-center gap-8 p-10 w-full max-w-200"
+    class="page-index flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-200"
   >
     <PageTitle>Index Page</PageTitle>
     <PageProse v-if="data">{{ data.text }}</PageProse>

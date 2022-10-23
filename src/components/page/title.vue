@@ -5,8 +5,8 @@ const mouseStore = useMouseStore()
 
 <template>
   <div
-    class="flex flex-col items-center justify-between border-b border-dashed w-full border-gray-400 rounded-3xl"
-    un-dark="border-gray-700"
+    class="component-page-title flex flex-col items-center justify-between border-b border-dashed w-full border-gray-400 rounded-b-3xl py-10"
+    un-dark="border-gray-600"
   >
     <div
       class="flex flex-row items-center justify-center text-gray-600 text-base font-semibold gap-1 mb-1"
@@ -20,10 +20,7 @@ const mouseStore = useMouseStore()
     </div>
 
     <div class="flex flex-row items-start justify-end gap-2 mb-4 ml-8">
-      <div
-        class="text-6xl font-extrabold text-gray-800"
-        un-dark="text-gray-200"
-      >
+      <div class="text-6xl font-extrabold text-gray-800" un-dark="text-gray-50">
         <slot />
       </div>
       <button
@@ -37,9 +34,7 @@ const mouseStore = useMouseStore()
       {{ now }}
     </div>
 
-    <div
-      class="flex flex-row flex-wrap items-center justify-center gap-3 mb-10"
-    >
+    <div class="flex flex-row flex-wrap items-center justify-center gap-3">
       <NuxtLink
         v-slot="{ isActive, navigate }"
         class="text-xs text-gray-500"
@@ -48,7 +43,7 @@ const mouseStore = useMouseStore()
         custom
       >
         <Button
-          :color="isActive ? 'blue' : 'gray'"
+          :color="isActive ? 'emerald' : 'zinc'"
           size="md"
           rounded="xl"
           @click="navigate"
@@ -67,7 +62,7 @@ const mouseStore = useMouseStore()
         custom
       >
         <Button
-          :color="isActive ? 'blue' : 'gray'"
+          :color="isActive ? 'blue' : 'zinc'"
           size="md"
           rounded="xl"
           @click="navigate"
@@ -86,7 +81,7 @@ const mouseStore = useMouseStore()
         custom
       >
         <Button
-          :color="isActive ? 'blue' : 'gray'"
+          :color="isActive ? 'rose' : 'zinc'"
           size="md"
           rounded="xl"
           @click="navigate"
@@ -100,3 +95,22 @@ const mouseStore = useMouseStore()
     </div>
   </div>
 </template>
+
+<style lang="postcss" scoped>
+/* .component-page-title {
+  background-image: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0) 10rem
+  );
+  box-shadow: 0px 20px 10px -10px rgba(191, 219, 254, 0.4);
+}
+.dark .component-page-title {
+  background-image: linear-gradient(
+    0deg,
+    rgba(8, 10, 48, 0.4) 0%,
+    rgba(0, 0, 0, 0) 10rem
+  );
+  box-shadow: 0px 20px 10px -10px rgba(10, 52, 190, 0.3);
+} */
+</style>

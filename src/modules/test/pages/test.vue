@@ -3,7 +3,9 @@ import { unoColorVariants, unoRoundedVariants, unoSizeVariants } from '@/uno'
 </script>
 
 <template>
-  <div class="page-test flex flex-col items-center gap-8 p-10 w-full max-w-200">
+  <div
+    class="page-test flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-200"
+  >
     <PageTitle>Test Page</PageTitle>
     <PageProse>
       <template v-for="rounded in unoRoundedVariants">

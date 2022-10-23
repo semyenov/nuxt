@@ -19,7 +19,7 @@ const { data } = await useFetch('/api/data/id', {
 <template>
   <div
     v-if="data"
-    class="page-data-id flex flex-col items-center gap-8 p-10 w-full max-w-200"
+    class="page-data-id flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-200"
   >
     <PageTitle>
       {{ `Data #${data._id} Page` }}
