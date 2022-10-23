@@ -4,7 +4,7 @@ const slots = useSlots()
 
 <template>
   <div
-    class="c-card divide-y border flex flex-col divide-blue-500 bg-opacity-80 border-blue-600 shadow-xl text-left min-w-85 shadow-blue-200 shadow-opacity-30 relative rounded-lg"
+    class="c-card divide-y border flex flex-col divide-blue-500 bg-opacity-80 border-blue-600 shadow-xl text-left min-w-75 shadow-blue-200 shadow-opacity-30 relative rounded-lg"
     un-dark="divide-blue-800 border-blue-700 shadow-opacity-20 shadow-blue-900"
   >
     <div
