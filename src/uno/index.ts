@@ -89,8 +89,8 @@ const btn = {
   'dark:hover:shadow': 900,
 }
 
-export const createShortcuts = () =>
-  unoColorVariants.reduce(
+export const createShortcuts = () => {
+  const buttons = unoColorVariants.reduce(
     (p, c) => ({
       ...p,
       [`btn-color__${c}`]: Object.entries(btn)
@@ -114,4 +114,39 @@ export const createShortcuts = () =>
       'btn-rounded__xl': 'rounded-xl',
       'btn-rounded__full': 'rounded-full',
     }
+  ) as Record<string, string>
+
+  const inputs = unoColorVariants.reduce(
+    (p, c) => {
+      const bc = buttons[`btn-color__${c}`]
+      const bcg = buttons[`btn-color__gray`]
+
+      return {
+        ...p,
+        [`input-color__${c}`]: [
+          bcg,
+          ...bc.split(' ').map((i) => `focus:${i}`),
+        ].join(' '),
+      }
+    },
+    {
+      input:
+        'flex flex-row items-center justify-center border rounded-md transition-200 outline-none',
+      'input-size__xs': ' px-3 py-1 text-xs shadow',
+      'input-size__sm': 'px-3.5 py-1.5 text-sm shadow-md',
+      'input-size__md': 'px-4 py-2 text-base shadow-lg dark:shadow-opacity-70',
+      'input-size__lg':
+        'px-4.5 py-2.5 text-lg shadow-xl dark:shadow-opacity-50',
+      'input-size__xl': 'px-5 py-3 text-xl shadow-2xl',
+      'input-rounded__none': 'rounded-none',
+      'input-rounded__xs': 'rounded-sm',
+      'input-rounded__sm': 'rounded',
+      'input-rounded__md': 'rounded-md',
+      'input-rounded__lg': 'rounded-lg',
+      'input-rounded__xl': 'rounded-xl',
+      'input-rounded__full': 'rounded-full',
+    }
   )
+
+  return { ...buttons, ...inputs }
+}

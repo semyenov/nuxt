@@ -4,6 +4,7 @@ import {
   presetIcons,
   presetTypography,
   presetUno,
+  presetWebFonts,
   transformerDirectives,
   transformerVariantGroup,
 } from 'unocss'
@@ -31,6 +32,12 @@ export default defineConfig({
   presets: [
     presetAttributify(),
     presetIcons(),
+    presetWebFonts({
+      provider: 'google',
+      fonts: {
+        lato: 'Lato',
+      },
+    }),
     presetTypography(),
     presetUno(),
   ],

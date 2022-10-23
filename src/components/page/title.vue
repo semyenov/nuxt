@@ -92,6 +92,7 @@ const mouseStore = useMouseStore()
           >
         </Button>
       </NuxtLink>
+      <!-- <input class="input input-size__md input-color__blue" type="text" /> -->
     </div>
   </div>
 </template>
