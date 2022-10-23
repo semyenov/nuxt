@@ -6,7 +6,7 @@ const mouseStore = useMouseStore()
 <template>
   <div
     class="flex flex-col items-center justify-between border-b border-dashed w-full border-gray-400"
-    un-dark="border-gray-600"
+    un-dark="border-gray-700"
   >
     <div
       class="flex items-center justify-center text-gray-600 text-sm"

@@ -43,15 +43,18 @@ const dataGetter = backendStore.itemGetter<{
       </template> -->
       <template #footer>
         <div
-          class="flex flex-row flex-wrap items-center gap-1 w-full justify-between"
+          class="flex flex-row flex-wrap items-center gap-1 w-full justify-center"
         >
-          <Button @click.prevent="backendStore.getItems('/api/data/others')">
+          <Button
+            color="blue"
+            @click.prevent="backendStore.getItems('/api/data/others')"
+          >
             <i class="i-carbon:download inline-block" />
-            <span>MORE</span>
+            <span>MORE &Cross; {{ dataIds.length }}</span>
           </Button>
-          <span class="text-gray-400 font-medium" un-dark="text-gray-500">{{
+          <!-- <span class="text-gray-400 font-medium" un-dark="text-gray-500">{{
             dataIds.length
-          }}</span>
+          }}</span> -->
         </div>
       </template>
     </VirtualList>
