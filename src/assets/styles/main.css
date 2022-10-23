@@ -6,6 +6,14 @@ body,
   height: 100%;
 }
 
+/* #__nuxt {
+  background: linear-gradient(to bottom, #ddd 0, #fff 10rem);
+}
+
+.dark #__nuxt {
+  background: linear-gradient(to bottom, #222 0, #111 10rem);
+} */
+
 .page-enter-active,
 .page-leave-active {
   transition: all cubic-bezier(0.23, 1, 0.32, 1) 0.5s;

@@ -20,15 +20,15 @@ const item = toRef(props, 'item')
   <Card v-if="item">
     <template v-if="item.name" #header>
       <NuxtLink :to="`/data/${item._id}`" class="w-full">
-        {{ `# ${item.name}` }}
+        <div class="p-4">{{ `# ${item.name}` }}</div>
       </NuxtLink>
     </template>
     <template #default>
-      <pre>{{ item }}</pre>
+      <pre class="p-4">{{ item }}</pre>
     </template>
     <template #footer>
       <div
-        class="flex flex-col items-center justify-center"
+        class="flex flex-col items-center justify-center py-2 px-4"
         :style="{ height: item.height }"
       >
         {{ `+${item.height}` }}

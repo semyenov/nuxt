@@ -1,18 +1,22 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import type { UnoColor, UnoSize } from '@/uno'
+import type {
+  UnoColorVariants,
+  UnoRoundedVariants,
+  UnoSizeVariants,
+} from '@/uno'
 
 const props = defineProps({
   color: {
-    type: String as PropType<UnoColor>,
+    type: String as PropType<UnoColorVariants>,
     default: 'gray',
   },
   size: {
-    type: String as PropType<UnoSize>,
+    type: String as PropType<UnoSizeVariants>,
     default: 'md',
   },
   rounded: {
-    type: String as PropType<UnoSize>,
+    type: String as PropType<UnoRoundedVariants>,
     default: 'md',
   },
 })

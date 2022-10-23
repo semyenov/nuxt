@@ -1,8 +1,16 @@
 // const colors =
 //   uno.theme && uno.theme.colors ? Object.keys(uno.theme.colors) : []
 
-export type UnoSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-export type UnoColor =
+export type UnoSizeVariants = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+export type UnoRoundedVariants =
+  | 'none'
+  | 'xs'
+  | 'sm'
+  | 'md'
+  | 'lg'
+  | 'xl'
+  | 'full'
+export type UnoColorVariants =
   | 'rose'
   | 'pink'
   | 'fuchsia'
@@ -26,7 +34,7 @@ export type UnoColor =
   | 'neutral'
   | 'stone'
 
-export const unoColors: UnoColor[] = [
+export const unoColorVariants: UnoColorVariants[] = [
   'rose',
   'pink',
   'fuchsia',
@@ -51,7 +59,16 @@ export const unoColors: UnoColor[] = [
   'stone',
 ]
 
-export const unoSizes: UnoSize[] = ['xs', 'sm', 'md', 'lg', 'xl']
+export const unoSizeVariants: UnoSizeVariants[] = ['xs', 'sm', 'md', 'lg', 'xl']
+export const unoRoundedVariants: UnoRoundedVariants[] = [
+  'none',
+  'xs',
+  'sm',
+  'md',
+  'lg',
+  'xl',
+  'full',
+]
 
 const btn = {
   bg: 50,
@@ -73,7 +90,7 @@ const btn = {
 }
 
 export const createShortcuts = () =>
-  unoColors.reduce(
+  unoColorVariants.reduce(
     (p, c) => ({
       ...p,
       [`btn-color__${c}`]: Object.entries(btn)
@@ -89,10 +106,12 @@ export const createShortcuts = () =>
       'btn-size__lg':
         'gap-2.5 px-3.5 py-2.5 text-lg shadow-xl dark:shadow-opacity-50',
       'btn-size__xl': 'gap-3 px-4 py-3 text-xl shadow-2xl',
-      'btn-rounded__xs': 'rounded',
-      'btn-rounded__sm': 'rounded-sm',
+      'btn-rounded__none': 'rounded-none',
+      'btn-rounded__xs': 'rounded-sm',
+      'btn-rounded__sm': 'rounded',
       'btn-rounded__md': 'rounded-md',
       'btn-rounded__lg': 'rounded-lg',
       'btn-rounded__xl': 'rounded-xl',
+      'btn-rounded__full': 'rounded-full',
     }
   )
