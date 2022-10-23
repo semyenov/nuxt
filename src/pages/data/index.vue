@@ -35,26 +35,18 @@ const dataGetter = backendStore.itemGetter<{
       :data-component="DataItem"
       :estimate-size="90"
     >
-      <!-- <template #header>
-        <NuxtLink class="text-sm text-gray-500" un-dark="text-gray-300" to="/">
-          <i class="i-carbon:arrow-left inline-block relative top-0.5 mr-1" />
-          <span>Index Page</span>
-        </NuxtLink>
-      </template> -->
       <template #footer>
         <div
           class="flex flex-row flex-wrap items-center gap-1 w-full justify-center"
         >
           <Button
             color="gray"
+            size="sm"
             @click.prevent="backendStore.getItems('/api/data/others')"
           >
             <i class="i-carbon:download inline-block" />
             <span>MORE</span>
           </Button>
-          <!-- <span class="text-gray-400 font-medium" un-dark="text-gray-500">{{
-            dataIds.length
-          }}</span> -->
         </div>
       </template>
     </VirtualList>

@@ -5,10 +5,6 @@ import { unoColors, unoSizes } from '@/uno'
 <template>
   <div class="page-test flex flex-col items-center gap-8 p-10 w-full max-w-200">
     <PageTitle>Test Page</PageTitle>
-    <!-- <NuxtLink class="text-sm text-gray-500" un-dark="text-gray-300" to="/">
-      <i class="i-carbon:arrow-left inline-block relative top-0.5 mr-1" />
-      <span>Index Page</span>
-    </NuxtLink> -->
     <PageProse>
       <div
         v-for="(size, index) in unoSizes"
