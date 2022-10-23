@@ -1,36 +1,14 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
+import type { UnoColor, UnoSize } from '@/uno'
 
 const props = defineProps({
   color: {
-    type: String as PropType<
-      | 'rose'
-      | 'pink'
-      | 'fuchsia'
-      | 'purple'
-      | 'violet'
-      | 'indigo'
-      | 'blue'
-      | 'sky'
-      | 'cyan'
-      | 'teal'
-      | 'emerald'
-      | 'green'
-      | 'lime'
-      | 'yellow'
-      | 'amber'
-      | 'orange'
-      | 'red'
-      | 'gray'
-      | 'slate'
-      | 'zinc'
-      | 'neutral'
-      | 'stone'
-    >,
+    type: String as PropType<UnoColor>,
     default: 'gray',
   },
   size: {
-    type: String as PropType<'xs' | 'sm' | 'base' | 'lg' | 'xl'>,
+    type: String as PropType<UnoSize>,
     default: 'xs',
   },
 })

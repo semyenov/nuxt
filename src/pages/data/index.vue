@@ -47,7 +47,7 @@ const dataGetter = backendStore.itemGetter<{
             <i class="i-carbon:download inline-block" />
             <span>MORE</span>
           </Button>
-          <span class="text-gray-300 font-medium" un-dark="text-gray-600">{{
+          <span class="text-gray-400 font-medium" un-dark="text-gray-500">{{
             dataIds.length
           }}</span>
         </div>

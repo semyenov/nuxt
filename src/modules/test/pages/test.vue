@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import { unoColors, unoSizes } from '@/uno'
+</script>
+
 <template>
   <div class="flex flex-col items-center gap-6 p-10">
     <PageTitle>Test Page</PageTitle>
@@ -7,36 +11,13 @@
     </NuxtLink>
     <PageProse>
       <div
-        v-for="(size, index) in ['xs', 'sm', 'base', 'lg', 'xl']"
+        v-for="(size, index) in unoSizes"
         :key="`btn-${size}`"
         class="flex flex-row items-center justify-center flex-wrap mb-8"
-        :class="`gap-${index + 2}`"
+        :class="`gap-${(index + 4) * 0.5}`"
       >
         <Button
-          v-for="color in [
-            'rose',
-            'pink',
-            'fuchsia',
-            'purple',
-            'violet',
-            'indigo',
-            'blue',
-            'sky',
-            'cyan',
-            'teal',
-            'emerald',
-            'green',
-            'lime',
-            'yellow',
-            'amber',
-            'orange',
-            'red',
-            'gray',
-            'slate',
-            'zinc',
-            'neutral',
-            'stone',
-          ]"
+          v-for="color in unoColors"
           :key="`btn-${color}`"
           :size="size"
           :color="color"

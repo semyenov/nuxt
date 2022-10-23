@@ -4,8 +4,8 @@ const slots = useSlots()
 
 <template>
   <div
-    class="c-card divide-y border flex flex-col divide-gray-200 bg-opacity-80 border-gray-300 shadow-xl text-left min-w-75 shadow-gray-200 relative rounded"
-    un-dark="divide-gray-700 border-gray-600 shadow-gray-900"
+    class="c-card divide-y border flex flex-col divide-gray-200 bg-opacity-80 border-gray-300 shadow-xl text-left min-w-75 shadow-green-200 shadow-opacity-30 relative rounded"
+    un-dark="divide-gray-700 border-gray-600 shadow-opacity-20 shadow-green-900"
   >
     <div
       v-if="slots.header"

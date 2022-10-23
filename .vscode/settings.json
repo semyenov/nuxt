@@ -9,7 +9,12 @@
   "volar.completion.preferredTagNameCase": "pascal",
   "volar.completion.preferredAttrNameCase": "kebab",
   "volar.preview.port": 3000,
-  "volar.vueserver.useSecondServer": true,
+  "editor.wrappingStrategy": "simple",
+  "editor.wordWrap": "bounded",
+  "editor.wordWrapColumn": 80,
+  "volar.autoWrapParentheses": true,
+  "volar.takeOverMode.enabled": "auto",
+  "volar.vueserver.petiteVue.processHtmlFile": true,
   "stylelint.validate": [
     "css",
     "less",
