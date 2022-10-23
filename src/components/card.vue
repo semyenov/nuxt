@@ -23,15 +23,15 @@ const slots = useSlots()
     </div>
     <div
       v-if="slots.default"
-      class="flex flex-col bg-gray-50 text-sm text-gray-700 items-stretch break-normal last-rounded-b-lg first-rounded-t-lg"
-      un-dark="text-gray-200 bg-gray-800 bg-opacity-50"
+      class="flex flex-col text-sm text-gray-700 items-stretch break-normal last-rounded-b-lg first-rounded-t-lg"
+      un-dark="text-gray-200"
     >
       <slot name="default" />
     </div>
     <div
       v-if="slots.footer"
-      class="flex-grow flex flex-row w-full text-sm text-gray-500 gap-1 last-rounded-b-lg first-rounded-t-lg"
-      un-dark="text-gray-300"
+      class="flex-grow bg-gray-50 flex flex-row w-full text-sm text-gray-500 gap-1 last-rounded-b-lg first-rounded-t-lg"
+      un-dark="text-gray-300 bg-gray-800 bg-opacity-50"
     >
       <slot name="footer" />
     </div>

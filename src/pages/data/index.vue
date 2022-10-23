@@ -41,11 +41,11 @@ const dataGetter = backendStore.itemGetter<{
         >
           <Button
             color="zinc"
-            size="sm"
+            size="md"
+            rounded="full"
             @click.prevent="backendStore.getItems('/api/data/others')"
           >
-            <i class="i-carbon:download inline-block" />
-            <span>MORE</span>
+            <i class="i-carbon:download inline-block h-6" />
           </Button>
         </div>
       </template>

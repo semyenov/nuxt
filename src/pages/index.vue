@@ -19,16 +19,8 @@ const { data } = await useFetch('/api/test')
       />
       <i class="i-mdi:alarm text-orange-400" un-hover="text-blue-400" />
       <i class="i-logos:vue text-6xl" />
-      <NuxtLink
-        to="/test"
-        class="i-ph:anchor-simple text-gray-600"
-        un-dark="text-gray-400"
-      />
-      <NuxtLink
-        to="/test"
-        class="i-ph:airplane-duotone text-blue-600"
-        un-dark="text-blue-500"
-      />
+      <i class="i-ph:anchor-simple text-gray-600" un-dark="text-gray-400" />
+      <i class="i-ph:airplane-duotone text-blue-600" un-dark="text-blue-500" />
     </div>
   </div>
 </template>
