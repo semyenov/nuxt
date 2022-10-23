@@ -10,7 +10,7 @@ const slots = useSlots()
     <div
       v-if="slots.header"
       class="flex flex-row flex-grow bg-blue-700 text-base leading-snug py-3 px-4 text-gray-50 gap-1 justify-between items-center font-bold last-rounded-b-lg first-rounded-t-lg"
-      un-dark="border-blue-500 bg-blue-600 text-gray-900"
+      un-dark="border-blue-500 bg-blue-700 text-gray-200"
     >
       <slot name="header" />
     </div>

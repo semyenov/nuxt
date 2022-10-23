@@ -9,13 +9,17 @@ const mouseStore = useMouseStore()
     un-dark="border-gray-700"
   >
     <div
-      class="flex items-center justify-center text-gray-600 text-sm font-semibold mb-2"
+      class="flex flex-row items-center justify-center text-gray-600 text-sm font-semibold gap-1 mb-2"
       un-dark="text-gray-400"
     >
-      {{ mouseStore.x }}:{{ mouseStore.y }}
+      {{ mouseStore.x }}
+      <span class="text-xs text-gray-400" un-dark="text-gray-600">
+        &Cross;
+      </span>
+      {{ mouseStore.y }}
     </div>
 
-    <div class="flex flex-row items-start gap-2 mb-6">
+    <div class="flex flex-row items-start gap-2 mb-4">
       <div
         class="text-6xl font-extrabold text-gray-800"
         un-dark="text-gray-200"
@@ -29,7 +33,7 @@ const mouseStore = useMouseStore()
       />
     </div>
 
-    <div class="flex mb-4 text-gray-400" un-dark="text-gray-600">
+    <div class="flex mb-6 text-gray-400" un-dark="text-gray-600">
       {{ now }}
     </div>
 

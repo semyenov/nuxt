@@ -46,11 +46,11 @@ const dataGetter = backendStore.itemGetter<{
           class="flex flex-row flex-wrap items-center gap-1 w-full justify-center"
         >
           <Button
-            color="blue"
+            color="gray"
             @click.prevent="backendStore.getItems('/api/data/others')"
           >
             <i class="i-carbon:download inline-block" />
-            <span>MORE &Cross; {{ dataIds.length }}</span>
+            <span>MORE ({{ dataIds.length }})</span>
           </Button>
           <!-- <span class="text-gray-400 font-medium" un-dark="text-gray-500">{{
             dataIds.length
