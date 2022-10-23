@@ -9,7 +9,7 @@ const mouseStore = useMouseStore()
     un-dark="border-gray-700"
   >
     <div
-      class="flex items-center justify-center text-gray-600 text-sm"
+      class="flex items-center justify-center text-gray-600 text-sm font-semibold mb-2"
       un-dark="text-gray-400"
     >
       {{ mouseStore.x }}:{{ mouseStore.y }}
