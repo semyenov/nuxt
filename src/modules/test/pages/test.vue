@@ -5,6 +5,46 @@
       <i class="i-carbon:arrow-left inline-block relative top-0.5 mr-1" />
       <span>Index Page</span>
     </NuxtLink>
-    <PageProse>Test page added by test module</PageProse>
+    <PageProse>
+      <div
+        v-for="(size, index) in ['xs', 'sm', 'base', 'lg', 'xl']"
+        :key="`btn-${size}`"
+        class="flex flex-row items-center justify-center flex-wrap mb-8"
+        :class="`gap-${index + 2}`"
+      >
+        <Button
+          v-for="color in [
+            'rose',
+            'pink',
+            'fuchsia',
+            'purple',
+            'violet',
+            'indigo',
+            'blue',
+            'sky',
+            'cyan',
+            'teal',
+            'emerald',
+            'green',
+            'lime',
+            'yellow',
+            'amber',
+            'orange',
+            'red',
+            'gray',
+            'slate',
+            'zinc',
+            'neutral',
+            'stone',
+          ]"
+          :key="`btn-${color}`"
+          :size="size"
+          :color="color"
+        >
+          <i class="i-carbon:download inline-block" />
+          <span>{{ `${size.toUpperCase()}-${color.toUpperCase()}` }}</span>
+        </Button>
+      </div>
+    </PageProse>
   </div>
 </template>

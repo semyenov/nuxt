@@ -8,6 +8,7 @@ const props = defineProps({
   },
   item: {
     type: Object as PropType<{ _id: string; name: string; height: string }>,
+    required: true,
   },
 })
 

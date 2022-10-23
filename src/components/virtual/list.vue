@@ -418,10 +418,10 @@ function getWrapperStyle(
   >
     <VirtualListSlot
       :key="`${props.dataKey}-list_header`"
-      data-id="thead"
       :tag="props.headerTag"
       :class="props.headerClass"
       :style="props.headerStyle"
+      data-id="thead"
       @resize="onSlotResized"
     >
       <slot name="header" />
@@ -459,10 +459,10 @@ function getWrapperStyle(
 
     <VirtualListSlot
       :key="`${props.dataKey}-list_footer`"
-      data-id="tfoot"
       :class="props.footerClass"
       :style="props.footerStyle"
       :tag="props.footerTag"
+      data-id="tfoot"
       @resize="onSlotResized"
     >
       <slot name="footer" />

@@ -40,7 +40,9 @@ const dataGetter = backendStore.itemGetter<{
         </NuxtLink>
       </template>
       <template #footer>
-        <div class="flex flex-row items-center w-full justify-between">
+        <div
+          class="flex flex-row flex-wrap items-center gap-1 w-full justify-between"
+        >
           <Button @click.prevent="backendStore.getItems('/api/data/others')">
             <i class="i-carbon:download inline-block" />
             <span>MORE</span>
