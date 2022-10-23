@@ -18,7 +18,9 @@ const dataGetter = backendStore.itemGetter<{
 </script>
 
 <template>
-  <div class="flex flex-col items-center p-10 gap-6">
+  <div
+    class="page-data-index flex flex-col items-center gap-8 p-10 w-full max-w-200"
+  >
     <PageTitle>Data Page</PageTitle>
     <VirtualList
       key="data-virtuallist"
@@ -33,12 +35,12 @@ const dataGetter = backendStore.itemGetter<{
       :data-component="DataItem"
       :estimate-size="90"
     >
-      <template #header>
-        <NuxtLink class="text-xs text-gray-500" un-dark="text-gray-300" to="/">
+      <!-- <template #header>
+        <NuxtLink class="text-sm text-gray-500" un-dark="text-gray-300" to="/">
           <i class="i-carbon:arrow-left inline-block relative top-0.5 mr-1" />
           <span>Index Page</span>
         </NuxtLink>
-      </template>
+      </template> -->
       <template #footer>
         <div
           class="flex flex-row flex-wrap items-center gap-1 w-full justify-between"

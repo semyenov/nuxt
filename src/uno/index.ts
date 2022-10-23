@@ -56,19 +56,19 @@ export const unoSizes: UnoSize[] = ['xs', 'sm', 'base', 'lg', 'xl']
 const btn = {
   bg: 50,
   text: 600,
-  border: 300,
+  border: 400,
   shadow: 200,
   'hover:text': 700,
   'hover:bg': 100,
-  'hover:border': 400,
+  'hover:border': 500,
   'hover:shadow': 100,
   'dark:bg': 900,
   'dark:text': 200,
-  'dark:border': 700,
+  'dark:border': 600,
   'dark:shadow': 800,
   'dark:hover:text': 100,
   'dark:hover:bg': 800,
-  'dark:hover:border': 600,
+  'dark:hover:border': 500,
   'dark:hover:shadow': 900,
 }
 
@@ -84,7 +84,7 @@ export const createShortcuts = () =>
       btn: 'flex flex-row items-center justify-center border rounded-md transition-200',
       'btn-xs': 'gap-1 px-2 py-1 text-xs shadow',
       'btn-sm': 'gap-1.5 px-2.5 py-1.5 text-sm shadow-md',
-      'btn-base': 'gap-2 px-3 py-2 text-base shadow-lg',
+      'btn-base': 'gap-2 px-3 py-2 text-base shadow-lg dark:shadow-opacity-70',
       'btn-lg':
         'gap-2.5 px-3.5 py-2.5 text-lg shadow-xl dark:shadow-opacity-50',
       'btn-xl': 'gap-3 px-4 py-3 text-xl shadow-2xl',

@@ -3,12 +3,12 @@ import { unoColors, unoSizes } from '@/uno'
 </script>
 
 <template>
-  <div class="flex flex-col items-center gap-6 p-10">
+  <div class="page-test flex flex-col items-center gap-8 p-10 w-full max-w-200">
     <PageTitle>Test Page</PageTitle>
-    <NuxtLink class="text-xs text-gray-500" un-dark="text-gray-300" to="/">
+    <!-- <NuxtLink class="text-sm text-gray-500" un-dark="text-gray-300" to="/">
       <i class="i-carbon:arrow-left inline-block relative top-0.5 mr-1" />
       <span>Index Page</span>
-    </NuxtLink>
+    </NuxtLink> -->
     <PageProse>
       <div
         v-for="(size, index) in unoSizes"
