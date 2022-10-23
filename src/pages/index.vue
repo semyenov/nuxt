@@ -30,8 +30,8 @@ const { data } = await useFetch('/api/test')
       />
       <NuxtLink
         to="/test"
-        class="i-ph:airplane-duotone text-gray-400"
-        un-dark="text-gray-500"
+        class="i-ph:airplane-duotone text-blue-600"
+        un-dark="text-blue-500"
       />
     </div>
   </div>
