@@ -1,7 +1,7 @@
 // const colors =
 //   uno.theme && uno.theme.colors ? Object.keys(uno.theme.colors) : []
 
-export type UnoSize = 'xs' | 'sm' | 'base' | 'lg' | 'xl'
+export type UnoSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 export type UnoColor =
   | 'rose'
   | 'pink'
@@ -51,7 +51,7 @@ export const unoColors: UnoColor[] = [
   'stone',
 ]
 
-export const unoSizes: UnoSize[] = ['xs', 'sm', 'base', 'lg', 'xl']
+export const unoSizes: UnoSize[] = ['xs', 'sm', 'md', 'lg', 'xl']
 
 const btn = {
   bg: 50,
@@ -84,7 +84,7 @@ export const createShortcuts = () =>
       btn: 'flex flex-row items-center justify-center border rounded-md transition-200',
       'btn-xs': 'gap-1 px-2 py-1 text-xs shadow',
       'btn-sm': 'gap-1.5 px-2.5 py-1.5 text-sm shadow-md',
-      'btn-base': 'gap-2 px-3 py-2 text-base shadow-lg dark:shadow-opacity-70',
+      'btn-md': 'gap-2 px-3 py-2 text-base shadow-lg dark:shadow-opacity-70',
       'btn-lg':
         'gap-2.5 px-3.5 py-2.5 text-lg shadow-xl dark:shadow-opacity-50',
       'btn-xl': 'gap-3 px-4 py-3 text-xl shadow-2xl',

@@ -19,7 +19,7 @@ const mouseStore = useMouseStore()
       {{ mouseStore.y }}
     </div>
 
-    <div class="flex flex-row items-start gap-2 mb-4">
+    <div class="flex flex-row items-start justify-end gap-2 mb-4 ml-6">
       <div
         class="text-6xl font-extrabold text-gray-800"
         un-dark="text-gray-200"
@@ -27,7 +27,7 @@ const mouseStore = useMouseStore()
         <slot />
       </div>
       <button
-        class="i-carbon:sun dark:i-carbon:moon text-xl text-gray-500"
+        class="i-carbon:sun dark:i-carbon:moon text-2xl text-gray-500 min-w-6"
         un-dark="text-gray-400"
         @click="toggleDark()"
       />

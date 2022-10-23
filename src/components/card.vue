@@ -4,12 +4,12 @@ const slots = useSlots()
 
 <template>
   <div
-    class="c-card divide-y border flex flex-col divide-blue-500 bg-opacity-80 border-blue-600 shadow-xl text-left min-w-75 shadow-blue-400 shadow-opacity-30 relative rounded-lg"
+    class="component-card divide-y border flex flex-col divide-blue-500 bg-opacity-80 border-blue-600 shadow-xl text-left min-w-55 w-full shadow-blue-400 shadow-opacity-30 relative rounded-lg"
     un-dark="divide-blue-800 border-blue-700 shadow-opacity-30 shadow-blue-800"
   >
     <div
       v-if="slots.header"
-      class="flex flex-row flex-grow bg-blue-700 text-base leading-snug py-3 px-4 text-gray-50 gap-1 justify-between items-center font-bold last-rounded-b-lg first-rounded-t-lg"
+      class="flex flex-row flex-grow bg-blue-700 text-base leading-snug py-4 px-4 text-gray-50 gap-1 justify-between items-center font-bold last-rounded-b-lg first-rounded-t-lg"
       un-dark="border-blue-500 bg-blue-700 text-gray-200"
     >
       <slot name="header" />
@@ -23,7 +23,7 @@ const slots = useSlots()
     </div>
     <div
       v-if="slots.default"
-      class="flex flex-col bg-gray-100 text-xs text-gray-700 items-stretch break-normal px-4 py-2 last-rounded-b-lg first-rounded-t-lg"
+      class="flex flex-col bg-gray-100 text-xs text-gray-700 items-stretch break-normal p-4 last-rounded-b-lg first-rounded-t-lg"
       un-dark="text-gray-200 bg-gray-800"
     >
       <slot name="default" />
