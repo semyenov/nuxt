@@ -33,17 +33,6 @@ export default defineNuxtConfig({
           href: '/favicon.svg',
         },
       ],
-      style: [
-        {
-          type: 'text/css',
-          children: ':root { color: red }',
-        },
-      ],
-      // script: [
-      //   {
-      //     src: 'http://192.168.1.45:8098',
-      //   },
-      // ],
     },
   },
 

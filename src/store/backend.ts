@@ -1,4 +1,5 @@
 import type { UseFetchOptions } from '#app'
+import { isClient } from '@vueuse/core'
 import type { NitroFetchRequest } from 'nitropack'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
@@ -30,9 +31,6 @@ export const useBackendStore = defineStore('backend', () => {
     computed(() => {
       if (store.value.has(scope)) {
         return Array.from(store.value.get(scope)!.keys())
-        // .sort((a, b) =>
-        //   parseInt(a) - parseInt(b) > 0 ? 1 : -1
-        // )
       }
 
       return []
@@ -65,7 +63,7 @@ export const useBackendStore = defineStore('backend', () => {
 
     const res = await useFetch<T[]>(request, {
       key: `${scope}-${command.join('.')}`,
-      baseURL: appConfig.apiUri,
+      baseURL: !isClient ? appConfig.apiUri : `/`,
       headers: [['Authorization', `Bearer ${authorization.value}`]],
       method: 'get',
       ...opts,

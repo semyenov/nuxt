@@ -11,14 +11,16 @@ const props = defineProps({
   },
 })
 
-const index = toRef(props, 'index')
+// const index = toRef(props, 'index')
 const item = toRef(props, 'item')
 </script>
 
 <template>
   <Card v-if="item">
     <template v-if="item.name" #header>
-      {{ `# ${item.name}` }}
+      <NuxtLink :to="`/data/${item._id}`" class="w-full">
+        {{ `# ${item.name}` }}
+      </NuxtLink>
     </template>
     <template #default>
       <pre>{{ item }}</pre>
