@@ -50,7 +50,7 @@ const dataGetter = backendStore.itemGetter<{
             @click.prevent="backendStore.getItems('/api/data/others')"
           >
             <i class="i-carbon:download inline-block" />
-            <span>MORE ({{ dataIds.length }})</span>
+            <span>MORE</span>
           </Button>
           <!-- <span class="text-gray-400 font-medium" un-dark="text-gray-500">{{
             dataIds.length
