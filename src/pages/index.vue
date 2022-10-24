@@ -4,7 +4,12 @@ definePageMeta({
   title: 'Page Title',
 })
 
-const { data } = await useFetch('/api/test')
+const { data } = await useFetch('/api/test', {
+  method: 'get',
+  query: {
+    name: 'Alexander',
+  },
+})
 </script>
 
 <template>
