@@ -31,7 +31,7 @@ const mouseStore = useMouseStore()
     </div>
 
     <div class="flex mb-6 text-gray-400" un-dark="text-gray-600">
-      {{ now }}
+      {{ now.toDateString() }}
     </div>
 
     <div class="flex flex-row flex-wrap items-center justify-center gap-3">
