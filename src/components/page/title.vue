@@ -35,13 +35,7 @@ const mouseStore = useMouseStore()
     </div>
 
     <div class="flex flex-row flex-wrap items-center justify-center gap-3">
-      <NuxtLink
-        v-slot="{ isActive, navigate }"
-        class="text-xs text-gray-500"
-        un-dark="text-gray-300"
-        to="/"
-        custom
-      >
+      <NuxtLink v-slot="{ isActive, navigate }" to="/" custom>
         <Button
           :color="isActive ? 'emerald' : 'zinc'"
           size="md"
@@ -54,13 +48,7 @@ const mouseStore = useMouseStore()
           >
         </Button>
       </NuxtLink>
-      <NuxtLink
-        v-slot="{ isActive, navigate }"
-        class="text-xs text-gray-500"
-        un-dark="text-gray-300"
-        to="/data"
-        custom
-      >
+      <NuxtLink v-slot="{ isActive, navigate }" to="/data" custom>
         <Button
           :color="isActive ? 'blue' : 'zinc'"
           size="md"
@@ -73,13 +61,7 @@ const mouseStore = useMouseStore()
           >
         </Button>
       </NuxtLink>
-      <NuxtLink
-        v-slot="{ isActive, navigate }"
-        class="text-xs text-gray-500"
-        un-dark="text-gray-300"
-        to="/test"
-        custom
-      >
+      <NuxtLink v-slot="{ isActive, navigate }" to="/test" custom>
         <Button
           :color="isActive ? 'rose' : 'zinc'"
           size="md"
@@ -92,7 +74,6 @@ const mouseStore = useMouseStore()
           >
         </Button>
       </NuxtLink>
-      <!-- <input class="input input-size__md input-color__blue" type="text" /> -->
     </div>
   </div>
 </template>
