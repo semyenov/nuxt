@@ -1,7 +1,11 @@
 <script setup lang="ts">
-onKeyStroke(['d', 'D'], (e) => {
-  e.preventDefault()
-  toggleDark()
+const keys = useMagicKeys()
+const shiftD = keys['Shift+D']
+
+watch(shiftD, (v) => {
+  if (v) {
+    toggleDark()
+  }
 })
 </script>
 
