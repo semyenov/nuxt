@@ -17,27 +17,25 @@ const dataGetter = backendStore.itemGetter<{
 </script>
 
 <template>
-  <div
-    class="page-data-index flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-200"
-  >
-    <PageTitle>Data Page</PageTitle>
+  <div class="page page-data-index">
     <VirtualList
       key="data-virtuallist"
-      class="flex flex-col items-center w-full"
-      :keeps="40"
+      :keeps="20"
       :page-mode="true"
-      wrap-class="flex flex-col w-full"
-      item-class="mb-8"
       :data-ids="dataIds"
       data-key="data-virtuallist"
       :data-getter="dataGetter"
       :data-component="DataItem"
       :estimate-size="90"
+      class="flex flex-col items-center gap-8 w-full max-w-200"
+      wrap-class="flex flex-col w-full"
+      item-class="mb-8"
     >
+      <template #header>
+        <PageTitle>Data Page</PageTitle>
+      </template>
       <template #footer>
-        <div
-          class="flex flex-row flex-wrap items-center gap-1 w-full justify-center"
-        >
+        <div class="flex flex-row items-center w-full">
           <Button
             color="zinc"
             size="md"

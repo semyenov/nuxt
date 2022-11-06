@@ -12,6 +12,7 @@ export const backendStoreKey = 'backend' as const
 
 export const useBackendStore = defineStore('backend', () => {
   const appConfig = useAppConfig()
+  const baseURL = !isClient ? appConfig.apiUri : '/'
 
   const store = ref<Map<string, Map<string, any>>>(new Map())
   const authorization = ref<string>('test')
@@ -34,7 +35,7 @@ export const useBackendStore = defineStore('backend', () => {
   const itemsGetter = <T extends IWithIdentificator>(scope: ScopeType) =>
     asyncComputed<string[]>(async () => {
       if (store.value.has(scope)) {
-        const storeItemsMap = store.value.get(scope)
+        const storeItemsMap = store.value.get(scope) as Map<string, T>
         return Array.from(storeItemsMap!.keys())
       }
 
@@ -63,7 +64,7 @@ export const useBackendStore = defineStore('backend', () => {
   ): Promise<T[] | undefined> {
     const uri = formatURI(scope, command, ...params)
     const res = await $fetch<T[]>(uri, {
-      baseURL: !isClient ? appConfig.apiUri : '/',
+      baseURL,
       headers: [['Authorization', `Bearer ${authorization.value}`]],
       method: 'get',
       ...opts,
@@ -81,7 +82,7 @@ export const useBackendStore = defineStore('backend', () => {
   ): Promise<T | undefined> {
     const uri = formatURI(scope, command, ...params)
     const res = await $fetch<T>(uri, {
-      baseURL: !isClient ? appConfig.apiUri : '/',
+      baseURL,
       headers: [['Authorization', `Bearer ${authorization.value}`]],
       method: 'get',
       ...opts,

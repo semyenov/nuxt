@@ -21,10 +21,11 @@ const item = dataGetter(id)
 </script>
 
 <template>
-  <div
-    class="page-data-id flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-200"
-  >
-    <div v-if="item">
+  <div class="page page-data-id">
+    <div
+      v-if="item"
+      class="flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-200"
+    >
       <PageTitle>
         {{ `Data #${item._id} Page` }}
       </PageTitle>
