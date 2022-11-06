@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { range } from '@antfu/utils'
 
-import type { ComputedRef, DefineComponent, PropType } from 'vue'
-
+import type { DefineComponent, PropType, Ref } from 'vue'
 import type { VirtualRange } from '@/composables/virtual'
+import type { IWithIdentificator } from '@/store/backend'
+
 import Virtual from '@/composables/virtual'
 
 const props = defineProps({
@@ -14,11 +15,9 @@ const props = defineProps({
   },
   dataGetter: {
     type: Function as PropType<
-      <T = Record<string, any> & { _id: string }>(
-        id: string
-      ) => Promise<T | undefined> | T | undefined
+      <T extends IWithIdentificator>(id: string) => Ref<T | undefined>
     >,
-    default: () => {},
+    required: true,
   },
   dataComponent: {
     type: [Object, Function] as PropType<DefineComponent<any, any, any>>,

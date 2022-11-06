@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { ComputedRef, DefineComponent, PropType } from 'vue'
+import type { DefineComponent, PropType, Ref } from 'vue'
+import type { IWithIdentificator } from '@/store/backend'
 
 const props = defineProps({
   index: {
@@ -32,7 +33,7 @@ const props = defineProps({
   },
   dataGetter: {
     type: Function as PropType<
-      (id: string) => ComputedRef<Record<string, any> & { _id: string }>
+      <T extends IWithIdentificator>(id: string) => Ref<T | undefined>
     >,
     required: true,
   },
@@ -59,7 +60,7 @@ const emit = defineEmits<{
 const index = toRef(props, 'index')
 const dataId = toRef(props, 'dataId')
 
-const item = asyncComputed(() => props.dataGetter(dataId.value), null)
+const item = props.dataGetter(dataId.value)
 
 const rootRef = ref<HTMLElement | null>(null)
 const horizontal = toRef(props, 'horizontal')

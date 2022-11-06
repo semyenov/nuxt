@@ -10,20 +10,24 @@ definePageMeta({
 const route = useRoute()
 const id = route.params.id as string
 
-const { data } = await useFetch('/api/data/id', {
-  query: { id },
-  key: id,
-})
+const backendStore = useBackendStore()
+const dataGetter = backendStore.itemGetter<{
+  _id: string
+  name: string
+  height: string
+}>('data')
+
+const item = dataGetter(id)
 </script>
 
 <template>
   <div
-    v-if="data"
+    v-if="item"
     class="page-data-id flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-200"
   >
     <PageTitle>
-      {{ `Data #${data._id} Page` }}
+      {{ `Data #${item._id} Page` }}
     </PageTitle>
-    <DataItem :item="data" :index="0"></DataItem>
+    <DataItem :item="item" :index="0"></DataItem>
   </div>
 </template>

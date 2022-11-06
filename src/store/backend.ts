@@ -1,39 +1,43 @@
-import type { UseFetchOptions } from '#app'
-import { isClient } from '@vueuse/core'
-import type { NitroFetchRequest } from 'nitropack'
+import type { FetchOptions } from 'ohmyfetch'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
-type ScopeType = 'data' | 'objects'
-interface IWithIdentificator {
+export type ScopeType = 'data' | 'objects'
+export interface IWithIdentificator {
   _id: string
 }
 
 export const backendStoreKey = 'backend' as const
 export const useBackendStore = defineStore('backend', () => {
-  const appConfig = useAppConfig()
+  // const appConfig = useAppConfig()
 
   const store = ref<Map<string, Map<string, any>>>(new Map())
   const authorization = ref<string>('test')
 
-  const itemGetter = <T extends IWithIdentificator>(scope: ScopeType) => {
-    const storeItemsMap = store.value.get(scope) as Map<string, T> | undefined
+  const itemGetter =
+    <T extends IWithIdentificator>(scope: ScopeType) =>
+    (id: string) =>
+      asyncComputed(async () => {
+        if (store.value.has(scope)) {
+          const storeItemsMap = store.value.get(scope) as Map<string, T>
+          if (storeItemsMap.has(id)) {
+            return storeItemsMap.get(id)
+          }
+        }
 
-    return (id: string) =>
-      computed<T | undefined>(() => {
-        return storeItemsMap && storeItemsMap.has(id)
-          ? storeItemsMap.get(id)
-          : undefined
+        const item = await getItem<T>([scope, 'items', id])
+        return item
       })
-  }
 
-  const itemsGetter = (scope: ScopeType) =>
-    computed(() => {
+  const itemsGetter = <T extends IWithIdentificator>(scope: ScopeType) =>
+    asyncComputed<string[]>(async () => {
       if (store.value.has(scope)) {
-        return Array.from(store.value.get(scope)!.keys())
+        const storeItemsMap = store.value.get(scope)
+        return Array.from(storeItemsMap!.keys())
       }
 
-      return []
+      const items = await getItems<T>([scope, 'items'])
+      return items ? items.map((item) => item._id) : []
     })
 
   function setItems<T extends IWithIdentificator>(scope: string, items: T[]) {
@@ -52,32 +56,47 @@ export const useBackendStore = defineStore('backend', () => {
   }
 
   async function getItems<T extends IWithIdentificator>(
-    request: NitroFetchRequest,
-    opts?: UseFetchOptions<T[]>
-  ): Promise<ReturnType<typeof useFetch<T[]>>> {
-    const [scope, ...command] = request
-      .toString()
-      .split('/')
-      .filter((item) => item !== '')
-      .slice(1) as [ScopeType, ...string[]]
-
-    const res = await useFetch<T[]>(request, {
-      key: `${scope}-${command.join('.')}`,
-      baseURL: !isClient ? appConfig.apiUri : `/`,
+    [scope, command, ...params]: [ScopeType, 'items', ...string[]],
+    opts?: FetchOptions<'json'>
+  ): Promise<T[] | undefined> {
+    const uri = formatURI(scope, command, ...params)
+    const res = await $fetch<T[]>(uri, {
+      baseURL: `/`,
       headers: [['Authorization', `Bearer ${authorization.value}`]],
       method: 'get',
       ...opts,
     })
 
-    if (res.data.value && res.data.value.length > 0) {
-      setItems(scope, res.data.value)
+    if (res && res.length > 0) {
+      setItems(scope, res)
+      return res as T[]
     }
-
-    return res
   }
 
-  return { getItems, store, itemsGetter, itemGetter }
+  async function getItem<T extends IWithIdentificator>(
+    [scope, command, ...params]: [ScopeType, 'items', ...string[]],
+    opts?: FetchOptions<'json'>
+  ): Promise<T | undefined> {
+    const uri = formatURI(scope, command, ...params)
+    const res = await $fetch<T>(uri, {
+      baseURL: `/`,
+      headers: [['Authorization', `Bearer ${authorization.value}`]],
+      method: 'get',
+      ...opts,
+    })
+
+    if (res) {
+      setItems(scope, [res])
+      return res as T
+    }
+  }
+
+  return { getItems, getItem, store, itemsGetter, itemGetter }
 })
+
+function formatURI(...args: string[]) {
+  return ['/api', ...args].filter((item) => !!item && item !== '').join('/')
+}
 
 if (import.meta.hot) {
   import.meta.hot.accept(acceptHMRUpdate(useBackendStore, import.meta.hot))

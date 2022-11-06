@@ -12,7 +12,7 @@ export default defineNuxtModule({
       logger.info('Nitro preset', config.options.preset)
     })
 
-    nuxt.hooks.hookOnce('pages:extend', (pages) => {
+    nuxt.hooks.hook('pages:extend', (pages) => {
       logger.info('Add test page', resolve(__dirname, 'pages/test.vue'))
 
       pages.push({
