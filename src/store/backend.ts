@@ -1,6 +1,7 @@
-import type { FetchOptions } from 'ohmyfetch'
-
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import { isClient } from '@vueuse/core'
+
+import type { FetchOptions } from 'ohmyfetch'
 
 export type ScopeType = 'data' | 'objects'
 export interface IWithIdentificator {
@@ -8,8 +9,9 @@ export interface IWithIdentificator {
 }
 
 export const backendStoreKey = 'backend' as const
+
 export const useBackendStore = defineStore('backend', () => {
-  // const appConfig = useAppConfig()
+  const appConfig = useAppConfig()
 
   const store = ref<Map<string, Map<string, any>>>(new Map())
   const authorization = ref<string>('test')
@@ -56,12 +58,12 @@ export const useBackendStore = defineStore('backend', () => {
   }
 
   async function getItems<T extends IWithIdentificator>(
-    [scope, command, ...params]: [ScopeType, 'items', ...string[]],
+    [scope, command, ...params]: [ScopeType, string, ...string[]],
     opts?: FetchOptions<'json'>
   ): Promise<T[] | undefined> {
     const uri = formatURI(scope, command, ...params)
     const res = await $fetch<T[]>(uri, {
-      baseURL: `/`,
+      baseURL: !isClient ? appConfig.apiUri : '/',
       headers: [['Authorization', `Bearer ${authorization.value}`]],
       method: 'get',
       ...opts,
@@ -74,12 +76,12 @@ export const useBackendStore = defineStore('backend', () => {
   }
 
   async function getItem<T extends IWithIdentificator>(
-    [scope, command, ...params]: [ScopeType, 'items', ...string[]],
+    [scope, command, ...params]: [ScopeType, string, ...string[]],
     opts?: FetchOptions<'json'>
   ): Promise<T | undefined> {
     const uri = formatURI(scope, command, ...params)
     const res = await $fetch<T>(uri, {
-      baseURL: `/`,
+      baseURL: !isClient ? appConfig.apiUri : '/',
       headers: [['Authorization', `Bearer ${authorization.value}`]],
       method: 'get',
       ...opts,

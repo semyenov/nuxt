@@ -7,6 +7,7 @@ definePageMeta({
 })
 
 const backendStore = useBackendStore()
+await backendStore.getItems(['data', 'items'])
 const dataIds = backendStore.itemsGetter('data')
 const dataGetter = backendStore.itemGetter<{
   _id: string
@@ -41,7 +42,7 @@ const dataGetter = backendStore.itemGetter<{
             color="zinc"
             size="md"
             rounded="full"
-            @click.prevent="backendStore.getItems('/api/data/others')"
+            @click.prevent="backendStore.getItems(['data', 'others'])"
           >
             <i class="i-carbon:download inline-block h-6" />
           </Button>
