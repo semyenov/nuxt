@@ -14,9 +14,9 @@ const props = defineProps({
   },
   dataGetter: {
     type: Function as PropType<
-      (
+      <T = Record<string, any> & { _id: string }>(
         id: string
-      ) => ComputedRef<(Record<string, any> & { _id: string }) | undefined>
+      ) => Promise<T | undefined> | T | undefined
     >,
     default: () => {},
   },
