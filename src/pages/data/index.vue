@@ -27,7 +27,7 @@ const dataGetter = backendStore.itemGetter<{
       :data-getter="dataGetter"
       :data-component="DataItem"
       :estimate-size="90"
-      class="flex flex-col items-center gap-8 w-full max-w-200"
+      class="flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-200"
       wrap-class="flex flex-col w-full"
       item-class="mb-8"
     >
