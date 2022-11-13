@@ -46,16 +46,22 @@ export const useBackendStore = defineStore('backend', () => {
     })
   }
 
-  function setItems<T extends IWithIdentificator>(
-    scope: ScopeType,
-    items: T[]
-  ) {
-    const storeScopeMap = store.value.get(scope)!
-    for (const item of items) {
-      storeScopeMap.set(item._id, item)
-    }
+  async function getItem<T extends IWithIdentificator>(
+    [scope, command, ...params]: [ScopeType, string, ...string[]],
+    opts?: FetchOptions<'json'>
+  ): Promise<T | undefined> {
+    const uri = formatURI(scope, command, ...params)
+    const res = await $fetch<T>(uri, {
+      baseURL,
+      headers: [['Authorization', `Bearer ${authorization.value}`]],
+      method: 'get',
+      ...opts,
+    })
 
-    return true
+    if (res) {
+      setItems(scope, [res])
+      return res as T
+    }
   }
 
   async function getItems<T extends IWithIdentificator>(
@@ -76,25 +82,19 @@ export const useBackendStore = defineStore('backend', () => {
     }
   }
 
-  async function getItem<T extends IWithIdentificator>(
-    [scope, command, ...params]: [ScopeType, string, ...string[]],
-    opts?: FetchOptions<'json'>
-  ): Promise<T | undefined> {
-    const uri = formatURI(scope, command, ...params)
-    const res = await $fetch<T>(uri, {
-      baseURL,
-      headers: [['Authorization', `Bearer ${authorization.value}`]],
-      method: 'get',
-      ...opts,
-    })
-
-    if (res) {
-      setItems(scope, [res])
-      return res as T
+  function setItems<T extends IWithIdentificator>(
+    scope: ScopeType,
+    items: T[]
+  ) {
+    const storeScopeMap = store.value.get(scope)!
+    for (const item of items) {
+      storeScopeMap.set(item._id, item)
     }
+
+    return true
   }
 
-  return { store, getItems, getItem, itemsGetter, itemGetter }
+  return { store, itemGetter, itemsGetter, getItem, getItems }
 })
 
 function formatURI(...args: string[]) {

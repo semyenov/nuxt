@@ -20,10 +20,12 @@ const dataGetter = backendStore.itemGetter<{
 const item = await dataGetter(id)
 
 function updateItem() {
-  backendStore.store.get('data')!.set(id, {
-    ...item.value,
-    height: `${parseInt(item.value.height) + 50}px`,
-  })
+  item.value.height = `${parseInt(item.value.height) + 50}px`
+
+  // backendStore.store.get('data')!.set(id, {
+  //   ...item.value,
+  //   height: `${parseInt(item.value.height) + 50}px`,
+  // })
 }
 </script>
 
