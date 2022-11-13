@@ -9,50 +9,50 @@ export interface IWithIdentificator {
 }
 
 export const backendStoreKey = 'backend' as const
+export const backendScopeTypes: ScopeType[] = ['data', 'objects']
 
 export const useBackendStore = defineStore('backend', () => {
   const appConfig = useAppConfig()
+  const authorization = ref<string>('test')
   const baseURL = !isClient ? appConfig.apiUri : '/'
 
-  const store = ref<Map<string, Map<string, any>>>(new Map())
-  const authorization = ref<string>('test')
+  const store = ref<Map<ScopeType, Map<string, any>>>(
+    new Map(backendScopeTypes.map((scope) => [scope, new Map()]))
+  )
 
   const itemGetter =
     <T extends IWithIdentificator>(scope: ScopeType) =>
-    (id: string) =>
-      asyncComputed(async () => {
-        if (store.value.has(scope)) {
-          const storeItemsMap = store.value.get(scope) as Map<string, T>
-          if (storeItemsMap.has(id)) {
-            return storeItemsMap.get(id)
-          }
-        }
-
-        const item = await getItem<T>([scope, 'items', id])
-        return item
-      })
-
-  const itemsGetter = <T extends IWithIdentificator>(scope: ScopeType) =>
-    asyncComputed<string[]>(async () => {
-      if (store.value.has(scope)) {
-        const storeItemsMap = store.value.get(scope) as Map<string, T>
-        return Array.from(storeItemsMap!.keys())
+    async (id: string) => {
+      const storeScopeMap = store.value.get(scope)!
+      if (!storeScopeMap.has(id)) {
+        await getItem<T>([scope, 'items', id])
       }
 
-      const items = await getItems<T>([scope, 'items'])
-      return items ? items.map((item) => item._id) : []
-    })
-
-  function setItems<T extends IWithIdentificator>(scope: string, items: T[]) {
-    if (!store.value.has(scope)) {
-      store.value.set(scope, new Map(items.map((item) => [item._id, item])))
-
-      return true
+      return computed(() => {
+        return storeScopeMap.get(id)
+      })
     }
 
-    const storeItemsMap = store.value.get(scope) as Map<string, T>
+  const itemsGetter = async <T extends IWithIdentificator>(
+    scope: ScopeType
+  ) => {
+    const storeScopeMap = store.value.get(scope)!
+    if (storeScopeMap.size === 0) {
+      await getItems<T>([scope, 'items'])
+    }
+
+    return computed(() => {
+      return Array.from(storeScopeMap.keys())
+    })
+  }
+
+  function setItems<T extends IWithIdentificator>(
+    scope: ScopeType,
+    items: T[]
+  ) {
+    const storeScopeMap = store.value.get(scope)!
     for (const item of items) {
-      storeItemsMap.set(item._id, item)
+      storeScopeMap.set(item._id, item)
     }
 
     return true
@@ -94,7 +94,7 @@ export const useBackendStore = defineStore('backend', () => {
     }
   }
 
-  return { getItems, getItem, store, itemsGetter, itemGetter }
+  return { store, getItems, getItem, itemsGetter, itemGetter }
 })
 
 function formatURI(...args: string[]) {

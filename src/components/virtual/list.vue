@@ -15,7 +15,7 @@ const props = defineProps({
   },
   dataGetter: {
     type: Function as PropType<
-      <T extends IWithIdentificator>(id: string) => Ref<T | undefined>
+      <T extends IWithIdentificator>(id: string) => Promise<T | undefined>
     >,
     required: true,
   },

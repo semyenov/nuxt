@@ -33,7 +33,7 @@ const props = defineProps({
   },
   dataGetter: {
     type: Function as PropType<
-      <T extends IWithIdentificator>(id: string) => Ref<T | undefined>
+      <T extends IWithIdentificator>(id: string) => Promise<T | undefined>
     >,
     required: true,
   },
@@ -60,7 +60,7 @@ const emit = defineEmits<{
 const index = toRef(props, 'index')
 const dataId = toRef(props, 'dataId')
 
-const item = props.dataGetter(dataId.value)
+const item = await props.dataGetter(dataId.value)
 
 const rootRef = ref<HTMLElement | null>(null)
 const horizontal = toRef(props, 'horizontal')

@@ -7,8 +7,8 @@ definePageMeta({
 })
 
 const backendStore = useBackendStore()
-await backendStore.getItems(['data', 'items'])
-const dataIds = backendStore.itemsGetter('data')
+// await backendStore.getItems(['data', 'items'])
+const dataIds = await backendStore.itemsGetter('data')
 const dataGetter = backendStore.itemGetter<{
   _id: string
   name: string
