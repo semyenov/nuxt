@@ -28,13 +28,6 @@ export default defineNuxtConfig({
           href: '/favicon.svg',
         },
       ],
-      script: [
-        {
-          src: 'https://polyfill.io/v3/polyfill.js?features=es5,es6,es7&flags=gated',
-          type: 'text/javascript',
-          fetchpriority: 'high',
-        },
-      ],
     },
   },
 
@@ -43,7 +36,7 @@ export default defineNuxtConfig({
   i18n: {
     vueI18n: {
       legacy: false,
-      locale: 'fr',
+      locale: 'en',
       messages: {
         en: {
           index: {
@@ -59,9 +52,7 @@ export default defineNuxtConfig({
     },
   },
 
-  content: {
-
-  },
+  content: {},
 
   modules: [
     '@nuxt/content',
