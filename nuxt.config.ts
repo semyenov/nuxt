@@ -32,12 +32,44 @@ export default defineNuxtConfig({
           href: '/favicon.svg',
         },
       ],
+      script: [
+        {
+          src: 'https://polyfill.io/v3/polyfill.js?features=es5,es6,es7&flags=gated',
+          type: 'text/javascript',
+          fetchpriority: 'high',
+        },
+      ],
     },
   },
 
   css: ['@unocss/reset/antfu.css', 'assets/styles/main.css'],
 
+  i18n: {
+    vueI18n: {
+      legacy: false,
+      locale: 'fr',
+      messages: {
+        en: {
+          index: {
+            title: 'Welcome page',
+          },
+        },
+        fr: {
+          index: {
+            title: "Page d'accueil",
+          },
+        },
+      },
+    },
+  },
+
+  content: {
+
+  },
+
   modules: [
+    '@nuxt/content',
+    '@nuxtjs/i18n',
     '@unocss/nuxt',
     '@vueuse/nuxt',
     '@pinia/nuxt',
