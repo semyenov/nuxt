@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { unoColorVariants, unoRoundedVariants, unoSizeVariants } from '@/uno'
+import { unoColorVariants, unoRoundedVariants, unoSizeVariants } from '~~/uno'
 </script>
 
 <template>

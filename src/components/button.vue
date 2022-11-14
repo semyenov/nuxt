@@ -4,7 +4,7 @@ import type {
   UnoColorVariants,
   UnoRoundedVariants,
   UnoSizeVariants,
-} from '@/uno'
+} from '~~/uno'
 
 const props = defineProps({
   color: {
