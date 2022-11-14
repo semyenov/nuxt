@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { DefineComponent, PropType, Ref } from 'vue'
+import type { ComputedRef, DefineComponent, PropType, Ref } from 'vue'
 import type { IWithIdentificator } from '@/store/backend'
 
 const props = defineProps({
@@ -33,7 +33,9 @@ const props = defineProps({
   },
   dataGetter: {
     type: Function as PropType<
-      <T extends IWithIdentificator>(id: string) => Promise<T | undefined>
+      <T extends IWithIdentificator>(
+        id: string
+      ) => Promise<ComputedRef<T> | undefined>
     >,
     required: true,
   },

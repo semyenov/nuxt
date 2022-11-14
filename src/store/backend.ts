@@ -29,7 +29,7 @@ export const useBackendStore = defineStore('backend', () => {
       }
 
       return computed(() => {
-        return storeScopeMap.get(id)
+        return storeScopeMap.get(id) as T
       })
     }
 

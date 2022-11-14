@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { range } from '@antfu/utils'
 
-import type { DefineComponent, PropType, Ref } from 'vue'
+import type { ComputedRef, DefineComponent, PropType } from 'vue'
 import type { VirtualRange } from '@/composables/virtual'
 import type { IWithIdentificator } from '@/store/backend'
 
@@ -15,7 +15,9 @@ const props = defineProps({
   },
   dataGetter: {
     type: Function as PropType<
-      <T extends IWithIdentificator>(id: string) => Promise<T | undefined>
+      <T extends IWithIdentificator>(
+        id: string
+      ) => Promise<ComputedRef<T | undefined>>
     >,
     required: true,
   },
