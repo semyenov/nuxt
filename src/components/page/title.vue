@@ -74,6 +74,19 @@ const mouseStore = useMouseStore()
           >
         </Button>
       </NuxtLink>
+      <NuxtLink v-slot="{ isActive, navigate }" to="/content" custom>
+        <Button
+          :color="isActive ? 'purple' : 'zinc'"
+          size="md"
+          rounded="xl"
+          @click="navigate"
+        >
+          <i class="i-carbon:text-scale inline-block h-6" />
+          <span :class="isActive || 'hidden'" un-sm="inline-block"
+            >Content Page</span
+          >
+        </Button>
+      </NuxtLink>
     </div>
   </div>
 </template>

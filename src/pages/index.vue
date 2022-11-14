@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useI18n } from '#imports'
+const { t } = useI18n()
+
 definePageMeta({
   layout: 'default',
   title: 'Page Title',
@@ -15,7 +18,7 @@ const { data } = await useFetch('/api/test', {
 <template>
   <div class="page page-index">
     <div class="flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-200">
-      <PageTitle>Index Page</PageTitle>
+      <PageTitle>{{ t('index.title') }}</PageTitle>
       <PageProse v-if="data">{{ data.text }}</PageProse>
       <div class="flex flex-row gap-2 text-3xl justify-center">
         <div
