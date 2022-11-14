@@ -7,10 +7,6 @@ export default defineNuxtConfig({
   srcDir: resolve(__dirname, 'src'),
   appDir: resolve(__dirname, 'src', 'app'),
 
-  appConfig: {
-    apiUri: 'http://localhost:3000',
-  },
-
   typescript: {
     shim: false,
     strict: true,

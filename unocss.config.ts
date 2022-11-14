@@ -9,7 +9,7 @@ import {
   transformerVariantGroup,
 } from 'unocss'
 
-import { createShortcuts } from './src/uno'
+import { createShortcuts } from './uno'
 const shortcuts = createShortcuts()
 
 export default defineConfig({
