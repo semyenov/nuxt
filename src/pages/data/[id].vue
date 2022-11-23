@@ -37,8 +37,8 @@ function updateItem() {
       <PageTitle>
         {{ `Data #${item._id} Page` }}
       </PageTitle>
-      <DataItem :item="item" :index="0" />
       <Button @click="updateItem">Update item</Button>
+      <DataItem :item="item" :index="0" />
     </div>
   </div>
 </template>

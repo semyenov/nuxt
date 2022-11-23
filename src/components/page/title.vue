@@ -81,7 +81,7 @@ const mouseStore = useMouseStore()
           rounded="xl"
           @click="navigate"
         >
-          <i class="i-carbon:text-scale inline-block h-6" />
+          <i class="i-carbon:content-delivery-network inline-block h-6" />
           <span :class="isActive || 'hidden'" un-sm="inline-block"
             >Content Page</span
           >
