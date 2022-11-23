@@ -11,6 +11,18 @@ const props = defineProps({
     required: true,
   },
 })
+
+const item = toRef(props, 'item')
+
+function updateItem() {
+  const height = `${parseInt(item.value.height) + 50}px`
+  item.value.height = height
+
+  // backendStore.store.get('data')!.set(id, {
+  //   ...item.value,
+  //   height,
+  // })
+}
 </script>
 
 <template>
@@ -25,8 +37,9 @@ const props = defineProps({
     </template>
     <template #footer>
       <div
-        class="flex flex-col props.items-center justify-center py-2 px-4"
+        class="flex flex-col flex-grow cursor-pointer props.items-center justify-center py-2 px-4"
         :style="{ height: props.item.height }"
+        @click="updateItem"
       >
         {{ `+${props.item.height}` }}
       </div>

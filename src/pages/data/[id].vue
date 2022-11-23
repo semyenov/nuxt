@@ -16,16 +16,6 @@ const backendStore = useBackendStore()
 const dataGetter = backendStore.itemGetter<IData>('data')
 
 const item = await dataGetter(id)
-
-function updateItem() {
-  const height = `${parseInt(item.value.height) + 50}px`
-  item.value.height = height
-
-  // backendStore.store.get('data')!.set(id, {
-  //   ...item.value,
-  //   height,
-  // })
-}
 </script>
 
 <template>
@@ -37,7 +27,6 @@ function updateItem() {
       <PageTitle>
         {{ `Data #${item._id} Page` }}
       </PageTitle>
-      <Button @click="updateItem">Update item</Button>
       <DataItem :item="item" :index="0" />
     </div>
   </div>
