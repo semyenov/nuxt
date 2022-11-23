@@ -435,12 +435,12 @@ function getWrapperStyle(
     >
       <VirtualListItem
         v-for="i in range(...vr).slice()"
-        :key="`${props.dataKey}-list_component-${dataIds.at(i)}-${i}`"
+        :key="`${props.dataKey}-list_component-${dataIds[i]}-${i}`"
         :index="i"
         :tag="props.itemTag"
         :style="props.itemStyle"
         :horizontal="isHorizontal"
-        :data-id="dataIds.at(i)"
+        :data-id="dataIds[i]"
         :estimate-size="v.getEstimateSize()"
         :data-key="props.dataKey"
         :data-getter="props.dataGetter"
