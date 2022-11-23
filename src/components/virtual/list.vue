@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { range } from '@antfu/utils'
 
-import type { ComputedRef, DefineComponent, PropType } from 'vue'
+import type { DefineComponent, PropType } from 'vue'
 import type { VirtualRange } from '@/composables/virtual'
 import type { IWithIdentificator } from '@/store/backend'
 
@@ -437,12 +437,12 @@ function getWrapperStyle(
     >
       <VirtualListItem
         v-for="i in range(...vr).slice()"
-        :key="`${props.dataKey}-list_component-${dataIds.at(i)}-${i}`"
+        :key="`${props.dataKey}-list_component-${dataIds[i]}-${i}`"
         :index="i"
         :tag="props.itemTag"
         :style="props.itemStyle"
         :horizontal="isHorizontal"
-        :data-id="dataIds.at(i)"
+        :data-id="dataIds[i]"
         :estimate-size="v.getEstimateSize()"
         :data-key="props.dataKey"
         :data-getter="props.dataGetter"

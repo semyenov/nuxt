@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { IData } from '@/types'
 import DataItem from '@/components/data/item.vue'
 
 definePageMeta({
@@ -9,11 +10,7 @@ definePageMeta({
 const backendStore = useBackendStore()
 // await backendStore.getItems(['data', 'items'])
 const dataIds = await backendStore.itemsGetter('data')
-const dataGetter = backendStore.itemGetter<{
-  _id: string
-  name: string
-  height: string
-}>('data')
+const dataGetter = backendStore.itemGetter<IData>('data')
 </script>
 
 <template>
