@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { IData } from '@/types'
+
 definePageMeta({
   layout: 'default',
   title: 'Page Title',
@@ -11,20 +13,17 @@ const route = useRoute()
 const id = route.params.id as string
 
 const backendStore = useBackendStore()
-const dataGetter = backendStore.itemGetter<{
-  _id: string
-  name: string
-  height: string
-}>('data')
+const dataGetter = backendStore.itemGetter<IData>('data')
 
 const item = await dataGetter(id)
 
 function updateItem() {
-  item.value.height = `${parseInt(item.value.height) + 50}px`
+  const height = `${parseInt(item.value.height) + 50}px`
+  item.value.height = height
 
   // backendStore.store.get('data')!.set(id, {
   //   ...item.value,
-  //   height: `${parseInt(item.value.height) + 50}px`,
+  //   height,
   // })
 }
 </script>

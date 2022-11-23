@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { range } from '@antfu/utils'
 
-import type { DefineComponent, PropType, Ref } from 'vue'
+import type { DefineComponent, PropType } from 'vue'
 import type { VirtualRange } from '@/composables/virtual'
 import type { IWithIdentificator } from '@/store/backend'
 
