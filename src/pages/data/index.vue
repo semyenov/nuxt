@@ -26,7 +26,7 @@ const dataGetter = backendStore.itemGetter<IData>('data')
       :estimate-size="90"
       class="flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-200"
       wrap-class="flex flex-col w-full"
-      item-class="mb-8"
+      item-class="pb-8"
     >
       <template #header>
         <PageTitle>Data Page</PageTitle>

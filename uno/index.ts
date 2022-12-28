@@ -72,48 +72,70 @@ export const unoRoundedVariants: UnoRoundedVariants[] = [
 
 const config = {
   buttons: {
-    bg: 50,
-    text: 600,
-    border: 400,
-    shadow: 200,
-    'hover:text': 700,
-    'hover:bg': 100,
-    'hover:border': 500,
-    'hover:shadow': 100,
-    'dark:bg': 900,
-    'dark:text': 200,
-    'dark:border': 600,
-    'dark:shadow': 800,
-    'dark:hover:text': 100,
-    'dark:hover:bg': 800,
-    'dark:hover:border': 500,
-    'dark:hover:shadow': 900,
+    color: {
+      bg: 50,
+      text: 600,
+      border: 400,
+      shadow: 200,
+      'hover:text': 700,
+      'hover:bg': 100,
+      'hover:border': 500,
+      'hover:shadow': 100,
+      'dark:bg': 900,
+      'dark:text': 200,
+      'dark:border': 600,
+      'dark:shadow': 800,
+      'dark:hover:text': 100,
+      'dark:hover:bg': 800,
+      'dark:hover:border': 500,
+      'dark:hover:shadow': 900,
+    },
   },
   inputs: {
-    bg: 50,
-    text: 600,
-    border: 400,
-    shadow: 200,
-    'focus:text': 700,
-    'focus:bg': 100,
-    'focus:border': 500,
-    'focus:shadow': 100,
-    'dark:bg': 900,
-    'dark:text': 200,
-    'dark:border': 600,
-    'dark:shadow': 800,
-    'dark:focus:text': 100,
-    'dark:focus:bg': 800,
-    'dark:focus:border': 500,
-    'dark:focus:shadow': 900,
+    color: {
+      bg: 50,
+      text: 600,
+      border: 400,
+      shadow: 200,
+      'focus:text': 700,
+      'focus:bg': 100,
+      'focus:border': 500,
+      'focus:shadow': 100,
+      'dark:bg': 900,
+      'dark:text': 200,
+      'dark:border': 600,
+      'dark:shadow': 800,
+      'dark:focus:text': 100,
+      'dark:focus:bg': 800,
+      'dark:focus:border': 500,
+      'dark:focus:shadow': 900,
+    },
   },
 }
+
+// console.log(
+//   unoColorVariants.reduce(
+//     (p, c) =>
+//       Object.assign(
+//         p,
+//         Object.entries(config.buttons)
+//           .map(([n, m]) => ({
+//             [`btn-${n}__${c}`]: Object.entries(m)
+//               .map(([s, v]) => `${s}-${c}-${v}`)
+//               .join(' '),
+//           }))
+//           .reduce((pp, cc) => Object.assign(pp, cc), {})
+//       ),
+//     {}
+//   )
+// )
 
 export const createShortcuts = () => {
   const buttons = unoColorVariants.reduce(
     (p, c) => ({
       ...p,
-      [`btn-color__${c}`]: Object.entries(config.buttons)
+      c,
+      [`btn-color__${c}`]: Object.entries(config.buttons.color)
         .map(([s, n]) => `${s}-${c}-${n}`)
         .join(' '),
     }),
@@ -139,14 +161,14 @@ export const createShortcuts = () => {
   const inputs = unoColorVariants.reduce(
     (p, c) => ({
       ...p,
-      [`input-color__${c}`]: Object.entries(config.buttons)
+      [`input-color__${c}`]: Object.entries(config.inputs.color)
         .map(([s, n]) => `${s}-${c}-${n}`)
         .join(' '),
     }),
     {
       input:
         'flex flex-row items-center justify-center border rounded-md transition-200 outline-none',
-      'input-size__xs': ' px-2 py-1 text-xs shadow',
+      'input-size__xs': 'px-2 py-1 text-xs shadow',
       'input-size__sm': 'px-2.5 py-1.5 text-sm shadow-md',
       'input-size__md': 'px-3 py-2 text-base shadow-lg dark:shadow-opacity-70',
       'input-size__lg':

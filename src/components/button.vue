@@ -28,7 +28,11 @@ const attrs = useAttrs()
   <button
     v-bind="attrs"
     class="btn"
-    :class="`btn-color__${props.color} btn-size__${props.size} btn-rounded__${props.rounded}`"
+    :class="[
+      `btn-color__${props.color}`,
+      `btn-size__${props.size}`,
+      `btn-rounded__${props.rounded}`,
+    ]"
   >
     <slot />
   </button>

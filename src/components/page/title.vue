@@ -5,7 +5,7 @@ const mouseStore = useMouseStore()
 
 <template>
   <div
-    class="component-page-title flex flex-col items-center justify-between border-b border-dashed w-full border-gray-400 rounded-b-3xl py-10"
+    class="component-page-title flex flex-col items-center justify-between border-b border-dashed w-full border-gray-400 rounded-b-3xl py-10 px-6"
     un-dark="border-gray-600"
   >
     <div
@@ -24,8 +24,8 @@ const mouseStore = useMouseStore()
         <slot />
       </div>
       <button
-        class="i-carbon:sun dark:i-carbon:moon text-3xl text-gray-500 min-w-8"
-        un-dark="text-gray-400"
+        class="i-carbon:sun text-3xl text-gray-500 min-w-8"
+        un-dark="text-gray-400 i-carbon:moon"
         @click="toggleDark()"
       />
     </div>

@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { useI18n } from '#imports'
-const { t } = useI18n()
+import { useI18n } from 'vue-i18n'
 
 definePageMeta({
   layout: 'default',
   title: 'Page Title',
 })
+
+const { t } = useI18n()
 
 const { data } = await useFetch('/api/test', {
   method: 'get',

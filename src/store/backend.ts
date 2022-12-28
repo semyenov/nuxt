@@ -11,7 +11,7 @@ export interface IWithIdentificator {
 export const backendStoreKey = 'backend' as const
 export const backendScopeTypes: ScopeType[] = ['data', 'objects']
 
-export const useBackendStore = defineStore('backend', () => {
+export const useBackendStore = defineStore(backendStoreKey, () => {
   const appConfig = useAppConfig()
   const authorization = ref<string>('test')
   const baseURL = !isClient ? appConfig.apiUri : '/'
@@ -29,7 +29,7 @@ export const useBackendStore = defineStore('backend', () => {
       }
 
       return computed(() => {
-        return storeScopeMap.get(id) as T
+        return storeScopeMap.get(id) as T | undefined
       })
     }
 

@@ -52,7 +52,10 @@ export default defineNuxtConfig({
     },
   },
 
-  content: {},
+  // content: {
+  //   // https://content.nuxtjs.org/api/configuration
+  //   base: '/_content',
+  // },
 
   modules: [
     '@nuxt/content',
@@ -60,7 +63,7 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@vueuse/nuxt',
     '@pinia/nuxt',
-    'magic-regexp/nuxt',
+    // 'magic-regexp/nuxt',
 
     '@/modules/test/index',
   ],

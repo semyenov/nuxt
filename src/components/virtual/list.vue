@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { range } from '@antfu/utils'
 
-import type { DefineComponent, PropType } from 'vue'
+import type { Component, ComputedRef, PropType } from 'vue'
 import type { VirtualRange } from '@/composables/virtual'
 import type { IWithIdentificator } from '@/store/backend'
 
@@ -10,8 +10,7 @@ import Virtual from '@/composables/virtual'
 const props = defineProps({
   dataIds: {
     type: Array as PropType<string[]>,
-    required: true,
-    default: () => [],
+    default: () => [] as string[],
   },
   dataGetter: {
     type: Function as PropType<
@@ -22,7 +21,7 @@ const props = defineProps({
     required: true,
   },
   dataComponent: {
-    type: [Object, Function] as PropType<DefineComponent<any, any, any>>,
+    type: [Object, Function] as PropType<Component>,
     required: false,
   },
   dataKey: {
@@ -95,7 +94,7 @@ const props = defineProps({
     default: '',
   },
   itemClassAdd: {
-    type: Function,
+    type: Function as PropType<(i: number) => string>,
   },
   itemStyle: {
     type: Object,
@@ -166,6 +165,11 @@ const directionKey = computed<'scrollLeft' | 'scrollTop'>(() => {
   return isHorizontal.value ? 'scrollLeft' : 'scrollTop'
 })
 
+defineExpose({
+  rootRef,
+  v,
+})
+
 onMounted(() => {
   // in page mode we bind scroll event to document
   if (props.pageMode) {
@@ -178,6 +182,12 @@ onMounted(() => {
 
   // set position
   onScroll(new Event('scroll'))
+})
+
+onUnmounted(() => {
+  if (props.pageMode) {
+    document.removeEventListener('scroll', onScroll)
+  }
 })
 
 // set back offset when awake from keep-alive
@@ -194,12 +204,6 @@ onActivated(() => {
 })
 
 onDeactivated(() => {
-  if (props.pageMode) {
-    document.removeEventListener('scroll', onScroll)
-  }
-})
-
-onUnmounted(() => {
   if (props.pageMode) {
     document.removeEventListener('scroll', onScroll)
   }
@@ -307,7 +311,7 @@ function scrollToBottom() {
       if (getOffset() + getClientSize() < getScrollSize()) {
         scrollToBottom()
       }
-    }, 3)
+    }, 30)
   }
 }
 
@@ -334,7 +338,7 @@ function onItemResized(id: string, size: number) {
 }
 
 // event called when slot mounted or size changed
-function onSlotResized(type: string, size: any, init: boolean) {
+function onSlotResized(type: string, size: number, init: boolean) {
   switch (type) {
     case 'thead':
       v.updateParam('slotHeaderSize', size)
