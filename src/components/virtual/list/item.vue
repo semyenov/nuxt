@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { DefineComponent, PropType } from 'vue'
+import type { ComputedRef, DefineComponent, PropType } from 'vue'
 import type { IWithIdentificator } from '@/store/backend'
 
 const props = defineProps({

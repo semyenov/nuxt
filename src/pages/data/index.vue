@@ -8,7 +8,6 @@ definePageMeta({
 })
 
 const backendStore = useBackendStore()
-// await backendStore.getItems(['data', 'items'])
 const dataIds = await backendStore.itemsGetter('data')
 const dataGetter = backendStore.itemGetter<IData>('data')
 </script>
@@ -23,7 +22,7 @@ const dataGetter = backendStore.itemGetter<IData>('data')
       data-key="data-virtuallist"
       :data-getter="dataGetter"
       :data-component="DataItem"
-      :estimate-size="90"
+      :estimate-size="350"
       class="flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-200"
       wrap-class="flex flex-col w-full"
       item-class="pb-8"
