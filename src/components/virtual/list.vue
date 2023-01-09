@@ -85,6 +85,10 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
+  itemWrapTag: {
+    type: String,
+    default: 'div',
+  },
   itemTag: {
     type: String,
     default: 'div',
@@ -139,9 +143,19 @@ const rootRef = ref<HTMLElement | null>(null)
 const shepherdRef = ref<HTMLElement | null>(null)
 
 const direction = toRef(props, 'direction')
+const dataIds = toRef(props, 'dataIds')
+
 const isHorizontal = computed(() => direction.value === 'horizontal')
 
-const dataIds = toRef(props, 'dataIds')
+const offsetSizeKey = computed<'scrollLeft' | 'scrollTop'>(() => {
+  return isHorizontal.value ? 'scrollLeft' : 'scrollTop'
+})
+const clientSizeKey = computed<'clientWidth' | 'clientHeight'>(() => {
+  return isHorizontal.value ? 'clientWidth' : 'clientHeight'
+})
+const scrollSizeKey = computed<'scrollWidth' | 'scrollHeight'>(() => {
+  return isHorizontal.value ? 'scrollWidth' : 'scrollHeight'
+})
 
 const wrapperStyle = ref<Record<string, any>>({})
 const vr = ref<[number, number]>([
@@ -155,18 +169,19 @@ const v = new Virtual(
     slotFooterSize: 0,
     keeps: props.keeps,
     estimateSize: props.estimateSize,
-    buffer: Math.round(props.keeps / 2),
+    buffer: Math.round(props.keeps / 3),
     uniqueIds: dataIds.value.slice(),
   },
   onRangeChanged
 )
 
-const directionKey = computed<'scrollLeft' | 'scrollTop'>(() => {
-  return isHorizontal.value ? 'scrollLeft' : 'scrollTop'
-})
-
 defineExpose({
   rootRef,
+
+  scrollToIndex,
+  scrollToOffset,
+  scrollToBottom,
+
   v,
 })
 
@@ -237,59 +252,60 @@ watch(
 )
 
 // return current scroll offset
-function getOffset() {
+function getOffsetSize() {
   if (props.pageMode) {
     return (
-      document.documentElement[directionKey.value] ||
-      document.body[directionKey.value]
+      document.documentElement[offsetSizeKey.value] ||
+      document.body[offsetSizeKey.value]
     )
   }
 
-  if (rootRef.value) {
-    return rootRef.value ? Math.ceil(rootRef.value[directionKey.value]) : 0
-  }
-
-  return 0
+  return rootRef.value ? Math.ceil(rootRef.value[offsetSizeKey.value]) : 0
 }
 
 // return client viewport size
 function getClientSize() {
-  const key = isHorizontal.value ? 'clientWidth' : 'clientHeight'
   if (props.pageMode) {
-    return document.documentElement[key] || document.body[key]
+    return (
+      document.documentElement[clientSizeKey.value] ||
+      document.body[clientSizeKey.value]
+    )
   }
 
-  return rootRef.value ? Math.ceil(rootRef.value[key]) : 0
+  return rootRef.value ? Math.ceil(rootRef.value[clientSizeKey.value]) : 0
 }
 
 // return all scroll size
 function getScrollSize() {
-  const key = isHorizontal.value ? 'scrollWidth' : 'scrollHeight'
   if (props.pageMode) {
-    return document.documentElement[key] || document.body[key]
+    return (
+      document.documentElement[scrollSizeKey.value] ||
+      document.body[scrollSizeKey.value]
+    )
   }
 
-  return rootRef.value ? Math.ceil(rootRef.value[key]) : 0
+  return rootRef.value ? Math.ceil(rootRef.value[scrollSizeKey.value]) : 0
 }
 
 // set current scroll position to a expectant offset
 function scrollToOffset(offset: number) {
   if (props.pageMode) {
-    document.body[directionKey.value] = offset
-    document.documentElement[directionKey.value] = offset
+    document.body[offsetSizeKey.value] = offset
+    document.documentElement[offsetSizeKey.value] = offset
 
     return
   }
 
   if (rootRef.value) {
-    rootRef.value[directionKey.value] = offset
+    rootRef.value[offsetSizeKey.value] = offset
   }
 }
 
 // set current scroll position to a expectant index
 function scrollToIndex(index: number) {
   if (index < dataIds.value.length) {
-    scrollToOffset(v.getOffset(index))
+    const offset = v.getOffset(index)
+    scrollToOffset(offset)
 
     return
   }
@@ -300,15 +316,15 @@ function scrollToIndex(index: number) {
 // set current scroll position to bottom
 function scrollToBottom() {
   if (shepherdRef.value) {
-    scrollToOffset(
+    const offset =
       shepherdRef.value[isHorizontal.value ? 'offsetLeft' : 'offsetTop']
-    )
+    scrollToOffset(offset)
 
     // check if it's really scrolled to the bottom
     // maybe list doesn't render and calculate to last range
     // so we need retry in next event loop until it really at bottom
     setTimeout(() => {
-      if (getOffset() + getClientSize() < getScrollSize()) {
+      if (getOffsetSize() + getClientSize() < getScrollSize()) {
         scrollToBottom()
       }
     }, 30)
@@ -360,33 +376,37 @@ function onRangeChanged(r: VirtualRange) {
   wrapperStyle.value = getWrapperStyle(r.padBehind, r.padFront)
 }
 
-function onScroll(evt?: any) {
-  const offset = getOffset()
+function onScroll(evt?: Event) {
+  const offsetSize = getOffsetSize()
   const clientSize = getClientSize()
   const scrollSize = getScrollSize()
 
   // iOS scroll-spring-back behavior will make direction mistake
-  if (offset < 0 || offset + clientSize > scrollSize + 1 || !scrollSize) {
+  if (
+    offsetSize < 0 ||
+    offsetSize + clientSize > scrollSize + 1 ||
+    !scrollSize
+  ) {
     return
   }
 
-  emitScrollEvent(offset, clientSize, scrollSize, evt)
-  v.handleScroll(offset)
+  emitScrollEvent(offsetSize, clientSize, scrollSize, evt)
+  v.handleScroll(Math.max(0, offsetSize - clientSize / 2))
 }
 
 // emit event in special position
 function emitScrollEvent(
-  offset: number,
+  offsetSize: number,
   clientSize: number,
   scrollSize: number,
-  evt: any
+  evt?: Event
 ) {
-  emit('scroll', evt, v.getRange())
+  emit('scroll', evt as UIEvent, v.getRange())
 
   if (
     v.isFront() &&
     dataIds.value.length > 0 &&
-    offset - props.topThreshold <= 0
+    offsetSize - props.topThreshold <= 0
   ) {
     emit('totop')
 
@@ -395,7 +415,7 @@ function emitScrollEvent(
 
   if (
     v.isBehind() &&
-    offset + clientSize + props.bottomThreshold >= scrollSize
+    offsetSize + clientSize + props.bottomThreshold >= scrollSize
   ) {
     emit('tobottom')
   }
@@ -421,6 +441,7 @@ function getWrapperStyle(
     ref="rootRef"
     @scroll="(evt: UIEvent) => !props.pageMode && onScroll(evt)"
   >
+    <!-- <div class="fixed left-0 top-0">{{ vr }}</div> -->
     <VirtualListSlot
       :key="`${props.dataKey}-list_header`"
       :tag="props.headerTag"
@@ -439,27 +460,32 @@ function getWrapperStyle(
       :style="wrapperStyle"
       role="group"
     >
-      <VirtualListItem
-        v-for="i in range(...vr).slice()"
+      <Component
+        :is="props.itemWrapTag"
+        v-for="i in range(...vr).concat()"
         :key="`${props.dataKey}-list_component-${dataIds[i]}-${i}`"
-        :index="i"
-        :tag="props.itemTag"
-        :style="props.itemStyle"
-        :horizontal="isHorizontal"
-        :data-id="dataIds[i]"
-        :estimate-size="v.getEstimateSize()"
-        :data-key="props.dataKey"
-        :data-getter="props.dataGetter"
-        :extra-props="props.extraProps"
-        :data-component="props.dataComponent"
-        :slot-component="slots && slots.item"
-        :scoped-slots="props.itemScopedSlots"
-        :item-class="
-          props.itemClass +
-          (props.itemClassAdd ? ` ${props.itemClassAdd(i)}` : '')
-        "
-        @resize="onItemResized"
-      />
+        role="listitem"
+      >
+        <VirtualListItem
+          :index="i"
+          :tag="props.itemTag"
+          :style="props.itemStyle"
+          :horizontal="isHorizontal"
+          :data-id="dataIds[i]"
+          :estimate-size="v.getEstimateSize()"
+          :data-key="props.dataKey"
+          :data-getter="props.dataGetter"
+          :extra-props="props.extraProps"
+          :data-component="props.dataComponent"
+          :slot-component="slots && slots.item"
+          :scoped-slots="props.itemScopedSlots"
+          :item-class="
+            props.itemClass +
+            (props.itemClassAdd ? ` ${props.itemClassAdd(i)}` : '')
+          "
+          @resize="onItemResized"
+        />
+      </Component>
     </Component>
 
     <VirtualListSlot

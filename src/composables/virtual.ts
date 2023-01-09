@@ -57,7 +57,7 @@ export default class Virtual {
 
     // scroll data
     this.offset = 0
-    this.direction = ''
+    this.direction = DIRECTION_TYPE.FRONT
 
     // range data
     this.range = Object.create(null)

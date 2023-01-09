@@ -63,7 +63,7 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@vueuse/nuxt',
     '@pinia/nuxt',
-    // 'magic-regexp/nuxt',
+    'magic-regexp/nuxt',
 
     '@/modules/test/index',
   ],

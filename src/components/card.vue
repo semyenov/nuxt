@@ -13,26 +13,17 @@ const slots = useSlots()
 
 <template>
   <div
-    :class="
-      props.color &&
-      `divide-${props.color}-400 border-${props.color}-500 shadow-${props.color}-400 dark:divide-${props.color}-700 dark:border-${props.color}-600 dark:shadow-${props.color}-800`
-    "
-    class="component-card divide-y border flex flex-col bg-white shadow-xl text-left min-w-55 w-full shadow-opacity-30 relative rounded-lg dark:bg-gray-900 dark:shadow-opacity-30"
+    class="component-card divide-y border flex flex-col divide-blue-400 bg-white border-blue-500 shadow-xl text-left min-w-55 w-full shadow-blue-400 shadow-opacity-30 relative rounded-lg dark:bg-gray-900 dark:divide-blue-700 dark:border-blue-600 dark:shadow-opacity-30 dark:shadow-blue-800"
   >
     <div
       v-if="slots.header"
-      :class="
-        props.color &&
-        `bg-${props.color}-700 text-${props.color}-100 dark:border-${props.color}-500 dark:bg-${props.color}-900 dark:text-${props.color}-100`
-      "
-      class="flex flex-row flex-grow text-lg leading-snug gap-1 justify-between items-center font-bold last-rounded-b-lg first-rounded-t-lg"
+      class="flex flex-row flex-grow bg-blue-700 text-lg leading-snug text-blue-100 gap-1 justify-between items-center font-bold last-rounded-b-lg first-rounded-t-lg dark:border-blue-500 dark:bg-blue-900 dark:text-blue-100"
     >
       <slot name="header" />
     </div>
     <div
       v-if="slots.panel"
-      :class="props.color && `border-${props.color}-300`"
-      class="border-b flex flex-row bg-light-400 last-rounded-b-lg first-rounded-t-lg dark:text-gray-300 dark:bg-gray-800"
+      class="border-b flex flex-row bg-light-400 border-blue-300 last-rounded-b-lg first-rounded-t-lg dark:text-gray-300 dark:bg-gray-800"
     >
       <slot name="panel" />
     </div>

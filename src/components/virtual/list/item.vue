@@ -72,6 +72,8 @@ const shapeKey = computed<'width' | 'height'>(() =>
 
 const resizeObserver = useResizeObserver(rootRef, (entries) => {
   if (entries.length > 0) {
+    console.log('entry', entries)
+
     emit('resize', dataId.value, entries[0].contentRect[shapeKey.value], false)
   }
 })
@@ -99,7 +101,6 @@ function dispatchSizeChange() {
       v-if="item"
       ref="rootRef"
       :key="`${props.dataKey}-listitem_tag-${dataId}-${index}`"
-      role="listitem"
     >
       <Component
         v-bind="{
