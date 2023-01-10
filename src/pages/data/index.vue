@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { IData } from '@/types'
 import DataItem from '@/components/data/item.vue'
+import VirtualList from '@/components/virtual/list.vue'
 
 definePageMeta({
   layout: 'default',
@@ -10,11 +11,14 @@ definePageMeta({
 const backendStore = useBackendStore()
 const dataIds = await backendStore.itemsGetter('data')
 const dataGetter = backendStore.itemGetter<IData>('data')
+
+const listRef = ref<InstanceType<typeof VirtualList> | null>(null)
 </script>
 
 <template>
   <div class="page page-data-index">
     <VirtualList
+      ref="listRef"
       key="data-virtuallist"
       :keeps="20"
       :page-mode="true"
@@ -29,6 +33,15 @@ const dataGetter = backendStore.itemGetter<IData>('data')
     >
       <template #header>
         <PageTitle>Data Page</PageTitle>
+        <Button
+          color="red"
+          rounded="md"
+          size="md"
+          @click.prevent="listRef!.scrollToIndex(5000)"
+        >
+          <i class="i-carbon:arrow-down inline-block h-6" />
+          GOTO 5000
+        </Button>
       </template>
       <template #footer>
         <div class="flex flex-row items-center w-full">
