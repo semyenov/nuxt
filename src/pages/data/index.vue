@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import type { IData } from '@/types'
+import { DataItem, VirtualList } from '#components'
 
-import DataItem from '@/components/data/item.vue'
-import VirtualList from '@/components/virtual/list.vue'
+import type { IData } from '@/types'
 
 definePageMeta({
   layout: 'default',
@@ -15,12 +14,14 @@ const dataGetter = backendStore.itemGetter<IData>('data')
 
 const listRef = ref<InstanceType<typeof VirtualList> | null>(null)
 
-const listScrollStep = 1
+const listScrollStep = 10
 let listScrollIndex = listScrollStep
 
 function handleScrollerClick() {
   if (listScrollIndex > dataIds.value.length) {
+    listRef.value!.scrollToBottom()
     listScrollIndex = 0
+    return
   }
 
   listRef.value!.scrollToIndex(listScrollIndex)
