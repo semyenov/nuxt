@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { range } from '@antfu/utils'
-
 import type { Component, ComputedRef, PropType } from 'vue'
-import type { VirtualRange } from '@/composables/virtual'
-import type { IWithIdentificator } from '@/store/backend'
 
-import Virtual from '@/composables/virtual'
+import type { VirtualRange } from './utils'
+import Virtual from './utils'
+
+import type { IWithIdentificator } from '@/store/backend'
 
 const props = defineProps({
   dataIds: {
@@ -439,6 +439,7 @@ function getWrapperStyle(
     :is="props.rootTag"
     :key="`${props.dataKey}-list_root`"
     ref="rootRef"
+    role="list"
     @scroll="(evt: UIEvent) => !props.pageMode && onScroll(evt)"
   >
     <!-- <div class="fixed left-0 top-0">{{ vr }}</div> -->

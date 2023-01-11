@@ -21,6 +21,7 @@ function handleScrollerClick() {
   if (listScrollIndex > dataIds.value.length) {
     listRef.value!.scrollToBottom()
     listScrollIndex = 0
+
     return
   }
 
@@ -47,28 +48,30 @@ function handleScrollerClick() {
     >
       <template #header>
         <PageTitle>Data Page</PageTitle>
-        <Button
-          color="blue"
-          rounded="md"
-          size="md"
-          class="fixed right-8 bottom-8"
-          @click.prevent="handleScrollerClick"
-        >
-          <i class="i-carbon:arrow-down inline-block h-6" />
-        </Button>
-      </template>
-      <template #footer>
-        <div class="flex flex-row items-center w-full">
+        <div class="fixed flex flex-col gap-4 right-8 bottom-8 z-10">
           <Button
             color="zinc"
             size="md"
-            rounded="full"
+            rounded="md"
             @click.prevent="backendStore.getItems(['data', 'others'])"
           >
             <i class="i-carbon:download inline-block h-6" />
           </Button>
+          <Button
+            color="blue"
+            rounded="md"
+            size="md"
+            @click.prevent="handleScrollerClick"
+          >
+            <i class="i-carbon:arrow-down inline-block h-6" />
+          </Button>
         </div>
       </template>
+      <!-- <template #footer>
+        <div class="flex flex-row items-center w-full">
+
+        </div>
+      </template> -->
     </VirtualList>
   </div>
 </template>
