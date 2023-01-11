@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const keys = useMagicKeys()
-const shiftD = keys['Shift+D']
+const tildaKey = keys['~']
 
-watch(shiftD, (v) => {
+watch(tildaKey, (v) => {
   if (v) {
     toggleDark()
   }
