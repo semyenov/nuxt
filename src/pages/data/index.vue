@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { IData } from '@/types'
+
 import DataItem from '@/components/data/item.vue'
 import VirtualList from '@/components/virtual/list.vue'
 
@@ -13,6 +14,18 @@ const dataIds = await backendStore.itemsGetter('data')
 const dataGetter = backendStore.itemGetter<IData>('data')
 
 const listRef = ref<InstanceType<typeof VirtualList> | null>(null)
+
+const listScrollStep = 1
+let listScrollIndex = listScrollStep
+
+function handleScrollerClick() {
+  if (listScrollIndex > dataIds.value.length) {
+    listScrollIndex = 0
+  }
+
+  listRef.value!.scrollToIndex(listScrollIndex)
+  listScrollIndex += listScrollStep
+}
 </script>
 
 <template>
@@ -34,13 +47,13 @@ const listRef = ref<InstanceType<typeof VirtualList> | null>(null)
       <template #header>
         <PageTitle>Data Page</PageTitle>
         <Button
-          color="red"
+          color="blue"
           rounded="md"
           size="md"
-          @click.prevent="listRef!.scrollToIndex(5000)"
+          class="fixed right-8 bottom-8"
+          @click.prevent="handleScrollerClick"
         >
           <i class="i-carbon:arrow-down inline-block h-6" />
-          GOTO 5000
         </Button>
       </template>
       <template #footer>
