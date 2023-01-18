@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
+import type { IData, IDataUpdateInput } from '@/types'
 
 const props = defineProps({
   index: {
@@ -12,16 +13,13 @@ const props = defineProps({
   },
 })
 
+const dataStore = useDataStore()
+
 const item = toRef(props, 'item')
 
-function updateItem() {
+async function updateItem() {
   const height = `${parseInt(item.value.height) + 50}px`
-  item.value.height = height
-
-  // backendStore.store.get('data')!.set(id, {
-  //   ...item.value,
-  //   height,
-  // })
+  await dataStore.putItem(item.value._id, { height })
 }
 </script>
 

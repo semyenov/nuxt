@@ -8,9 +8,9 @@ definePageMeta({
   title: 'Page Title',
 })
 
-const backendStore = useBackendStore()
-const dataIds = await backendStore.itemsGetter('data')
-const dataGetter = backendStore.itemGetter<IData>('data')
+const dataStore = useDataStore()
+const dataIds = await dataStore.itemsGetter
+const dataGetter = dataStore.itemGetter
 
 const listRef = ref<InstanceType<typeof VirtualList> | null>(null)
 
@@ -38,12 +38,12 @@ function handleScrollerClick() {
       :keeps="20"
       :page-mode="true"
       :data-ids="dataIds"
-      data-key="data-virtuallist"
       :data-getter="dataGetter"
       :data-component="DataItem"
-      :estimate-size="350"
-      class="flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-200"
+      data-key="data-virtuallist"
       wrap-class="flex flex-col w-full"
+      class="flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-200"
+      :estimate-size="350"
       item-class="mb-8"
     >
       <template #header>
@@ -51,9 +51,9 @@ function handleScrollerClick() {
         <div class="fixed flex flex-col gap-4 right-8 bottom-8 z-10">
           <Button
             color="zinc"
-            size="md"
             rounded="md"
-            @click.prevent="backendStore.getItems(['data', 'others'])"
+            size="md"
+            @click.prevent="dataStore.getOthers"
           >
             <i class="i-carbon:download inline-block h-6" />
           </Button>

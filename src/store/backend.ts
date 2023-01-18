@@ -64,6 +64,29 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
     }
   }
 
+  async function putItem<
+    T extends IWithIdentificator,
+    I extends Record<string, any>
+  >(
+    [scope, command, ...params]: [ScopeType, string, ...string[]],
+    input: I,
+    opts?: FetchOptions<'json'>
+  ): Promise<T | undefined> {
+    const uri = formatURI(scope, command, ...params)
+    const res = await $fetch<T>(uri, {
+      baseURL,
+      headers: [['Authorization', `Bearer ${authorization.value}`]],
+      method: 'put',
+      body: input,
+      ...opts,
+    })
+
+    if (res) {
+      setItems(scope, [res])
+      return res as T
+    }
+  }
+
   async function getItems<T extends IWithIdentificator>(
     [scope, command, ...params]: [ScopeType, string, ...string[]],
     opts?: FetchOptions<'json'>
@@ -94,7 +117,7 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
     return true
   }
 
-  return { store, itemGetter, itemsGetter, getItem, getItems }
+  return { store, itemGetter, itemsGetter, getItem, putItem, getItems }
 })
 
 function formatURI(...args: string[]) {

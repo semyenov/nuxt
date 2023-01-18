@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { IData } from '@/types'
-
 definePageMeta({
   layout: 'default',
   title: 'Page Title',
@@ -12,8 +10,8 @@ definePageMeta({
 const route = useRoute()
 const id = route.params.id as string
 
-const backendStore = useBackendStore()
-const dataGetter = backendStore.itemGetter<IData>('data')
+const dataStore = useDataStore()
+const dataGetter = dataStore.itemGetter
 
 const item = await dataGetter(id)
 </script>

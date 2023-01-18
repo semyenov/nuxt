@@ -1,7 +1,10 @@
+import z from 'zod'
 import { defineEventHandler } from 'h3'
+import { useValidatedParams } from 'h3-zod'
+
 import { items } from '@/server/data'
 
-export default defineEventHandler((event) => {
-  const id = event.context.params.id
-  return items.find((item) => item._id === id)
+export default defineEventHandler(async (event) => {
+  const params = await useValidatedParams(event, z.object({ id: z.string() }))
+  return items.find((item) => item._id === params.id)
 })
