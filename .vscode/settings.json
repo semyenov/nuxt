@@ -13,7 +13,6 @@
   "editor.wordWrap": "bounded",
   "editor.wordWrapColumn": 80,
   "volar.autoWrapParentheses": true,
-  "volar.takeOverMode.enabled": "auto",
   "volar.vueserver.petiteVue.processHtmlFile": true,
   "stylelint.validate": [
     "css",
@@ -29,5 +28,5 @@
   },
   "browse-lite.startUrl": "http://localhost:3000",
   "browse-lite.chromeExecutable": "/usr/bin/google-chrome-stable",
-  "i18n-ally.localesPaths": []
+  "i18n-ally.localesPaths": ["./locales"]
 }

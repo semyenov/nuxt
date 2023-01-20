@@ -1,5 +1,8 @@
 import { resolve } from 'pathe'
 
+import en from './locales/en.json'
+import fr from './locales/fr.json'
+
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   telemetry: false,
@@ -38,16 +41,8 @@ export default defineNuxtConfig({
       legacy: false,
       locale: 'en',
       messages: {
-        en: {
-          index: {
-            title: 'Welcome page',
-          },
-        },
-        fr: {
-          index: {
-            title: "Page d'accueil",
-          },
-        },
+        en,
+        fr,
       },
     },
   },

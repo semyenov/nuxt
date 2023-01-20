@@ -1,12 +1,13 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import { DataItem, VirtualList } from '#components'
-
-import type { IData } from '@/types'
 
 definePageMeta({
   layout: 'default',
   title: 'Page Title',
 })
+
+const { t } = useI18n()
 
 const dataStore = useDataStore()
 const dataIds = await dataStore.itemsGetter
@@ -47,7 +48,7 @@ function handleScrollerClick() {
       item-class="mb-8"
     >
       <template #header>
-        <PageTitle>Data Page</PageTitle>
+        <PageTitle>{{ t('data.title') }}</PageTitle>
         <div class="fixed flex flex-col gap-4 right-8 bottom-8 z-10">
           <Button
             color="zinc"
