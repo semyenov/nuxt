@@ -19,6 +19,8 @@ export default defineNuxtConfig({
     dirs: ['store', 'composables'],
   },
 
+  css: ['@unocss/reset/antfu.css', 'assets/styles/main.css'],
+
   app: {
     head: {
       charset: 'utf-8',
@@ -34,8 +36,6 @@ export default defineNuxtConfig({
     },
   },
 
-  css: ['@unocss/reset/antfu.css', 'assets/styles/main.css'],
-
   i18n: {
     vueI18n: {
       legacy: false,
@@ -47,10 +47,10 @@ export default defineNuxtConfig({
     },
   },
 
-  // content: {
-  //   // https://content.nuxtjs.org/api/configuration
-  //   base: '/_content',
-  // },
+  content: {
+    // https://content.nuxtjs.org/api/configuration
+    base: '/_content',
+  },
 
   modules: [
     '@nuxt/content',
