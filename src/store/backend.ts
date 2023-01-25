@@ -1,4 +1,4 @@
-import type { FetchOptions } from 'ofetch'
+import type { FetchOptions, SearchParameters } from 'ofetch'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { toArray } from '@antfu/utils'
@@ -59,16 +59,18 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
       })
     }
 
-  async function get<T>(
+  async function get<T, Q extends SearchParameters = {}>(
     [scope, command, ...params]: [ScopeType, string, ...string[]],
+    query?: Q,
     opts?: FetchOptions<'json'>
   ): Promise<T | undefined> {
     const uri = formatURI(scope, command, ...params)
     const headers = formatHeaders(authorizationStore.authorization)
 
     const res = await client.request<T>('get', uri, {
-      baseURL,
+      query,
       headers,
+      baseURL,
       ...opts,
     })
 
@@ -78,9 +80,30 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
     }
   }
 
-  async function put<T, B extends Record<string, any>>(
+  async function post<T, B extends Record<string, any> = {}>(
     [scope, command, ...params]: [ScopeType, string, ...string[]],
-    body: B,
+    body?: B,
+    opts?: FetchOptions<'json'>
+  ): Promise<T | undefined> {
+    const uri = formatURI(scope, command, ...params)
+    const headers = formatHeaders(authorizationStore.authorization)
+
+    const res = await client.request<T>('post', uri, {
+      baseURL,
+      headers,
+      body,
+      ...opts,
+    })
+
+    if (res.data) {
+      // setStoreItems(scope, [res.data])
+      return res.data
+    }
+  }
+
+  async function put<T, B extends Record<string, any> = {}>(
+    [scope, command, ...params]: [ScopeType, string, ...string[]],
+    body?: B,
     opts?: FetchOptions<'json'>
   ): Promise<T | undefined> {
     const uri = formatURI(scope, command, ...params)
@@ -99,18 +122,18 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
     }
   }
 
-  async function post<T, B extends Record<string, any>>(
+  async function patch<T, B extends Record<string, any> = {}>(
     [scope, command, ...params]: [ScopeType, string, ...string[]],
-    body: B,
+    body?: B,
     opts?: FetchOptions<'json'>
   ): Promise<T | undefined> {
     const uri = formatURI(scope, command, ...params)
     const headers = formatHeaders(authorizationStore.authorization)
 
-    const res = await client.request<T>('post', uri, {
-      baseURL,
-      headers,
+    const res = await client.request<T>('patch', uri, {
       body,
+      headers,
+      baseURL,
       ...opts,
     })
 
@@ -140,6 +163,7 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
     get,
     post,
     put,
+    patch,
   }
 })
 
