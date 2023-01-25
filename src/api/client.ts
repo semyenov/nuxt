@@ -62,21 +62,19 @@ export class BackendClient {
     this._ofetch = ofetch.create(options)
   }
 
-  public request<T>(
+  public async request<T>(
     method: string,
     url: string,
     options: FetchOptions<'json'> = {}
   ): Promise<BackendResponse<T>> {
-    return this._ofetch
-      .raw<IResponse<T>>(url, {
+    try {
+      const res = await this._ofetch.raw<IResponse<T>>(url, {
         method,
         ...options,
       })
-      .then((res) => {
-        return new BackendResponse<T>('success', res)
-      })
-      .catch((err) => {
-        return new BackendResponse('fail', undefined, err)
-      })
+      return new BackendResponse<T>('success', res)
+    } catch (err) {
+      return new BackendResponse('fail', undefined, err as Error)
+    }
   }
 }
