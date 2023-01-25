@@ -49,7 +49,9 @@ export default defineNuxtConfig({
 
   content: {
     // https://content.nuxtjs.org/api/configuration
-    base: '/_content',
+    api: {
+      baseURL: '/_content',
+    },
   },
 
   modules: [

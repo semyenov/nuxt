@@ -1,5 +1,5 @@
 export default defineAppConfig({
-  apiUri: 'http://localhost:3000',
+  apiUri: 'http://127.0.0.1:8080',
 })
 
 declare module '@nuxt/schema' {

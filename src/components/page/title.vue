@@ -48,7 +48,7 @@ const mouseStore = useMouseStore()
           >
         </Button>
       </NuxtLink>
-      <NuxtLink v-slot="{ isActive, navigate }" to="/data" custom>
+      <NuxtLink v-slot="{ isActive, navigate }" to="/objects" custom>
         <Button
           :color="isActive ? 'blue' : 'zinc'"
           size="md"
@@ -57,7 +57,7 @@ const mouseStore = useMouseStore()
         >
           <i class="i-carbon:data-blob inline-block h-6" />
           <span :class="isActive || 'hidden'" un-sm="inline-block"
-            >Data Page</span
+            >Objects Page</span
           >
         </Button>
       </NuxtLink>

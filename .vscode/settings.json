@@ -28,5 +28,6 @@
   },
   "browse-lite.startUrl": "http://localhost:3000",
   "browse-lite.chromeExecutable": "/usr/bin/google-chrome-stable",
-  "i18n-ally.localesPaths": ["./locales"]
+  "i18n-ally.localesPaths": ["./locales"],
+  "i18n-ally.keystyle": "nested"
 }

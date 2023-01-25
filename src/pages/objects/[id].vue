@@ -3,17 +3,17 @@ definePageMeta({
   layout: 'default',
   title: 'Page Title',
   validate: (route) => {
-    return /^\d+$/.test(route.params.id as string)
+    return route.params.id.length === 21
   },
 })
 
 const route = useRoute()
 const id = route.params.id as string
 
-const dataStore = useDataStore()
-const dataGetter = dataStore.itemGetter
+const objectsStore = useObjectsStore()
+const objectGetter = objectsStore.itemGetter
 
-const item = await dataGetter(id)
+const item = await objectGetter(id)
 </script>
 
 <template>
@@ -23,9 +23,9 @@ const item = await dataGetter(id)
       class="flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-200"
     >
       <PageTitle>
-        {{ `Data #${item._id} Page` }}
+        {{ `# ${item.info.name} Page` }}
       </PageTitle>
-      <DataItem :item="item" :index="0" />
+      <ObjectsItem :item="item" :index="0" />
     </div>
   </div>
 </template>

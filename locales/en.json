@@ -4,5 +4,8 @@
   },
   "data": {
     "title": "Data page"
+  },
+  "objects": {
+    "title": "Objects page"
   }
 }

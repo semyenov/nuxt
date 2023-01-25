@@ -1,27 +1,35 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { isClient } from '@vueuse/core'
 
-import type { FetchOptions } from 'ohmyfetch'
+import type { FetchOptions } from 'ofetch'
+import { BackendClient } from '@/api/client'
 
-export type ScopeType = 'data' | 'objects'
+export type ScopeType = 'data' | 'objects' | 'users'
 export interface IWithIdentificator {
   _id: string
 }
 
 export const backendStoreKey = 'backend' as const
+export const backendLogger = useLogger(backendStoreKey)
 
 export const backendScopeTypes: ScopeType[] = ['data', 'objects']
 export const backendScopeTypesMap: Record<ScopeType, ScopeType[]> = {
   data: ['data'],
   objects: ['objects'],
+  users: ['users'],
 }
 
 export const useBackendStore = defineStore(backendStoreKey, () => {
   const appConfig = useAppConfig()
-  const baseURL = !isClient ? appConfig.apiUri : '/'
+  const baseURL = appConfig.apiUri
 
   const authorizationStore = useAuthorizationStore()
-  const authorization = authorizationStore.authorization
+
+  const client = new BackendClient({
+    baseURL,
+    onRequestError: (ctx) => {
+      backendLogger.error(JSON.stringify(ctx, null, 2))
+    },
+  })
 
   const store = ref<Map<ScopeType, Map<string, any>>>(
     new Map(backendScopeTypes.map((scope) => [scope, new Map()]))
@@ -58,18 +66,19 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
     opts?: FetchOptions<'json'>
   ): Promise<T[] | undefined> {
     const uri = formatURI(scope, command, ...params)
-    const headers = formatHeaders(authorization)
+    const headers = formatHeaders(authorizationStore.authorization)
 
-    const res = await $fetch<T[]>(uri, {
+    const res = await client.request<T[]>('get', uri, {
       baseURL,
       headers,
-      method: 'get',
       ...opts,
     })
 
-    if (res && res.length > 0) {
-      setStoreItems(scope, res)
-      return res as T[]
+    // console.log('test', res)
+
+    if (res.data && res.data.length > 0) {
+      setStoreItems(scope, res.data)
+      return res.data
     }
   }
 
@@ -78,43 +87,59 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
     opts?: FetchOptions<'json'>
   ): Promise<T | undefined> {
     const uri = formatURI(scope, command, ...params)
-    const headers = formatHeaders(authorization)
+    const headers = formatHeaders(authorizationStore.authorization)
 
-    const res = await $fetch<T>(uri, {
+    const res = await client.request<T>('get', uri, {
       baseURL,
       headers,
-      method: 'get',
       ...opts,
     })
 
-    if (res) {
-      setStoreItems(scope, [res])
-      return res as T
+    if (res.data) {
+      setStoreItems(scope, [res.data])
+      return res.data
     }
   }
 
-  async function putOne<
-    T extends IWithIdentificator,
-    I extends Record<string, any>
-  >(
+  async function putOne<T, B extends Record<string, any>>(
     [scope, command, ...params]: [ScopeType, string, ...string[]],
-    input: I,
+    body: B,
     opts?: FetchOptions<'json'>
   ): Promise<T | undefined> {
     const uri = formatURI(scope, command, ...params)
-    const headers = formatHeaders(authorization)
+    const headers = formatHeaders(authorizationStore.authorization)
 
-    const res = await $fetch<T>(uri, {
+    const res = await client.request<T>('put', uri, {
       baseURL,
       headers,
-      method: 'put',
-      body: input,
+      body,
       ...opts,
     })
 
-    if (res) {
-      setStoreItems(scope, [res])
-      return res as T
+    if (res.data) {
+      // setStoreItems(scope, [res.data])
+      return res.data
+    }
+  }
+
+  async function postOne<T, B extends Record<string, any>>(
+    [scope, command, ...params]: [ScopeType, string, ...string[]],
+    body: B,
+    opts?: FetchOptions<'json'>
+  ): Promise<T | undefined> {
+    const uri = formatURI(scope, command, ...params)
+    const headers = formatHeaders(authorizationStore.authorization)
+
+    const res = await client.request<T>('post', uri, {
+      baseURL,
+      headers,
+      body,
+      ...opts,
+    })
+
+    if (res.data) {
+      // setStoreItems(scope, [res.data])
+      return res.data
     }
   }
 
@@ -138,16 +163,23 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
 
     getMany,
     getOne,
+    postOne,
     putOne,
   }
 })
 
-function formatHeaders(authorization: string): HeadersInit {
-  return [['Authorization', `Bearer ${authorization}`]]
+function formatHeaders(authorization: string | null): HeadersInit {
+  const headers: HeadersInit = []
+
+  if (authorization) {
+    headers.push(['Authorization', `Bearer ${authorization}`])
+  }
+
+  return headers
 }
 
 function formatURI(scope: ScopeType, ...args: string[]) {
-  return ['/api', ...backendScopeTypesMap[scope], ...args]
+  return [...backendScopeTypesMap[scope], ...args]
     .filter((item) => !!item && item !== '')
     .join('/')
 }

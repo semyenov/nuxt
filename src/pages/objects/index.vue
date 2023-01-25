@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { DataItem, VirtualList } from '#components'
+import { ObjectsItem, VirtualList } from '#components'
 
 definePageMeta({
   layout: 'default',
@@ -9,9 +9,9 @@ definePageMeta({
 
 const { t } = useI18n()
 
-const dataStore = useDataStore()
-const dataIds = await dataStore.itemsGetter
-const dataGetter = dataStore.itemGetter
+const objectsStore = useObjectsStore()
+const objectsIds = await objectsStore.itemsGetter
+const objectGetter = objectsStore.itemGetter
 
 const listRef = ref<InstanceType<typeof VirtualList> | null>(null)
 
@@ -19,7 +19,7 @@ const listScrollStep = 10
 let listScrollIndex = listScrollStep
 
 function handleScrollerClick() {
-  if (listScrollIndex > dataIds.value.length) {
+  if (listScrollIndex > objectsIds.value.length) {
     listRef.value!.scrollToBottom()
     listScrollIndex = 0
 
@@ -36,25 +36,25 @@ function handleScrollerClick() {
     <VirtualList
       ref="listRef"
       key="data-virtuallist"
-      :keeps="20"
+      :keeps="5"
       :page-mode="true"
-      :data-ids="dataIds"
-      :data-getter="dataGetter"
-      :data-component="DataItem"
+      :data-ids="objectsIds"
+      :data-getter="objectGetter"
+      :data-component="ObjectsItem"
       data-key="data-virtuallist"
       wrap-class="flex flex-col w-full"
       class="flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-200"
-      :estimate-size="350"
+      :estimate-size="800"
       item-class="mb-8"
     >
       <template #header>
-        <PageTitle>{{ t('data.title') }}</PageTitle>
+        <PageTitle>{{ t('objects.title') }}</PageTitle>
         <div class="fixed flex flex-col gap-4 right-8 bottom-8 z-10">
           <Button
             color="zinc"
             rounded="md"
             size="md"
-            @click.prevent="dataStore.getOthers"
+            @click.prevent="objectsStore.getOthers"
           >
             <i class="i-carbon:download inline-block h-6" />
           </Button>

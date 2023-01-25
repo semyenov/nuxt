@@ -2,7 +2,7 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 
 export const authorizationStoreKey = 'authorization' as const
 export const useAuthorizationStore = defineStore('authorization', () => {
-  const authorization = ref<string>('test')
+  const authorization = ref<string | null>(null)
 
   return {
     authorization,
