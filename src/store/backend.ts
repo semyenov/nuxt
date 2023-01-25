@@ -146,8 +146,7 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
   function setStoreItems<T>(scope: ScopeType, items: T[]) {
     const storeScopeMap = store.value.get(scope)!
     for (const i in items) {
-      const item = items[i] as T &
-        Record<typeof backendStoreIdentificator, string>
+      const item = items[i] as T & { [backendStoreIdentificator]: string }
       storeScopeMap.set(item[backendStoreIdentificator], item)
     }
 
