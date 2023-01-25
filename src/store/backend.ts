@@ -1,4 +1,5 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import { toArray } from '@antfu/utils'
 
 import type { FetchOptions } from 'ofetch'
 import { BackendClient } from '@/api/client'
@@ -40,7 +41,7 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
   ) => {
     const storeScopeMap = store.value.get(scope)!
     if (storeScopeMap.size === 0) {
-      await getMany<T>([scope, 'items'])
+      await get<T[]>([scope, 'items'])
     }
 
     return computed(() => {
@@ -53,7 +54,7 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
     async (id: string) => {
       const storeScopeMap = store.value.get(scope)!
       if (!storeScopeMap.has(id)) {
-        await getOne<T>([scope, 'items', id])
+        await get<T>([scope, 'items', id])
       }
 
       return computed(() => {
@@ -61,28 +62,7 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
       })
     }
 
-  async function getMany<T extends IWithIdentificator>(
-    [scope, command, ...params]: [ScopeType, string, ...string[]],
-    opts?: FetchOptions<'json'>
-  ): Promise<T[] | undefined> {
-    const uri = formatURI(scope, command, ...params)
-    const headers = formatHeaders(authorizationStore.authorization)
-
-    const res = await client.request<T[]>('get', uri, {
-      baseURL,
-      headers,
-      ...opts,
-    })
-
-    // console.log('test', res)
-
-    if (res.data && res.data.length > 0) {
-      setStoreItems(scope, res.data)
-      return res.data
-    }
-  }
-
-  async function getOne<T extends IWithIdentificator>(
+  async function get<T extends Record<string, any>>(
     [scope, command, ...params]: [ScopeType, string, ...string[]],
     opts?: FetchOptions<'json'>
   ): Promise<T | undefined> {
@@ -95,13 +75,13 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
       ...opts,
     })
 
-    if (res.data) {
-      setStoreItems(scope, [res.data])
+    if (res.data && res.data.length > 0) {
+      setStoreItems(scope, '_id', toArray<T>(res.data))
       return res.data
     }
   }
 
-  async function putOne<T, B extends Record<string, any>>(
+  async function put<T, B extends Record<string, any>>(
     [scope, command, ...params]: [ScopeType, string, ...string[]],
     body: B,
     opts?: FetchOptions<'json'>
@@ -122,7 +102,7 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
     }
   }
 
-  async function postOne<T, B extends Record<string, any>>(
+  async function post<T, B extends Record<string, any>>(
     [scope, command, ...params]: [ScopeType, string, ...string[]],
     body: B,
     opts?: FetchOptions<'json'>
@@ -143,13 +123,14 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
     }
   }
 
-  function setStoreItems<T extends IWithIdentificator>(
+  function setStoreItems<T extends Record<string, any>, K extends keyof T>(
     scope: ScopeType,
+    key: K,
     items: T[]
   ) {
     const storeScopeMap = store.value.get(scope)!
     for (const item of items) {
-      storeScopeMap.set(item._id, item)
+      storeScopeMap.set(item[key], item)
     }
 
     return true
@@ -161,10 +142,9 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
     itemsGetter,
     itemGetter,
 
-    getMany,
-    getOne,
-    postOne,
-    putOne,
+    get,
+    post,
+    put,
   }
 })
 

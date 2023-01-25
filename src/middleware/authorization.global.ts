@@ -7,7 +7,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const backendStore = useBackendStore()
   const authorizationStore = useAuthorizationStore()
 
-  const userTokenData = await backendStore.postOne<
+  const userTokenData = await backendStore.post<
     IUserTokensData,
     IUserLoginInput
   >(['users', 'current'], {

@@ -30,13 +30,13 @@ export const useObjectsStore = defineStore(objectsStoreKey, () => {
 
   const itemGetter = backendStore.itemGetter<IObject>('objects')
 
-  const getItems = () => backendStore.getMany<IObject>(['objects', 'items'])
-  const getOthers = () => backendStore.getMany<IObject>(['objects', 'others'])
+  const getItems = () => backendStore.get<IObject>(['objects', 'items'])
+  const getOthers = () => backendStore.get<IObject>(['objects', 'others'])
 
   const getItem = (id: string) =>
-    backendStore.getOne<IObject>(['objects', 'items', id])
+    backendStore.get<IObject>(['objects', 'items', id])
   const putItem = (id: string, input: IObjectUpdateInput) =>
-    backendStore.putOne<IObject, IObjectUpdateInput>(
+    backendStore.put<IObject, IObjectUpdateInput>(
       ['objects', 'items', id],
       input
     )
