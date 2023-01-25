@@ -5,10 +5,8 @@ import type { FetchOptions } from 'ofetch'
 import { BackendClient } from '@/api/client'
 
 export type ScopeType = 'data' | 'objects' | 'users'
-export interface IWithIdentificator {
-  _id: string
-}
 
+export const backendStoreIdentificator = '_id' as const
 export const backendStoreKey = 'backend' as const
 export const backendLogger = useLogger(backendStoreKey)
 
@@ -36,9 +34,7 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
     new Map(backendScopeTypes.map((scope) => [scope, new Map()]))
   )
 
-  const itemsGetter = async <T extends IWithIdentificator>(
-    scope: ScopeType
-  ) => {
+  const itemsGetter = async <T>(scope: ScopeType) => {
     const storeScopeMap = store.value.get(scope)!
     if (storeScopeMap.size === 0) {
       await get<T[]>([scope, 'items'])
@@ -50,7 +46,7 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
   }
 
   const itemGetter =
-    <T extends IWithIdentificator>(scope: ScopeType) =>
+    <T extends Record<string, any>>(scope: ScopeType) =>
     async (id: string) => {
       const storeScopeMap = store.value.get(scope)!
       if (!storeScopeMap.has(id)) {

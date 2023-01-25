@@ -36,7 +36,7 @@ function handleScrollerClick() {
     <VirtualList
       ref="listRef"
       key="data-virtuallist"
-      :keeps="5"
+      :keeps="50"
       :page-mode="true"
       :data-ids="objectsIds"
       :data-getter="objectGetter"

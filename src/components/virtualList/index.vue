@@ -5,8 +5,6 @@ import type { Component, ComputedRef, PropType } from 'vue'
 import type { VirtualRange } from './utils'
 import Virtual from './utils'
 
-import type { IWithIdentificator } from '@/store/backend'
-
 const props = defineProps({
   dataIds: {
     type: Array as PropType<string[]>,
@@ -14,7 +12,7 @@ const props = defineProps({
   },
   dataGetter: {
     type: Function as PropType<
-      <T extends IWithIdentificator>(
+      <T extends Record<string, any>>(
         id: string
       ) => Promise<ComputedRef<T | undefined>>
     >,

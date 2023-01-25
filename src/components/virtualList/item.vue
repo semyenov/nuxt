@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { ComputedRef, DefineComponent, PropType } from 'vue'
-import type { IWithIdentificator } from '@/store/backend'
 
 const props = defineProps({
   index: {
@@ -33,7 +32,7 @@ const props = defineProps({
   },
   dataGetter: {
     type: Function as PropType<
-      <T extends IWithIdentificator>(
+      <T extends Record<string, any>>(
         id: string
       ) => Promise<ComputedRef<T> | undefined>
     >,
