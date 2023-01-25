@@ -76,8 +76,6 @@ export class BackendClient {
         return new BackendResponse<T>('success', res)
       })
       .catch((err) => {
-        console.log(err)
-
         return new BackendResponse('fail', undefined, err)
       })
   }
