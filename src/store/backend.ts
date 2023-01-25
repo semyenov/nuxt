@@ -1,7 +1,8 @@
+import type { FetchOptions } from 'ofetch'
+
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { toArray } from '@antfu/utils'
 
-import type { FetchOptions } from 'ofetch'
 import { BackendClient } from '@/api/client'
 
 export type ScopeType = 'data' | 'objects' | 'users'
@@ -58,7 +59,7 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
       })
     }
 
-  async function get<T extends Record<string, any>>(
+  async function get<T>(
     [scope, command, ...params]: [ScopeType, string, ...string[]],
     opts?: FetchOptions<'json'>
   ): Promise<T | undefined> {
@@ -71,8 +72,8 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
       ...opts,
     })
 
-    if (res.data && res.data.length > 0) {
-      setStoreItems(scope, '_id', toArray<T>(res.data))
+    if (res.data) {
+      setStoreItems(scope, toArray<T>(res.data))
       return res.data
     }
   }
@@ -86,9 +87,9 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
     const headers = formatHeaders(authorizationStore.authorization)
 
     const res = await client.request<T>('put', uri, {
-      baseURL,
-      headers,
       body,
+      headers,
+      baseURL,
       ...opts,
     })
 
@@ -119,14 +120,12 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
     }
   }
 
-  function setStoreItems<T extends Record<string, any>, K extends keyof T>(
-    scope: ScopeType,
-    key: K,
-    items: T[]
-  ) {
+  function setStoreItems<T>(scope: ScopeType, items: T[]) {
     const storeScopeMap = store.value.get(scope)!
-    for (const item of items) {
-      storeScopeMap.set(item[key], item)
+    for (const i in items) {
+      const item = items[i] as T &
+        Record<typeof backendStoreIdentificator, string>
+      storeScopeMap.set(item[backendStoreIdentificator], item)
     }
 
     return true
