@@ -34,6 +34,10 @@ export default defineNuxtConfig({
         },
       ],
     },
+    pageTransition: {
+      name: 'page',
+      mode: 'out-in',
+    },
   },
 
   i18n: {
