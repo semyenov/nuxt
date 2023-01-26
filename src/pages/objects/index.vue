@@ -16,18 +16,22 @@ const objectGetter = objectsStore.itemGetter
 const listRef = ref<InstanceType<typeof VirtualList> | null>(null)
 
 const listScrollStep = 10
-let listScrollIndex = listScrollStep
+const listScrollIndex = ref(listScrollStep)
 
 function handleScrollerClick() {
-  if (listScrollIndex > objectsIds.value.length) {
-    listRef.value!.scrollToBottom()
-    listScrollIndex = 0
+  if (!listRef.value) {
+    return
+  }
+
+  if (listScrollIndex.value > objectsIds.value.length) {
+    listRef.value.scrollToBottom()
+    listScrollIndex.value = 0
 
     return
   }
 
-  listRef.value!.scrollToIndex(listScrollIndex)
-  listScrollIndex += listScrollStep
+  listRef.value.scrollToIndex(listScrollIndex.value)
+  listScrollIndex.value += listScrollStep
 }
 </script>
 
@@ -50,14 +54,6 @@ function handleScrollerClick() {
       <template #header>
         <PageTitle>{{ t('objects.title') }}</PageTitle>
         <div class="fixed flex flex-col gap-4 right-8 bottom-8 z-10">
-          <Button
-            color="zinc"
-            rounded="md"
-            size="md"
-            @click.prevent="objectsStore.getOthers"
-          >
-            <i class="i-carbon:download inline-block h-6" />
-          </Button>
           <Button
             color="blue"
             rounded="md"

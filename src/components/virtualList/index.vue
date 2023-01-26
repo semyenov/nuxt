@@ -313,20 +313,22 @@ function scrollToIndex(index: number) {
 
 // set current scroll position to bottom
 function scrollToBottom() {
-  if (shepherdRef.value) {
-    const offset =
-      shepherdRef.value[isHorizontal.value ? 'offsetLeft' : 'offsetTop']
-    scrollToOffset(offset)
-
-    // check if it's really scrolled to the bottom
-    // maybe list doesn't render and calculate to last range
-    // so we need retry in next event loop until it really at bottom
-    setTimeout(() => {
-      if (getOffsetSize() + getClientSize() < getScrollSize()) {
-        scrollToBottom()
-      }
-    }, 30)
+  if (!shepherdRef.value) {
+    return
   }
+
+  const offset =
+    shepherdRef.value[isHorizontal.value ? 'offsetLeft' : 'offsetTop']
+  scrollToOffset(offset)
+
+  // check if it's really scrolled to the bottom
+  // maybe list doesn't render and calculate to last range
+  // so we need retry in next event loop until it really at bottom
+  setTimeout(() => {
+    if (getOffsetSize() + getClientSize() < getScrollSize()) {
+      scrollToBottom()
+    }
+  }, 30)
 }
 
 // when using page mode we need update slot header size manually

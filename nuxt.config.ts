@@ -3,12 +3,24 @@ import { resolve } from 'pathe'
 import en from './locales/en.json'
 import fr from './locales/fr.json'
 
+declare module '@nuxt/schema' {
+  interface PublicRuntimeConfig {
+    apiBase: string
+  }
+}
+
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   telemetry: false,
 
   srcDir: resolve(__dirname, 'src'),
   appDir: resolve(__dirname, 'src', 'app'),
+
+  runtimeConfig: {
+    public: {
+      apiUri: 'http://127.0.0.1:8080',
+    },
+  },
 
   typescript: {
     shim: false,

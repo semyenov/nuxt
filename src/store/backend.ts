@@ -9,9 +9,10 @@ export type ScopeType = 'data' | 'objects' | 'users'
 
 export const backendStoreIdentificator = '_id' as const
 export const backendStoreKey = 'backend' as const
+
 export const backendLogger = useLogger(backendStoreKey)
 
-export const backendScopeTypes: ScopeType[] = ['data', 'objects']
+export const backendScopeTypes: ScopeType[] = ['data', 'objects', 'users']
 export const backendScopeTypesMap: Record<ScopeType, ScopeType[]> = {
   data: ['data'],
   objects: ['objects'],
@@ -19,8 +20,8 @@ export const backendScopeTypesMap: Record<ScopeType, ScopeType[]> = {
 }
 
 export const useBackendStore = defineStore(backendStoreKey, () => {
-  const appConfig = useAppConfig()
-  const baseURL = appConfig.apiUri
+  const appConfig = useRuntimeConfig()
+  const baseURL = appConfig.public.apiUri
 
   const authorizationStore = useAuthorizationStore()
 
@@ -47,7 +48,7 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
   }
 
   const itemGetter =
-    <T extends Record<string, any>>(scope: ScopeType) =>
+    <T>(scope: ScopeType) =>
     async (id: string) => {
       const storeScopeMap = store.value.get(scope)!
       if (!storeScopeMap.has(id)) {

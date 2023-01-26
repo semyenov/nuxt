@@ -1,9 +1,7 @@
-export default defineAppConfig({
-  apiUri: 'http://127.0.0.1:8080',
-})
+export default defineAppConfig({})
 
-declare module '@nuxt/schema' {
-  interface AppConfig {
-    apiUri: string
-  }
-}
+// declare module '@nuxt/schema' {
+//   interface AppConfig {
+//     apiUri: string
+//   }
+// }
