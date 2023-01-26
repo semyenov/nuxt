@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: dockerfile
       args:
-        NODE_VERSION: '18.8.0'
+        NODE_VERSION: '19.5.0'
 
         INSTALL_ZSH: 'true'
         UPGRADE_PACKAGES: 'true'
