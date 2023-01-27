@@ -94,9 +94,9 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
     const headers = formatHeaders(authorizationStore.authorization)
 
     const res = await client.request<T>('post', uri, {
+      body,
       baseURL,
       headers,
-      body,
       ...opts,
     })
 

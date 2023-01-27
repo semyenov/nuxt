@@ -26,14 +26,5 @@ const item = toRef(props, 'item')
     <template #default>
       <pre class="p-4">{{ item }}</pre>
     </template>
-    <!-- <template #footer>
-      <div
-        class="flex flex-col flex-grow cursor-pointer items-center justify-center py-2 px-4"
-        :style="{ height: item.height }"
-        @click="updateItem"
-      >
-        {{ `+${item.height}` }}
-      </div>
-    </template> -->
   </Card>
 </template>

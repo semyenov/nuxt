@@ -1,3 +1,4 @@
+# Nuxt
 node_modules
 *.log*
 .nuxt
@@ -6,6 +7,15 @@ node_modules
 .output
 .env
 dist
+
+# Yarn
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
 # VIM
 **/*~

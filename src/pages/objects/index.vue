@@ -49,7 +49,7 @@ function handleScrollerClick() {
       wrap-class="flex flex-col w-full"
       class="flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-200"
       :estimate-size="800"
-      item-class="mb-8"
+      item-class="mb-8 w-40"
     >
       <template #header>
         <PageTitle>{{ t('objects.title') }}</PageTitle>

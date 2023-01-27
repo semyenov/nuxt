@@ -76,6 +76,7 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@vueuse/nuxt',
     '@pinia/nuxt',
+    '@nuxtjs/emotion',
     'magic-regexp/nuxt',
     'nuxt-typed-router',
 

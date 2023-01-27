@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import type { UnoColorVariants } from '~~/uno'
+// import type { PropType } from 'vue'
+// import type { UnoColorVariants } from '~~/uno'
 
-const props = defineProps({
-  color: {
-    type: String as PropType<UnoColorVariants>,
-    default: 'gray',
-  },
-})
+// const props = defineProps({
+//   color: {
+//     type: String as PropType<UnoColorVariants>,
+//     default: 'gray',
+//   },
+// })
 const slots = useSlots()
 </script>
 

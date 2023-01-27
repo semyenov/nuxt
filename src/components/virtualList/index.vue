@@ -11,11 +11,7 @@ const props = defineProps({
     default: () => [] as string[],
   },
   dataGetter: {
-    type: Function as PropType<
-      <T extends Record<string, any>>(
-        id: string
-      ) => Promise<ComputedRef<T | undefined>>
-    >,
+    type: Function as PropType<(id: string) => Promise<ComputedRef>>,
     required: true,
   },
   dataComponent: {

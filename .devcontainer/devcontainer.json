@@ -27,7 +27,8 @@
     "stylelint.vscode-stylelint",
     "ms-vscode.vscode-js-profile-flame",
     "tombonnike.vscode-status-bar-format-toggle",
-    "VisualStudioExptTeam.vscodeintellicode"
+    "VisualStudioExptTeam.vscodeintellicode",
+    "arcanis.vscode-zipfs"
   ],
   "forwardPorts": [3000],
   "onCreateCommand": "yarn",
