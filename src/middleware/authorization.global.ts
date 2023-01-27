@@ -1,4 +1,5 @@
 import type { IUserLoginInput, IUserTokensData } from '@/types'
+import { IMetaScope } from '@/types'
 
 const logger = useLogger()
 
@@ -11,7 +12,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const userTokenData = await backendStore.post<
     IUserTokensData,
     IUserLoginInput
-  >(['users', 'current'], {
+  >([IMetaScope.USERS, 'current'], {
     email: 'dez@hotmail.com',
     password: '12345678',
   })

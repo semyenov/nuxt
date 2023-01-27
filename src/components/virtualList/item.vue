@@ -44,7 +44,7 @@ const props = defineProps({
   },
 
   extraProps: {
-    type: Object,
+    type: Object as PropType<Record<string, any>>,
   },
   scopedSlots: {
     type: Object,

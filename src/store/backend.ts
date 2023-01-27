@@ -4,16 +4,20 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import { toArray } from '@antfu/utils'
 
 import { BackendClient } from '@/api/client'
+import { IMetaScope } from '@/types'
 
-export type ScopeType = 'data' | 'objects' | 'users'
+// export type IMetaScope = 'data' | 'objects' | 'users'
 
 export const backendStoreIdentificator = '_id' as const
 export const backendStoreKey = 'backend' as const
 
 export const backendLogger = useLogger(backendStoreKey)
 
-export const backendScopeTypes: ScopeType[] = ['data', 'objects', 'users']
-export const backendScopeTypesMap: Record<ScopeType, ScopeType[]> = {
+export const backendScopeTypes: IMetaScope[] = [
+  IMetaScope.OBJECTS,
+  IMetaScope.USERS,
+]
+export const backendScopeTypesMap: Partial<Record<IMetaScope, string[]>> = {
   data: ['data'],
   objects: ['objects'],
   users: ['users'],
@@ -32,11 +36,11 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
     },
   })
 
-  const store = ref<Map<ScopeType, Map<string, any>>>(
+  const store = ref<Map<IMetaScope, Map<string, any>>>(
     new Map(backendScopeTypes.map((scope) => [scope, new Map()]))
   )
 
-  const itemsGetter = async <T>(scope: ScopeType) => {
+  const itemsGetter = async <T>(scope: IMetaScope) => {
     const storeScopeMap = store.value.get(scope)!
     if (storeScopeMap.size === 0) {
       await get<T[]>([scope, 'items'])
@@ -48,7 +52,7 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
   }
 
   const itemGetter =
-    <T>(scope: ScopeType) =>
+    <T>(scope: IMetaScope) =>
     async (id: string) => {
       const storeScopeMap = store.value.get(scope)!
       if (!storeScopeMap.has(id)) {
@@ -61,7 +65,7 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
     }
 
   async function get<T, Q extends SearchParameters = {}>(
-    [scope, command, ...params]: [ScopeType, string, ...string[]],
+    [scope, command, ...params]: [IMetaScope, string, ...string[]],
     query?: Q,
     opts?: FetchOptions<'json'>
   ): Promise<T | undefined> {
@@ -82,7 +86,7 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
   }
 
   async function post<T, B extends Record<string, any> = {}>(
-    [scope, command, ...params]: [ScopeType, string, ...string[]],
+    [scope, command, ...params]: [IMetaScope, string, ...string[]],
     body?: B,
     opts?: FetchOptions<'json'>
   ): Promise<T | undefined> {
@@ -103,7 +107,7 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
   }
 
   async function put<T, B extends Record<string, any> = {}>(
-    [scope, command, ...params]: [ScopeType, string, ...string[]],
+    [scope, command, ...params]: [IMetaScope, string, ...string[]],
     body?: B,
     opts?: FetchOptions<'json'>
   ): Promise<T | undefined> {
@@ -124,7 +128,7 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
   }
 
   async function patch<T, B extends Record<string, any> = {}>(
-    [scope, command, ...params]: [ScopeType, string, ...string[]],
+    [scope, command, ...params]: [IMetaScope, string, ...string[]],
     body?: B,
     opts?: FetchOptions<'json'>
   ): Promise<T | undefined> {
@@ -144,7 +148,7 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
     }
   }
 
-  function setStoreItems<T>(scope: ScopeType, items: T[]) {
+  function setStoreItems<T>(scope: IMetaScope, items: T[]) {
     const storeScopeMap = store.value.get(scope)!
     for (const i in items) {
       const item = items[i] as T & { [backendStoreIdentificator]: string }
@@ -177,8 +181,8 @@ function formatHeaders(authorization: string | null): HeadersInit {
   return headers
 }
 
-function formatURI(scope: ScopeType, ...args: string[]) {
-  return [...backendScopeTypesMap[scope], ...args]
+function formatURI(scope: IMetaScope, ...args: string[]) {
+  return [...(backendScopeTypesMap[scope] || scope), ...args]
     .filter((item) => !!item && item !== '')
     .join('/')
 }

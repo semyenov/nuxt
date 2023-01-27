@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { range } from '@antfu/utils'
 import type { Component, ComputedRef, PropType } from 'vue'
+import { range } from '@antfu/utils'
 
-import type { VirtualRange } from './utils'
-import Virtual from './utils'
+import type { VirtualRange } from '@/utils'
+import { Virtual } from '@/utils'
 
 const props = defineProps({
   dataIds: {
@@ -334,17 +334,20 @@ function scrollToBottom() {
 // when using page mode we need update slot header size manually
 // taking root offset relative to the browser as slot header size
 function updatePageModeFront() {
-  if (rootRef.value) {
-    const rect = rootRef.value.getBoundingClientRect()
-    const { defaultView } = rootRef.value.ownerDocument
-
-    if (defaultView) {
-      const offsetFront = isHorizontal.value
-        ? rect.left + defaultView!.pageXOffset
-        : rect.top + defaultView!.pageYOffset
-      v.updateParam('slotHeaderSize', offsetFront)
-    }
+  if (!rootRef.value) {
+    return
   }
+
+  const { defaultView } = rootRef.value.ownerDocument
+  if (!defaultView) {
+    return
+  }
+
+  const rect = rootRef.value.getBoundingClientRect()
+  const offsetFront = isHorizontal.value
+    ? rect.left + defaultView!.pageXOffset
+    : rect.top + defaultView!.pageYOffset
+  v.updateParam('slotHeaderSize', offsetFront)
 }
 
 // event called when each item mounted or size changed

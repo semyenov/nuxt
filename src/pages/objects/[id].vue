@@ -7,7 +7,7 @@ definePageMeta({
   },
 })
 
-const route = useRoute()
+const route = useRoute('objects-id')
 const id = route.params.id as string
 
 const objectsStore = useObjectsStore()

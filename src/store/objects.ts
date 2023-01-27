@@ -1,13 +1,14 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import type { IObject, IObjectUpdateInput } from '@/types'
+import { IMetaScope } from '@/types'
 
-export const objectsStoreKey = 'objects' as const
+export const objectsStoreKey = IMetaScope.OBJECTS as const
 
 export const useObjectsStore = defineStore(objectsStoreKey, () => {
   const backendStore = useBackendStore()
 
   const itemsGetter = backendStore
-    .itemsGetter<IObject>('objects')
+    .itemsGetter<IObject>(IMetaScope.OBJECTS)
     .then((items) =>
       computed(() =>
         items.value
@@ -28,14 +29,15 @@ export const useObjectsStore = defineStore(objectsStoreKey, () => {
       )
     )
 
-  const itemGetter = backendStore.itemGetter<IObject>('objects')
+  const itemGetter = backendStore.itemGetter<IObject>(IMetaScope.OBJECTS)
 
-  const getItems = () => backendStore.get<IObject>(['objects', 'items'])
+  const getItems = () =>
+    backendStore.get<IObject>([IMetaScope.OBJECTS, 'items'])
   const getItem = (id: string) =>
-    backendStore.get<IObject>(['objects', 'items', id])
+    backendStore.get<IObject>([IMetaScope.OBJECTS, 'items', id])
   const putItem = (id: string, input: IObjectUpdateInput) =>
     backendStore.put<IObject, IObjectUpdateInput>(
-      ['objects', 'items', id],
+      [IMetaScope.OBJECTS, 'items', id],
       input
     )
 

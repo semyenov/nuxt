@@ -1,3 +1,4 @@
+import { range } from '@antfu/utils'
 import {
   defineConfig,
   presetAttributify,
@@ -8,8 +9,7 @@ import {
   transformerDirectives,
   transformerVariantGroup,
 } from 'unocss'
-
-import { range } from '@antfu/utils'
+import { presetScrollbar } from 'unocss-preset-scrollbar'
 
 import { createShortcuts } from './uno'
 const shortcuts = createShortcuts()
@@ -28,6 +28,7 @@ export default defineConfig({
     }),
     presetTypography(),
     presetUno(),
+    presetScrollbar(),
   ],
   transformers: [transformerDirectives(), transformerVariantGroup()],
   shortcuts,

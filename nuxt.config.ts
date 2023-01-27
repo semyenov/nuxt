@@ -3,11 +3,11 @@ import { resolve } from 'pathe'
 import en from './locales/en.json'
 import fr from './locales/fr.json'
 
-declare module '@nuxt/schema' {
-  interface PublicRuntimeConfig {
-    apiBase: string
-  }
-}
+// declare module '@nuxt/schema' {
+//   interface PublicRuntimeConfig {
+//     apiBase: string
+//   }
+// }
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
@@ -77,6 +77,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@pinia/nuxt',
     'magic-regexp/nuxt',
+    'nuxt-typed-router',
 
     '@/modules/test/index',
   ],

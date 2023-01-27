@@ -30,7 +30,7 @@ export interface VirtualParam {
 
 const LEADING_BUFFER = 0
 
-export default class Virtual {
+export class Virtual {
   public sizes: Map<string, number>
   public firstRangeTotalSize?: number
   public firstRangeAverageSize: number
