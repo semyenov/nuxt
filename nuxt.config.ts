@@ -37,7 +37,7 @@ export default defineNuxtConfig({
     head: {
       charset: 'utf-8',
       title: 'A Better Nuxt 3 Starter',
-      viewport: 'width=device-width, initial-scale=1',
+      viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
       link: [
         {
           rel: 'icon',
