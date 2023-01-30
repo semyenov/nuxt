@@ -7,25 +7,25 @@ definePageMeta({
   },
 })
 
-const route = useRoute('objects-id')
+const route = useRoute('users-id')
 const id = route.params.id as string
 
-const objectsStore = useObjectsStore()
-const objectGetter = objectsStore.itemGetter
+const usersStore = useUsersStore()
+const usersGetter = usersStore.itemGetter
 
-const item = await objectGetter(id)
+const item = await usersGetter(id)
 </script>
 
 <template>
-  <div class="page page-objects-id">
+  <div class="page page-users-id">
     <div
       v-if="item"
       class="flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-200"
     >
-      <PageTitle v-if="item.info.name">
-        {{ `# ${item.info.name} Page` }}
+      <PageTitle v-if="item.info.first_name && item.info.last_name">
+        {{ `# ${item.info.first_name} ${item.info.last_name} Page` }}
       </PageTitle>
-      <ObjectsItem :item="item" :index="0" />
+      <UsersItem :item="item" :index="0" />
     </div>
   </div>
 </template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { ObjectsItem, VirtualList } from '#components'
+import { UsersItem, VirtualList } from '#components'
 
 definePageMeta({
   layout: 'default',
@@ -9,9 +9,9 @@ definePageMeta({
 
 const { t } = useI18n()
 
-const objectsStore = useObjectsStore()
-const objectsIds = await objectsStore.itemsGetter
-const objectGetter = objectsStore.itemGetter
+const usersStore = useUsersStore()
+const usersIds = await usersStore.itemsGetter
+const objectGetter = usersStore.itemGetter
 
 const listRef = ref<InstanceType<typeof VirtualList> | null>(null)
 
@@ -23,7 +23,7 @@ function handleScrollerClick() {
     return
   }
 
-  if (listScrollIndex.value > objectsIds.value.length) {
+  if (listScrollIndex.value > usersIds.value.length) {
     listRef.value.scrollToBottom()
     listScrollIndex.value = 0
 
@@ -36,15 +36,15 @@ function handleScrollerClick() {
 </script>
 
 <template>
-  <div class="page page-objects-index">
+  <div class="page page-users-index">
     <VirtualList
       ref="listRef"
       key="data-virtuallist"
       :keeps="50"
       :page-mode="true"
-      :data-ids="objectsIds"
+      :data-ids="usersIds"
       :data-getter="objectGetter"
-      :data-component="ObjectsItem"
+      :data-component="UsersItem"
       data-key="data-virtuallist"
       wrap-class="flex flex-col w-full"
       class="flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-200"
@@ -52,7 +52,7 @@ function handleScrollerClick() {
       item-class="mb-8 w-40"
     >
       <template #header>
-        <PageTitle>{{ t('objects.title') }}</PageTitle>
+        <PageTitle>{{ t('users.title') }}</PageTitle>
         <div class="fixed flex flex-col gap-4 right-8 bottom-8 z-10">
           <Button
             color="blue"

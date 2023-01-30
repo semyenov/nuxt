@@ -13,6 +13,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
   if (userTokenData) {
     authorizationStore.authorization = userTokenData.access_token || null
+    await usersStore.getItems()
     const currentUser = await usersStore.getCurrent()
 
     if (currentUser) {

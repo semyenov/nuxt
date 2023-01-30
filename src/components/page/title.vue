@@ -39,7 +39,7 @@ const mouseStore = useMouseStore()
         <Button
           :color="isActive ? 'emerald' : 'zinc'"
           size="md"
-          rounded="xl"
+          rounded="lg"
           @click="navigate"
         >
           <i class="i-carbon:home inline-block h-6" />
@@ -52,7 +52,7 @@ const mouseStore = useMouseStore()
         <Button
           :color="isActive ? 'blue' : 'zinc'"
           size="md"
-          rounded="xl"
+          rounded="lg"
           @click="navigate"
         >
           <i class="i-carbon:data-blob inline-block h-6" />
@@ -61,11 +61,24 @@ const mouseStore = useMouseStore()
           >
         </Button>
       </NuxtLink>
+      <NuxtLink v-slot="{ isActive, navigate }" to="/users" custom>
+        <Button
+          :color="isActive ? 'blue' : 'zinc'"
+          size="md"
+          rounded="lg"
+          @click="navigate"
+        >
+          <i class="i-carbon:user inline-block h-6" />
+          <span :class="isActive || 'hidden'" un-sm="inline-block"
+            >Users Page</span
+          >
+        </Button>
+      </NuxtLink>
       <NuxtLink v-slot="{ isActive, navigate }" to="/test" custom>
         <Button
           :color="isActive ? 'rose' : 'zinc'"
           size="md"
-          rounded="xl"
+          rounded="lg"
           @click="navigate"
         >
           <i class="i-carbon:text-scale inline-block h-6" />
@@ -78,7 +91,7 @@ const mouseStore = useMouseStore()
         <Button
           :color="isActive ? 'purple' : 'zinc'"
           size="md"
-          rounded="xl"
+          rounded="lg"
           @click="navigate"
         >
           <i class="i-carbon:book inline-block h-6" />

@@ -4,5 +4,8 @@
   },
   "data": {
     "title": "Page de données"
+  },
+  "users": {
+    "title": "Page des utilisateurs"
   }
 }
