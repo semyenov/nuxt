@@ -13,7 +13,7 @@
     "preview": "nuxt preview",
     "generate": "nuxt generate",
     "typecheck": "nuxt typecheck",
-    "lint": "eslint --ext .ts,.vue src && stylelint **/*.vue",
+    "lint": "eslint --ext .ts,.vue src && stylelint **/*.{vue,css,postcss}",
     "postinstall": "husky install && nuxt prepare"
   },
   "devDependencies": {

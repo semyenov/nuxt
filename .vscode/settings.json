@@ -5,6 +5,13 @@
   "eslint.alwaysShowStatus": true,
   "eslint.format.enable": false,
   "eslint.lintTask.enable": true,
+  "eslint.validate": [
+    "typescript",
+    "typescriptreact",
+    "javascript",
+    "javascriptreact",
+    "vue"
+  ],
   "volar.codeLens.scriptSetupTools": true,
   "volar.completion.preferredTagNameCase": "pascal",
   "volar.completion.preferredAttrNameCase": "kebab",
