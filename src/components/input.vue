@@ -26,7 +26,9 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits<{
+  (event: 'update:modelValue', val: string): void
+}>()
 const attrs = useAttrs()
 
 function handleInput(evt: Event) {
@@ -39,7 +41,11 @@ function handleInput(evt: Event) {
   <input
     v-bind="attrs"
     class="input"
-    :class="`input-color__${props.color} input-size__${props.size} input-rounded__${props.rounded}`"
+    :class="[
+      `input-color__${props.color}`,
+      `input-size__${props.size}`,
+      `input-rounded__${props.rounded}`,
+    ]"
     :value="modelValue"
     @input="handleInput"
   />
