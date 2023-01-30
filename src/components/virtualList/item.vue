@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ComputedRef, DefineComponent, PropType } from 'vue'
+import type { ComputedRef, PropType } from 'vue'
 
 const props = defineProps({
   index: {
@@ -39,7 +39,7 @@ const props = defineProps({
     required: true,
   },
   dataComponent: {
-    type: [Object, Function] as PropType<DefineComponent<any, any, any>>,
+    type: [Object, Function],
     required: false,
   },
 

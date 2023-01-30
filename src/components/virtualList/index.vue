@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Component, ComputedRef, PropType } from 'vue'
+import type { ComputedRef, PropType } from 'vue'
 import { range } from '@antfu/utils'
 
 import type { VirtualRange } from '@/utils'
@@ -15,7 +15,7 @@ const props = defineProps({
     required: true,
   },
   dataComponent: {
-    type: [Object, Function] as PropType<Component>,
+    type: [Object, Function],
     required: false,
   },
   dataKey: {
