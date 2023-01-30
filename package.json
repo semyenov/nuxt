@@ -9,6 +9,7 @@
     "dev": "nuxt dev",
     "build": "nuxt build",
     "clean": "nuxt clean",
+    "prepare": "nuxt prepare",
     "preview": "nuxt preview",
     "generate": "nuxt generate",
     "typecheck": "nuxt typecheck",
