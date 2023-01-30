@@ -6662,6 +6662,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"h3@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "h3@npm:1.1.0"
+  dependencies:
+    cookie-es: ^0.5.0
+    destr: ^1.2.2
+    radix3: ^1.0.0
+    ufo: ^1.0.1
+  checksum: aa3be7d031d10758f3d2b7c8c81187d4b87629334be4a28a3fd31bf51e0986323f592bfc39086c2e397e9e164dfbc25fb497db04eaf8ef076f0d1453590e8710
+  languageName: node
+  linkType: hard
+
 "hard-rejection@npm:^2.1.0":
   version: 2.1.0
   resolution: "hard-rejection@npm:2.1.0"
@@ -11251,6 +11263,7 @@ __metadata:
     eslint-plugin-import: ^2.27.5
     eslint-plugin-prettier: ^4.2.1
     eslint-plugin-vue: ^9.9.0
+    h3: ^1.1.0
     h3-zod: ^0.3.10
     husky: ^8.0.3
     lint-staged: ^13.1.0
@@ -11267,13 +11280,11 @@ __metadata:
     stylelint-config-prettier: ^9.0.4
     stylelint-config-recommended-vue: ^1.4.0
     typescript: ^4.9.4
+    unocss: ^0.49.1
     unocss-preset-scrollbar: ^0.2.1
     vitest: ^0.28.3
     vue-tsc: ^1.0.24
     zod: ^3.20.2
-  peerDependencies:
-    h3: "*"
-    unocss: "*"
   languageName: unknown
   linkType: soft
 
@@ -12813,7 +12824,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unocss@npm:0.49.1":
+"unocss@npm:0.49.1, unocss@npm:^0.49.1":
   version: 0.49.1
   resolution: "unocss@npm:0.49.1"
   dependencies:
