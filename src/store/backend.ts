@@ -1,12 +1,10 @@
 import type { FetchOptions, SearchParameters } from 'ofetch'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { toArray } from '@antfu/utils'
+import { hasOwnProperty, toArray } from '@antfu/utils'
 
 import { BackendClient } from '@/api/client'
 import { IMetaScope } from '@/types'
-
-// export type IMetaScope = 'data' | 'objects' | 'users'
 
 export const backendStoreIdentificator = '_id' as const
 export const backendStoreKey = 'backend' as const
@@ -152,7 +150,9 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
     const storeScopeMap = store.value.get(scope)!
     for (const i in items) {
       const item = items[i] as T & { [backendStoreIdentificator]: string }
-      storeScopeMap.set(item[backendStoreIdentificator], item)
+      if (hasOwnProperty(item, backendStoreIdentificator)) {
+        storeScopeMap.set(item[backendStoreIdentificator], item)
+      }
     }
 
     return true
