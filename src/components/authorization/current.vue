@@ -13,8 +13,8 @@ const userFullName = computed(
 
 <template>
   <div
-    class="fixed right-0 top-0 bg-amber-50 pr-4 pl-3 py-0.5 rounded-lb-xl inline-flex flex-row items-center text-amber-800 border border-r-none border-t-none border-amber-600"
-    un-dark="bg-amber-900 text-amber-50 border-amber-600"
+    class="fixed right-0 top-0 bg-amber-50 pr-4 pl-3 py-0.5 rounded-lb-xl inline-flex flex-row items-center text-amber-800 border border-r-none border-t-none border-amber-600 bg-opacity-90"
+    un-dark="bg-amber-900 text-amber-50 border-amber-600 bg-opacity-75"
   >
     <i class="i-carbon:worship-jewish mr-2" />
     <span>{{ userFullName }}</span>

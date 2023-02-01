@@ -16,7 +16,7 @@ export default defineNuxtModule({
       logger.info('Add test page', resolve(__dirname, 'pages/test.vue'))
 
       pages.push({
-        name: 'Test',
+        name: 'test',
         path: '/test',
         file: resolve('pages', 'test.vue'),
       })
