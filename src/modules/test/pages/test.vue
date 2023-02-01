@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { unoColorVariants, unoRoundedVariants, unoSizeVariants } from '~~/uno'
-const route = useRoute()
-console.log(route.name)
 </script>
 
 <template>
