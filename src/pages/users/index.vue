@@ -11,7 +11,7 @@ const { t } = useI18n()
 
 const usersStore = useUsersStore()
 const usersIds = await usersStore.itemsGetter
-const objectGetter = usersStore.itemGetter
+const usersGetter = usersStore.itemGetter
 
 const listRef = ref<InstanceType<typeof VirtualList> | null>(null)
 
@@ -43,13 +43,13 @@ function handleScrollerClick() {
       :keeps="50"
       :page-mode="true"
       :data-ids="usersIds"
-      :data-getter="objectGetter"
+      :data-getter="usersGetter"
       :data-component="UsersItem"
       data-key="data-virtuallist"
       wrap-class="flex flex-col w-full"
       class="flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-200"
       :estimate-size="800"
-      item-class="mb-8 w-40"
+      item-class="mb-8"
     >
       <template #header>
         <PageTitle>{{ t('users.title') }}</PageTitle>

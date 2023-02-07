@@ -3,7 +3,7 @@ import type { FetchOptions, SearchParameters } from 'ofetch'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { hasOwnProperty, toArray } from '@antfu/utils'
 
-import { BackendClient } from '@/api/client'
+import { ApiClient } from '@/api/client'
 import { IMetaScope } from '@/types'
 
 export const backendStoreIdentificator = '_id' as const
@@ -27,7 +27,7 @@ export const useBackendStore = defineStore(backendStoreKey, () => {
 
   const authorizationStore = useAuthorizationStore()
 
-  const client = new BackendClient({
+  const client = new ApiClient({
     baseURL,
     onRequestError: (ctx) => {
       backendLogger.error(JSON.stringify(ctx, null, 2))

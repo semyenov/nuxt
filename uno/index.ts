@@ -132,12 +132,12 @@ const config = {
 
 export const createShortcuts = () => {
   const buttons = unoColorVariants.reduce(
-    (p, c) =>
-      Object.assign(p, {
-        [`btn-color__${c}`]: Object.entries(config.buttons.color)
-          .map(([s, n]) => `${s}-${c}-${n}`)
-          .join(' '),
-      }),
+    (p, c) => ({
+      ...p,
+      [`btn-color__${c}`]: Object.entries(config.buttons.color)
+        .map(([s, n]) => `${s}-${c}-${n}`)
+        .join(' '),
+    }),
     {
       btn: 'flex flex-row items-center justify-center border rounded-md transition-200',
       'btn-size__xs': 'gap-1 px-2 py-1 text-xs shadow',
@@ -158,12 +158,12 @@ export const createShortcuts = () => {
   ) as Record<string, string>
 
   const inputs = unoColorVariants.reduce(
-    (p, c) =>
-      Object.assign(p, {
-        [`input-color__${c}`]: Object.entries(config.inputs.color)
-          .map(([s, n]) => `${s}-${c}-${n}`)
-          .join(' '),
-      }),
+    (p, c) => ({
+      ...p,
+      [`input-color__${c}`]: Object.entries(config.inputs.color)
+        .map(([s, n]) => `${s}-${c}-${n}`)
+        .join(' '),
+    }),
     {
       input:
         'flex flex-row items-center justify-center border rounded-md transition-200 outline-none',

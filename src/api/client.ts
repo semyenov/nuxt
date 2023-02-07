@@ -1,7 +1,7 @@
 import type { $Fetch, FetchOptions, FetchResponse } from 'ofetch'
 import { ofetch } from 'ofetch'
 
-export type BackendResponseStatus = 'success' | 'fail'
+export type ApiResponseStatus = 'success' | 'fail'
 
 interface IResponseError {
   code?: number
@@ -13,16 +13,16 @@ interface IResponse<T> {
   error?: IResponseError
 }
 
-export class BackendResponse<T> implements IResponse<T> {
+export class ApiResponse<T> implements IResponse<T> {
   private _ts: number
-  private _status: BackendResponseStatus
+  private _status: ApiResponseStatus
   private _statusCode: number
 
   public data?: T
   public error?: IResponseError
 
   constructor(
-    status: BackendResponseStatus,
+    status: ApiResponseStatus,
     res?: FetchResponse<IResponse<T>>,
     err?: Error
   ) {
@@ -46,7 +46,7 @@ export class BackendResponse<T> implements IResponse<T> {
     return this._ts
   }
 
-  public get status(): BackendResponseStatus {
+  public get status(): ApiResponseStatus {
     return this._status
   }
 
@@ -55,7 +55,9 @@ export class BackendResponse<T> implements IResponse<T> {
   }
 }
 
-export class BackendClient {
+type ApiRequestMethod = 'get' | 'post' | 'put' | 'patch' | 'head' | 'options'
+
+export class ApiClient {
   private _ofetch: $Fetch
 
   constructor(options: FetchOptions<'json'>) {
@@ -63,18 +65,18 @@ export class BackendClient {
   }
 
   public async request<T>(
-    method: string,
+    method: ApiRequestMethod,
     url: string,
     options: FetchOptions<'json'> = {}
-  ): Promise<BackendResponse<T>> {
+  ): Promise<ApiResponse<T>> {
     try {
       const res = await this._ofetch.raw<IResponse<T>>(url, {
         method,
         ...options,
       })
-      return new BackendResponse<T>('success', res)
+      return new ApiResponse<T>('success', res)
     } catch (err) {
-      return new BackendResponse('fail', undefined, err as Error)
+      return new ApiResponse('fail', undefined, err as Error)
     }
   }
 }

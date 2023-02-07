@@ -5,18 +5,18 @@ const mouseStore = useMouseStore()
 
 <template>
   <div
-    class="component-page-title flex flex-col items-center justify-between border-b border-dashed w-full border-gray-400 rounded-b-3xl py-6 px-6"
+    class="component-page-title flex flex-col items-center justify-between border-b border-dashed w-full border-gray-400 rounded-b-3xl py-8 px-6"
     un-dark="border-gray-600"
   >
     <div
       class="flex flex-row items-center justify-center text-gray-600 text-base font-semibold gap-1 mb-1"
       un-dark="text-gray-400"
     >
-      {{ mouseStore.x }}
+      <span>{{ mouseStore.x }}</span>
       <span class="text-xs text-gray-400" un-dark="text-gray-500">
         &Cross;
       </span>
-      {{ mouseStore.y }}
+      <span>{{ mouseStore.y }}</span>
     </div>
 
     <div class="flex flex-row items-start justify-end gap-2 mb-4 ml-8">
@@ -30,11 +30,11 @@ const mouseStore = useMouseStore()
       />
     </div>
 
-    <div class="flex mb-4 text-gray-400" un-dark="text-gray-600">
+    <div class="flex mb-6 text-gray-400" un-dark="text-gray-600">
       {{ now.toDateString() }}
     </div>
 
-    <div class="flex flex-row flex-wrap items-center justify-center gap-3">
+    <div class="flex flex-row flex-wrap items-center justify-center gap-2">
       <NuxtLink v-slot="{ isActive, navigate }" :to="{ name: 'index' }" custom>
         <Button
           :color="isActive ? 'emerald' : 'zinc'"

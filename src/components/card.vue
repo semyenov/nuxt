@@ -13,7 +13,7 @@ const slots = useSlots()
 
 <template>
   <div
-    class="component-card w-full divide-y border flex flex-col divide-blue-400 bg-white border-blue-500 shadow-xl text-left min-w-55 w-full shadow-blue-400 shadow-opacity-30 relative rounded-lg dark:bg-gray-900 dark:divide-blue-700 dark:border-blue-600 dark:shadow-opacity-30 dark:shadow-blue-800"
+    class="component-card w-full divide-y border flex flex-col divide-blue-400 bg-white border-blue-500 shadow-xl text-left w-full shadow-blue-400 shadow-opacity-30 relative rounded-lg dark:bg-gray-900 dark:divide-blue-700 dark:border-blue-600 dark:shadow-opacity-30 dark:shadow-blue-800"
   >
     <div
       v-if="slots.header"
