@@ -55,7 +55,7 @@ function handleScrollerClick() {
         <PageTitle>{{ t('users.title') }}</PageTitle>
         <div class="fixed flex flex-col gap-4 right-8 bottom-8 z-10">
           <Button
-            color="blue"
+            color="secondary"
             rounded="md"
             size="md"
             @click.prevent="handleScrollerClick"

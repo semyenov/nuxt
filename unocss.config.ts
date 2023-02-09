@@ -1,5 +1,6 @@
-import { range } from '@antfu/utils'
 import chroma from 'chroma-js'
+import { range } from '@antfu/utils'
+import { presetScrollbar } from 'unocss-preset-scrollbar'
 import {
   presetUno as createPresetUno,
   defineConfig,
@@ -10,33 +11,43 @@ import {
   transformerDirectives,
   transformerVariantGroup,
 } from 'unocss'
-import { presetScrollbar } from 'unocss-preset-scrollbar'
 
 import { createShortcuts } from './uno'
+
+type UnoColors = Exclude<typeof presetUnoTheme.colors, undefined>
 
 const shortcuts = createShortcuts()
 const presetUno = createPresetUno()
 const presetUnoTheme = presetUno.theme!
 
 function createColorScale(
-  color: typeof presetUnoTheme.colors,
-  steps: number = 18
-) {
-  if (color) {
-    return chroma
-      .scale([color[50], color[900]])
-      .mode('rgb')
-      .colors(steps)
-      .reduce(
-        (s, c, i) => ({
-          ...s,
-          [50 * (i + 1)]: chroma(c)
-            .saturate((1 / steps) * i - 0.2)
-            .hex(),
-        }),
-        {} as typeof presetUnoTheme.colors
-      )
+  color: UnoColors | string,
+  steps = 18
+): UnoColors | string {
+  if (!color) {
+    return '#ff00ff'
   }
+
+  if (typeof color === 'string') {
+    return color
+  }
+
+  const start = color[50] as string
+  const stop = color[900] as string
+
+  return chroma
+    .scale([start, stop])
+    .mode('rgb')
+    .colors(steps)
+    .reduce(
+      (s, c, i) => ({
+        ...s,
+        [50 * (i + 1)]: chroma(c)
+          .saturate((1 / steps) * i - 0.2)
+          .hex(),
+      }),
+      {}
+    )
 }
 
 export default defineConfig<typeof presetUnoTheme>({
