@@ -28,5 +28,8 @@ const item = toRef(props, 'item')
     <template #default>
       <pre class="p-4">{{ item }}</pre>
     </template>
+    <template #footer>
+      <div class="p-4">test</div>
+    </template>
   </Card>
 </template>

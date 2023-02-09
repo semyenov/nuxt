@@ -6,24 +6,24 @@ import { uiColorVariants, uiRoundedVariants, uiSizeVariants } from '~~/uno'
   <div class="page page-test">
     <div class="flex flex-col items-center w-full">
       <PageTitle>Test Page</PageTitle>
-      <PageProse class="max-w-250">
-        <h2 class="mb-8">Boxes</h2>
+      <PageProse class="max-w-300">
+        <h2 class="mb-8 mt-6">Boxes</h2>
         <div
           v-for="color in uiColorVariants"
           :key="`box-${color}`"
           class="flex flex-row items-center justify-center flex-wrap mb-8 gap-4"
         >
           <div
-            v-for="variant in 8"
+            v-for="variant in 9"
             :key="`box-${variant}`"
             class="w-26 h-26 border p-2 break-words flex flex-col justify-center items-center"
             :class="`box-color__${color}--${variant}`"
           >
-            <div>{{ color }}</div>
-            <div class="text-xl font-bold">{{ variant }}</div>
+            <div class="-mt-6">{{ color }}</div>
+            <div class="text-4xl font-bold">{{ variant }}</div>
           </div>
         </div>
-        <h2 class="mb-8">Buttons</h2>
+        <h2 class="mb-8 mt-6">Buttons</h2>
         <template
           v-for="rounded in uiRoundedVariants"
           :key="`rounded-${rounded}`"
@@ -48,7 +48,7 @@ import { uiColorVariants, uiRoundedVariants, uiSizeVariants } from '~~/uno'
             </Button>
           </div>
         </template>
-        <h2 class="mb-8">Inputs</h2>
+        <h2 class="mb-8 mt-6">Inputs</h2>
         <template v-for="rounded in uiRoundedVariants">
           <div
             v-for="(size, index) in uiSizeVariants"

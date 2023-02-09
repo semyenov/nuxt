@@ -5,7 +5,7 @@ import type { UIColorVariants } from '@/types/ui'
 const props = defineProps({
   color: {
     type: String as PropType<UIColorVariants>,
-    default: 'red',
+    default: 'primary',
   },
 })
 const slots = useSlots()
@@ -19,7 +19,7 @@ const slots = useSlots()
     <div
       v-if="slots.header"
       class="flex flex-row flex-grow text-lg leading-snug gap-1 justify-between items-center font-bold last-rounded-b-lg first-rounded-t-lg"
-      :class="[props.color && `box-color__${props.color}--6`]"
+      :class="[props.color && `box-color__${props.color}--8`]"
     >
       <slot name="header" />
     </div>
