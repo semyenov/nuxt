@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col fixed top-0 left-0 bottom-0 box-color__gray--2 border-r"
+    class="flex flex-col fixed top-0 left-0 bottom-0 box-color__default--2 border-r"
   >
     <!-- <Button
       v-for="i in 6"

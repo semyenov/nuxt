@@ -1,3 +1,9 @@
+import type {
+  UIColorVariants,
+  UIRoundedVariants,
+  UISizeVariants,
+} from '@/types/ui'
+
 export type UnoColorVariants =
   | 'rose'
   | 'pink'
@@ -47,24 +53,16 @@ export const unoColorVariants: UnoColorVariants[] = [
   'stone',
 ]
 
-export type UISizeVariants = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-export type UIColorVariants = 'primary' | 'secondary' | 'third' | 'fourth'
-export type UIRoundedVariants =
-  | 'none'
-  | 'xs'
-  | 'sm'
-  | 'md'
-  | 'lg'
-  | 'xl'
-  | 'full'
-
 export const uiSizeVariants: UISizeVariants[] = ['xs', 'sm', 'md', 'lg', 'xl']
+
 export const uiColorVariants: UIColorVariants[] = [
+  'default',
   'primary',
   'secondary',
   'third',
   'fourth',
 ]
+
 export const uiRoundedVariants: UIRoundedVariants[] = [
   'none',
   'xs',
@@ -96,7 +94,7 @@ export function createShortcuts() {
 
           dark:text-white
           dark:bg-${c}-900
-          dark:border-${c}-500
+          dark:border-${c}-800
         `,
         [`box-color__${c}--3`]: `
           bg-${c}-100
@@ -173,10 +171,10 @@ export function createShortcuts() {
     'box-rounded__xl': 'rounded-xl',
     'box-rounded__full': 'rounded-full',
 
-    'box-size__xs': 'gap-1 px-2 py-1 text-xs',
-    'box-size__sm': 'gap-1.5 px-2.5 py-1.5 text-sm ',
-    'box-size__md': 'gap-2 px-3 py-2 text-base',
-    'box-size__lg': 'gap-2.5 px-3.5 py-2.5 text-lg ',
-    'box-size__xl': 'gap-3 px-4 py-3',
+    'box-size__xs': 'gap-1 px-2.5 py-1 text-xs',
+    'box-size__sm': 'gap-1.5 px-3 py-1.5 text-sm ',
+    'box-size__md': 'gap-2 px-3.5 py-2 text-base',
+    'box-size__lg': 'gap-2.5 px-4 py-2.5 text-lg ',
+    'box-size__xl': 'gap-3 px-4.5 py-3',
   }
 }

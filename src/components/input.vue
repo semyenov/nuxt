@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
 
-import type { UIColorVariants, UIRoundedVariants, UISizeVariants } from '~~/uno'
+import type {
+  UIColorVariants,
+  UIRoundedVariants,
+  UISizeVariants,
+} from '@/types/ui'
 
 const props = defineProps({
   modelValue: {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import type { UIColorVariants } from '~~/uno'
+import type { UIColorVariants } from '@/types/ui'
 
 const props = defineProps({
   color: {

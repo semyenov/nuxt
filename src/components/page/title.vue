@@ -5,7 +5,7 @@ const mouseStore = useMouseStore()
 
 <template>
   <div
-    class="component-page-title flex flex-col items-center justify-between border-b border-dashed w-full border-gray-400 rounded-b-3xl py-8 px-6"
+    class="component-page-title flex flex-col items-center justify-between border-b border-dashed w-full border-gray-400 rounded-b-3xl py-6 px-6"
     un-dark="border-gray-600"
   >
     <div
@@ -30,89 +30,8 @@ const mouseStore = useMouseStore()
       />
     </div>
 
-    <div class="flex mb-6 text-gray-400" un-dark="text-gray-600">
+    <div class="flex text-gray-400" un-dark="text-gray-600">
       {{ now.toDateString() }}
-    </div>
-
-    <div class="flex flex-row flex-wrap items-center justify-center gap-2">
-      <!-- <NuxtLink v-slot="{ isActive, navigate }" :to="{ name: 'index' }" custom>
-        <Button
-          :color="isActive ? 'primary' : 'fourth'"
-          outline
-          size="md"
-          rounded="lg"
-          @click="navigate"
-        >
-          <i class="i-carbon:home inline-block h-6" />
-          <span :class="isActive || 'hidden'" un-sm="inline-block"
-            >Index Page</span
-          >
-        </Button>
-      </NuxtLink>
-      <NuxtLink
-        v-slot="{ isActive, navigate }"
-        :to="{ name: 'objects' }"
-        custom
-      >
-        <Button
-          :color="isActive ? 'secondary' : 'third'"
-          outline
-          size="md"
-          rounded="lg"
-          @click="navigate"
-        >
-          <i class="i-carbon:data-blob inline-block h-6" />
-          <span :class="isActive || 'hidden'" un-sm="inline-block"
-            >Objects Page</span
-          >
-        </Button>
-      </NuxtLink>
-      <NuxtLink v-slot="{ isActive, navigate }" :to="{ name: 'users' }" custom>
-        <Button
-          :color="isActive ? 'third' : 'secondary'"
-          outline
-          size="md"
-          rounded="lg"
-          @click="navigate"
-        >
-          <i class="i-carbon:user inline-block h-6" />
-          <span :class="isActive || 'hidden'" un-sm="inline-block"
-            >Users Page</span
-          >
-        </Button>
-      </NuxtLink>
-      <NuxtLink v-slot="{ isActive, navigate }" :to="{ name: 'test' }" custom>
-        <Button
-          :color="isActive ? 'fourth' : 'primary'"
-          size="md"
-          outline
-          rounded="lg"
-          @click="navigate"
-        >
-          <i class="i-carbon:text-scale inline-block h-6" />
-          <span :class="isActive || 'hidden'" un-sm="inline-block"
-            >Test Page</span
-          >
-        </Button>
-      </NuxtLink>
-      <NuxtLink
-        v-slot="{ isActive, navigate }"
-        :to="{ name: 'content-all' }"
-        custom
-      >
-        <Button
-          :color="isActive ? 'primary' : 'fourth'"
-          outline
-          size="md"
-          rounded="lg"
-          @click="navigate"
-        >
-          <i class="i-carbon:book inline-block h-6" />
-          <span :class="isActive || 'hidden'" un-sm="inline-block"
-            >Content Page</span
-          >
-        </Button>
-      </NuxtLink> -->
     </div>
   </div>
 </template>

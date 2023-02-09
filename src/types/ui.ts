@@ -1,0 +1,15 @@
+export type UISizeVariants = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+export type UIColorVariants =
+  | 'default'
+  | 'primary'
+  | 'secondary'
+  | 'third'
+  | 'fourth'
+export type UIRoundedVariants =
+  | 'none'
+  | 'xs'
+  | 'sm'
+  | 'md'
+  | 'lg'
+  | 'xl'
+  | 'full'

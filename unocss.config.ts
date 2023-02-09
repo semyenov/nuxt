@@ -46,7 +46,7 @@ function createColorScale(
           .saturate((1 / steps) * i - 0.2)
           .hex(),
       }),
-      {}
+      {} as UnoColors
     )
 }
 
@@ -56,6 +56,7 @@ export default defineConfig<typeof presetUnoTheme>({
       return
     }
 
+    theme.colors.default = createColorScale(theme.colors.zinc)
     theme.colors.primary = createColorScale(theme.colors.emerald)
     theme.colors.secondary = createColorScale(theme.colors.sky)
     theme.colors.third = createColorScale(theme.colors.rose)

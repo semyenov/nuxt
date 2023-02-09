@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import type { UIColorVariants, UIRoundedVariants, UISizeVariants } from '~~/uno'
+import type {
+  UIColorVariants,
+  UIRoundedVariants,
+  UISizeVariants,
+} from '@/types/ui'
+
 const props = defineProps({
   color: {
     type: String as PropType<UIColorVariants>,
@@ -49,7 +54,9 @@ const optionGetter = async (label: string) =>
       :estimate-size="800"
       item-class="mb-8"
     >
-      <template #item> </template>
+      <template #item="{ item }">
+        {{ item.label }}
+      </template>
     </VirtualList>
   </div>
 </template>

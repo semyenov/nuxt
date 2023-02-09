@@ -55,20 +55,19 @@ function handleScrollerClick() {
         <PageTitle>{{ t('objects.title') }}</PageTitle>
         <div class="fixed flex flex-col gap-4 right-8 bottom-8 z-10">
           <Button
-            color="secondary"
+            color="fourth"
+            outline
             rounded="md"
             size="md"
             @click.prevent="handleScrollerClick"
           >
-            <i class="i-carbon:add inline-block h-6" />
+            <i class="i-carbon:arrow-down inline-block h-6" />
           </Button>
         </div>
       </template>
-      <!-- <template #footer>
-        <div class="flex flex-row items-center w-full">
-
-        </div>
-      </template> -->
+      <template #footer>
+        <div class="flex flex-row items-center w-full">test</div>
+      </template>
     </VirtualList>
   </div>
 </template>
