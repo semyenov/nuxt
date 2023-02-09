@@ -35,9 +35,10 @@ const mouseStore = useMouseStore()
     </div>
 
     <div class="flex flex-row flex-wrap items-center justify-center gap-2">
-      <NuxtLink v-slot="{ isActive, navigate }" :to="{ name: 'index' }" custom>
+      <!-- <NuxtLink v-slot="{ isActive, navigate }" :to="{ name: 'index' }" custom>
         <Button
-          :color="isActive ? 'emerald' : 'zinc'"
+          :color="isActive ? 'primary' : 'fourth'"
+          outline
           size="md"
           rounded="lg"
           @click="navigate"
@@ -54,7 +55,8 @@ const mouseStore = useMouseStore()
         custom
       >
         <Button
-          :color="isActive ? 'blue' : 'zinc'"
+          :color="isActive ? 'secondary' : 'third'"
+          outline
           size="md"
           rounded="lg"
           @click="navigate"
@@ -67,7 +69,8 @@ const mouseStore = useMouseStore()
       </NuxtLink>
       <NuxtLink v-slot="{ isActive, navigate }" :to="{ name: 'users' }" custom>
         <Button
-          :color="isActive ? 'blue' : 'zinc'"
+          :color="isActive ? 'third' : 'secondary'"
+          outline
           size="md"
           rounded="lg"
           @click="navigate"
@@ -80,8 +83,9 @@ const mouseStore = useMouseStore()
       </NuxtLink>
       <NuxtLink v-slot="{ isActive, navigate }" :to="{ name: 'test' }" custom>
         <Button
-          :color="isActive ? 'rose' : 'zinc'"
+          :color="isActive ? 'fourth' : 'primary'"
           size="md"
+          outline
           rounded="lg"
           @click="navigate"
         >
@@ -97,7 +101,8 @@ const mouseStore = useMouseStore()
         custom
       >
         <Button
-          :color="isActive ? 'purple' : 'zinc'"
+          :color="isActive ? 'primary' : 'fourth'"
+          outline
           size="md"
           rounded="lg"
           @click="navigate"
@@ -107,7 +112,7 @@ const mouseStore = useMouseStore()
             >Content Page</span
           >
         </Button>
-      </NuxtLink>
+      </NuxtLink> -->
     </div>
   </div>
 </template>

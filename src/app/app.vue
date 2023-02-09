@@ -4,6 +4,6 @@ const route = useRoute()
 
 <template>
   <NuxtLayout>
-    <NuxtPage :key="route.meta.layout ? route.meta.layout : route.fullPath" />
+    <NuxtPage :key="route.fullPath" />
   </NuxtLayout>
 </template>

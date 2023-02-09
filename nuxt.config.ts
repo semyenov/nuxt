@@ -31,7 +31,11 @@ export default defineNuxtConfig({
     dirs: ['store', 'composables'],
   },
 
-  css: ['@unocss/reset/antfu.css', 'assets/styles/main.css'],
+  css: ['@unocss/reset/antfu.css', 'assets/styles/main.postcss'],
+
+  unocss: {
+    // autoImport: false,
+  },
 
   app: {
     head: {

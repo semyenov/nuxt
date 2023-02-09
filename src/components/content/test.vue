@@ -1,7 +1,7 @@
 <template>
   <div class="test">
     <div class="mb-6">CONTENT TEST COMPONENT</div>
-    <Card>
+    <Card color="primary">
       <template #header>
         <slot name="header" />
       </template>

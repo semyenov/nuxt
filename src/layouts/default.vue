@@ -14,6 +14,7 @@ const authorizationStore = useAuthorizationStore()
     >
       <AuthorizationCurrent />
     </div>
+    <PageSidebar />
     <div
       class="layout-default__page flex flex-col items-center justify-center text-center"
     >

@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
 
-import type {
-  UnoColorVariants,
-  UnoRoundedVariants,
-  UnoSizeVariants,
-} from '~~/uno'
+import type { UIColorVariants, UIRoundedVariants, UISizeVariants } from '~~/uno'
 
 const props = defineProps({
   modelValue: {
@@ -13,15 +9,15 @@ const props = defineProps({
     default: '',
   },
   color: {
-    type: String as PropType<UnoColorVariants>,
+    type: String as PropType<UIColorVariants>,
     default: 'gray',
   },
   size: {
-    type: String as PropType<UnoSizeVariants>,
+    type: String as PropType<UISizeVariants>,
     default: 'md',
   },
   rounded: {
-    type: String as PropType<UnoRoundedVariants>,
+    type: String as PropType<UIRoundedVariants>,
     default: 'md',
   },
 })
@@ -40,11 +36,12 @@ function handleInput(evt: Event) {
 <template>
   <input
     v-bind="attrs"
-    class="input"
+    class="c-input flex flex-row items-center justify-center border transition-200 outline-none"
     :class="[
-      `input-color__${props.color}`,
-      `input-size__${props.size}`,
-      `input-rounded__${props.rounded}`,
+      props.color &&
+        `box-color__${props.color}--2 focus:box-color__${props.color}--3`,
+      props.size && `box-size__${props.size}`,
+      props.rounded && `box-rounded__${props.rounded}`,
     ]"
     :value="modelValue"
     @input="handleInput"

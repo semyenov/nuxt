@@ -1,23 +1,27 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import type {
-  UnoColorVariants,
-  UnoRoundedVariants,
-  UnoSizeVariants,
-} from '~~/uno'
+import type { UIColorVariants, UIRoundedVariants, UISizeVariants } from '~~/uno'
 
 const props = defineProps({
   color: {
-    type: String as PropType<UnoColorVariants>,
+    type: String as PropType<UIColorVariants>,
     default: 'gray',
   },
   size: {
-    type: String as PropType<UnoSizeVariants>,
+    type: String as PropType<UISizeVariants>,
     default: 'md',
   },
   rounded: {
-    type: String as PropType<UnoRoundedVariants>,
+    type: String as PropType<UIRoundedVariants>,
     default: 'md',
+  },
+  outline: {
+    type: Boolean,
+    default: false,
+  },
+  border: {
+    type: Boolean,
+    default: true,
   },
 })
 
@@ -27,11 +31,16 @@ const attrs = useAttrs()
 <template>
   <button
     v-bind="attrs"
-    class="btn"
+    class="flex flex-row flex-shrink-0 items-center justify-center transition-200"
     :class="[
-      `btn-color__${props.color}`,
-      `btn-size__${props.size}`,
-      `btn-rounded__${props.rounded}`,
+      props.size && `box-size__${props.size}`,
+      props.rounded && `box-rounded__${props.rounded}`,
+      props.outline
+        ? props.color &&
+          `box-color__${props.color}--1 hover:box-color__${props.color}--3`
+        : props.color &&
+          `box-color__${props.color}--6 hover:box-color__${props.color}--5`,
+      props.border && `border`,
     ]"
   >
     <slot />

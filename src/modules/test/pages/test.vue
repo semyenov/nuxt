@@ -1,50 +1,69 @@
 <script setup lang="ts">
-import { unoColorVariants, unoRoundedVariants, unoSizeVariants } from '~~/uno'
+import { uiColorVariants, uiRoundedVariants, uiSizeVariants } from '~~/uno'
 </script>
 
 <template>
   <div class="page page-test">
-    <div class="flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-200">
+    <div class="flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-250">
       <PageTitle>Test Page</PageTitle>
-      <template v-for="rounded in unoRoundedVariants">
+      <div>
         <div
-          v-for="(size, index) in unoSizeVariants"
-          :key="`input-size__${size} input-rounded__${rounded}`"
-          class="flex flex-row items-center justify-center flex-wrap mb-8"
-          :class="`gap-${(index + 4) * 0.5}`"
+          v-for="color in uiColorVariants"
+          :key="`box-${color}`"
+          class="flex flex-row items-center justify-center flex-wrap mb-8 gap-4"
         >
-          <Button
-            v-for="color in unoColorVariants"
-            :key="`input-${color}`"
-            :size="size"
-            :color="color"
-            :rounded="rounded"
+          <div
+            v-for="variant in 8"
+            :key="`box-${variant}`"
+            class="w-20 h-20 border"
+            :class="`box-color__${color}--${variant}`"
           >
-            <i class="i-carbon:download inline-block" />
-            <span>{{
-              `${color.toUpperCase()}-${size.toUpperCase()}-${rounded.toLocaleUpperCase()}`
-            }}</span>
-          </Button>
+            HELLO WORLD
+          </div>
         </div>
-      </template>
-      <template v-for="rounded in unoRoundedVariants">
-        <div
-          v-for="(size, index) in unoSizeVariants"
-          :key="`btn-size__${size} btn-rounded__${rounded}`"
-          class="flex flex-col items-center justify-center flex-wrap mb-8 w-full"
-          :class="`gap-${(index + 4) * 0.5}`"
+        <template
+          v-for="rounded in uiRoundedVariants"
+          :key="`rounded-${rounded}`"
         >
-          <Input
-            v-for="color in unoColorVariants"
-            :key="`btn-${color}`"
-            class="flex flex-col w-full"
-            :size="size"
-            :color="color"
-            :rounded="rounded"
-            :model-value="`${color.toUpperCase()}-${size.toUpperCase()}-${rounded.toLocaleUpperCase()}`"
-          />
-        </div>
-      </template>
+          <div
+            v-for="(size, index) in uiSizeVariants"
+            :key="`input-size__${size} input-rounded__${rounded}`"
+            class="flex flex-row items-center justify-center flex-wrap mb-8"
+            :class="`gap-${(index + 4) * 0.5}`"
+          >
+            <Button
+              v-for="color in uiColorVariants"
+              :key="`input-${color}`"
+              :size="size"
+              :color="color"
+              :rounded="rounded"
+            >
+              <i class="i-carbon:download inline-block" />
+              <span>{{
+                `${color.toUpperCase()}-${size.toUpperCase()}-${rounded.toLocaleUpperCase()}`
+              }}</span>
+            </Button>
+          </div>
+        </template>
+        <template v-for="rounded in uiRoundedVariants">
+          <div
+            v-for="(size, index) in uiSizeVariants"
+            :key="`btn-size__${size} btn-rounded__${rounded}`"
+            class="flex flex-col items-center justify-center flex-wrap mb-8 w-full"
+            :class="`gap-${(index + 4) * 0.5}`"
+          >
+            <Input
+              v-for="color in uiColorVariants"
+              :key="`btn-${color}`"
+              class="flex flex-col w-full"
+              :size="size"
+              :color="color"
+              :rounded="rounded"
+              :model-value="`${color.toUpperCase()}-${size.toUpperCase()}-${rounded.toLocaleUpperCase()}`"
+            />
+          </div>
+        </template>
+      </div>
     </div>
   </div>
 </template>
