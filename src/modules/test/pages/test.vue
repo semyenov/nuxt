@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { uiColorVariants, uiRoundedVariants, uiSizeVariants } from '~~/uno'
+import {
+  uiColorVariants,
+  uiRoundedVariants,
+  uiSizeVariants,
+} from '~~/unocss.config'
 </script>
 
 <template>
@@ -37,6 +41,26 @@ import { uiColorVariants, uiRoundedVariants, uiSizeVariants } from '~~/uno'
             <Button
               v-for="color in uiColorVariants"
               :key="`input-${color}`"
+              :size="size"
+              :color="color"
+              :rounded="rounded"
+            >
+              <i class="i-carbon:download inline-block" />
+              <span>{{
+                `${color.toUpperCase()}-${size.toUpperCase()}-${rounded.toLocaleUpperCase()}`
+              }}</span>
+            </Button>
+          </div>
+          <div
+            v-for="(size, index) in uiSizeVariants"
+            :key="`input-size__${size} input-rounded__${rounded}`"
+            class="flex flex-row items-center justify-center flex-wrap mb-8"
+            :class="`gap-${(index + 4) * 0.5}`"
+          >
+            <Button
+              v-for="color in uiColorVariants"
+              :key="`input-${color}-outline`"
+              outline
               :size="size"
               :color="color"
               :rounded="rounded"

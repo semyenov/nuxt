@@ -14,8 +14,8 @@
     </Button> -->
     <NuxtLink v-slot="{ isActive, navigate }" :to="{ name: 'index' }" custom>
       <Button
-        :color="isActive ? 'primary' : 'fourth'"
-        outline
+        color="primary"
+        :outline="!isActive"
         size="md"
         rounded="none"
         :border="false"
@@ -26,8 +26,8 @@
     </NuxtLink>
     <NuxtLink v-slot="{ isActive, navigate }" :to="{ name: 'objects' }" custom>
       <Button
-        :color="isActive ? 'secondary' : 'third'"
-        outline
+        color="secondary"
+        :outline="!isActive"
         size="md"
         rounded="none"
         :border="false"
@@ -38,8 +38,8 @@
     </NuxtLink>
     <NuxtLink v-slot="{ isActive, navigate }" :to="{ name: 'users' }" custom>
       <Button
-        :color="isActive ? 'third' : 'secondary'"
-        outline
+        color="third"
+        :outline="!isActive"
         size="md"
         rounded="none"
         :border="false"
@@ -50,9 +50,9 @@
     </NuxtLink>
     <NuxtLink v-slot="{ isActive, navigate }" :to="{ name: 'test' }" custom>
       <Button
-        :color="isActive ? 'fourth' : 'primary'"
+        color="fourth"
         size="md"
-        outline
+        :outline="!isActive"
         rounded="none"
         :border="false"
         @click="navigate"
@@ -66,8 +66,8 @@
       custom
     >
       <Button
-        :color="isActive ? 'primary' : 'fourth'"
-        outline
+        color="primary"
+        :outline="!isActive"
         size="md"
         rounded="none"
         :border="false"

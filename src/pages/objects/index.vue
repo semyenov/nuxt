@@ -61,7 +61,7 @@ function handleScrollerClick() {
             size="md"
             @click.prevent="handleScrollerClick"
           >
-            <i class="i-carbon:arrow-down inline-block h-6" />
+            <i class="i-carbon:arrow-down inline-block" />
           </Button>
         </div>
       </template>

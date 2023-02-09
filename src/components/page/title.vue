@@ -5,7 +5,7 @@ const mouseStore = useMouseStore()
 
 <template>
   <div
-    class="component-page-title flex flex-col items-center justify-between border-b border-dashed w-full border-gray-400 rounded-b-3xl py-6 px-6"
+    class="component-page-title flex flex-col items-center justify-between border-b border-dashed w-full border-gray-400 py-6 px-6"
     un-dark="border-gray-600"
   >
     <div
@@ -30,9 +30,9 @@ const mouseStore = useMouseStore()
       />
     </div>
 
-    <div class="flex text-gray-400" un-dark="text-gray-600">
+    <!-- <div class="flex text-gray-400" un-dark="text-gray-600">
       {{ now.toDateString() }}
-    </div>
+    </div> -->
   </div>
 </template>
 

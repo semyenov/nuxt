@@ -17,7 +17,7 @@ const item = toRef(props, 'item')
 </script>
 
 <template>
-  <Card v-if="item" color="third">
+  <Card v-if="item" color="secondary">
     <template v-if="item.info.name" #header>
       <NuxtLink :to="`/objects/${item._id}`" class="w-full">
         <div class="p-4">{{ `# ${item.info.name}` }}</div>
