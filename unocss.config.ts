@@ -98,102 +98,100 @@ const shortcuts = {
     (s, c) => ({
       ...s,
       [`box-color__${c}--1`]: `
-          bg-transparent
+          bg-${c}-50
           text-${c}-600
-          border-${c}-100
+          border-${c}-250
 
-          dark:bg-transparent
-          dark:text-${c}-200
+          dark:bg-${c}-900
+          dark:text-${c}-400
           dark:border-${c}-800
         `,
       [`box-color__${c}--2`]: `
-          bg-${c}-50
+          bg-${c}-100
           text-${c}-650
-          border-${c}-150
+          border-${c}-250
 
-          dark:bg-${c}-700
-          dark:bg-opacity-10
-          dark:text-${c}-150
-          dark:border-${c}-800
+          dark:bg-${c}-850
+          dark:text-${c}-350
+          dark:border-${c}-750
         `,
       [`box-color__${c}--3`]: `
-          bg-${c}-100
+          bg-${c}-150
           text-${c}-700
-          border-${c}-200
+          border-${c}-300
 
-          dark:bg-${c}-800
-          dark:bg-opacity-35
+          dark:bg-${c}-750
+          dark:text-${c}-100
+          dark:border-${c}-800
+        `,
+      [`box-color__${c}--4`]: `
+          bg-${c}-200
+          text-${c}-750
+          border-${c}-350
+
+          dark:bg-${c}-700
           dark:text-${c}-100
           dark:border-${c}-750
         `,
-      [`box-color__${c}--4`]: `
-          bg-${c}-150
-          text-${c}-750
-          border-${c}-250
+      [`box-color__${c}--5`]: `
+          bg-${c}-500
+          text-${c}-50
+          border-${c}-400
 
-          dark:bg-${c}-800
-          dark:bg-opacity-50
+          dark:bg-${c}-650
           dark:text-${c}-100
           dark:border-${c}-700
         `,
-      [`box-color__${c}--5`]: `
-          bg-${c}-600
+      [`box-color__${c}--6`]: `
+          bg-${c}-550
           text-${c}-50
+          border-${c}-650
+
+          dark:bg-${c}-550
+          dark:text-${c}-50
+          dark:border-${c}-650
+        `,
+      [`box-color__${c}--7`]: `
+          bg-${c}-650
+          text-${c}-100
           border-${c}-700
 
           dark:bg-${c}-500
-          dark:text-${c}-800
+          dark:text-${c}-900
           dark:border-${c}-700
-      `,
-      [`box-color__${c}--6`]: `
-          bg-${c}-650
-          text-${c}-50
-          border-${c}-600
+        `,
+      [`box-color__${c}--8`]: `
+          bg-${c}-700
+          text-${c}-100
+          border-${c}-750
 
           dark:bg-${c}-450
           dark:text-${c}-900
           dark:border-${c}-650
+
         `,
-      [`box-color__${c}--7`]: `
-          bg-${c}-700
+      [`box-color__${c}--9`]: `
+          bg-${c}-750
           text-${c}-100
-          border-${c}-500
+          border-${c}-800
 
           dark:bg-${c}-400
           dark:text-${c}-900
           dark:border-${c}-700
         `,
-      [`box-color__${c}--8`]: `
-          bg-${c}-800
-          text-${c}-100
-          border-${c}-500
 
-          dark:text-white
-          dark:bg-${c}-900
-          dark:border-${c}-750
-        `,
-      [`box-color__${c}--9`]: `
-          bg-${c}-900
-          text-${c}-150
-          border-${c}-500
-
-          dark:text-white
-          dark:bg-${c}-900
-          dark:border-${c}-850
-        `,
       [`list-color__${c}`]: `
           bg-white
-          divide-${c}-400
-          border-${c}-500
+          divide-${c}-300
+          border-${c}-400
 
           dark:divide-${c}-800
-          dark:border-${c}-900
+          dark:border-${c}-800
           dark:bg-gray-900
         `,
     }),
     {} as Record<string, string>
   ),
-
   'box-rounded__xs': 'rounded-sm',
   'box-rounded__sm': 'rounded',
   'box-rounded__md': 'rounded-md',
@@ -208,9 +206,12 @@ const shortcuts = {
   'box-size__xl': 'gap-3 px-4.5 py-3 text-xl min-h-13',
 }
 
+const lightThemeBg = '#ffffff'
+const darkThemeBg = '#1c1b22'
+
 function createColorScale(
   color: UnoColors | string,
-  steps = 36
+  steps = 18
 ): UnoColors | string {
   if (!color) {
     return '#ff00ff'
@@ -220,18 +221,19 @@ function createColorScale(
     return color
   }
 
-  const start = color[50] as string
-  const stop = color[900] as string
+  const start = color[200] as string
+  const base = color[500] as string
+  const stop = color[700] as string
 
   return chroma
-    .scale([start, stop])
-    .mode('rgb')
+    .scale([lightThemeBg, start, base, stop, darkThemeBg])
+    .mode('lab')
     .colors(steps)
     .reduce(
       (s, c, i) => ({
         ...s,
-        [25 * (i + 1)]: chroma(c)
-          .saturate((1 / steps) * i - 0.2)
+        [50 * (i + 1)]: chroma(c)
+          // .saturate((1 / steps) * i - 0.2)
           .hex(),
       }),
       {} as UnoColors

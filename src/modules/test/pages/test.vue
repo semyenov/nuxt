@@ -6,8 +6,6 @@ import {
   uiSizeVariants,
 } from '~~/unocss.config'
 
-import { ObjectsComboboxItem } from '#components'
-
 const objectsStore = useObjectsStore()
 const objectOptionsIds = await objectsStore.itemsGetter
 const objectOptions = (
@@ -25,7 +23,7 @@ console.log(objectOptions)
     <div class="flex flex-col items-center w-full">
       <PageTitle>Test Page</PageTitle>
       <PageProse class="max-w-300">
-        <h2 class="mb-8 mt-6">Combobox</h2>
+        <!-- <h2 class="mb-8 mt-6">Combobox</h2>
         <div
           class="flex flex-row items-center justify-center flex-wrap mb-8 gap-4"
         >
@@ -33,7 +31,7 @@ console.log(objectOptions)
             :options="objectOptions"
             :data-component="ObjectsComboboxItem"
           />
-        </div>
+        </div> -->
 
         <h2 class="mb-8 mt-6">Boxes</h2>
         <div

@@ -31,7 +31,8 @@ const slots = useSlots()
     </div>
     <div
       v-if="slots.default"
-      class="flex flex-col text-sm text-gray-700 items-stretch break-normal last-rounded-b-lg first-rounded-t-lg dark:text-gray-200 overflow-auto"
+      class="flex flex-col text-sm items-stretch break-normal last-rounded-b-lg first-rounded-t-lg overflow-auto"
+      :class="[props.color && `box-color__${props.color}--1`]"
     >
       <slot name="default" />
     </div>
