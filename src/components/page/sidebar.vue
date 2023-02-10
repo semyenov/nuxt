@@ -2,16 +2,6 @@
   <div
     class="flex flex-col fixed top-0 left-0 bottom-0 box-color__default--1 border-r"
   >
-    <!-- <Button
-      v-for="i in 6"
-      :key="`sidebar-item-${i}`"
-      outline
-      :border="false"
-      rounded="none"
-      color="secondary"
-    >
-      <i class="i-carbon:text-scale inline-block h-6" />
-    </Button> -->
     <NuxtLink v-slot="{ isActive, navigate }" :to="{ name: 'index' }" custom>
       <Button
         color="primary"

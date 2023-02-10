@@ -210,7 +210,7 @@ const shortcuts = {
 
 function createColorScale(
   color: UnoColors | string,
-  steps = 18
+  steps = 36
 ): UnoColors | string {
   if (!color) {
     return '#ff00ff'
@@ -230,7 +230,7 @@ function createColorScale(
     .reduce(
       (s, c, i) => ({
         ...s,
-        [50 * (i + 1)]: chroma(c)
+        [25 * (i + 1)]: chroma(c)
           .saturate((1 / steps) * i - 0.2)
           .hex(),
       }),
@@ -244,7 +244,7 @@ export default defineConfig<UnoTheme>({
       return
     }
 
-    theme.colors.default = createColorScale(theme.colors.zinc)
+    theme.colors.default = createColorScale(theme.colors.coolGray)
     theme.colors.primary = createColorScale(theme.colors.emerald)
     theme.colors.secondary = createColorScale(theme.colors.sky)
     theme.colors.third = createColorScale(theme.colors.rose)
@@ -252,7 +252,7 @@ export default defineConfig<UnoTheme>({
 
     return theme
   },
-  rules: [['custom-rule', { color: 'red' }]],
+  // rules: [['custom-rule', { color: 'red' }]],
   safelist: [
     ...range(12).map((i) => `gap-${i / 2}`),
     ...Object.keys(shortcuts).flatMap((c) => [

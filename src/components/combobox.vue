@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { objectPick } from '@antfu/utils'
 import type { PropType } from 'vue'
 import type {
   UIColorVariants,
@@ -27,32 +28,75 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+
+  searchFields: {
+    type: Array,
+    default: () => [],
+  },
+
   options: {
-    type: Object as PropType<{ label: string; value: any }[]>,
+    type: Array as PropType<Array<Record<string, any> & { _id: string }>>,
     required: true,
   },
+
+  dataComponent: {
+    type: [Object, Function],
+    required: false,
+  },
+  dataKey: {
+    type: String,
+    default: '',
+  },
 })
+
+const input = ref<string>('аге')
+
 const options = toRef(props, 'options')
-const optionsIds = computed(() => options.value.map((item) => item.label))
-const optionGetter = async (label: string) =>
-  computed(() => options.value.find((item) => item.label === label))
+const dataIds = computed(() =>
+  options.value
+    .filter((item) => findByOptionsFields(item, ['info', 'name'], input.value))
+    .map((item) => item._id)
+)
+const dataGetter = async (id: string) =>
+  computed(() => options.value.find((item) => item._id === id))
+
+function findByOptionsFields(item: any, path: string[], str: string) {
+  let val = item
+  for (const p of path) {
+    if (!Object.hasOwn(val, p)) {
+      return false
+    }
+
+    val = val[p]
+  }
+
+  if (typeof val === 'string') {
+    return val.toLowerCase().includes(str.toLowerCase())
+  }
+
+  return false
+}
 </script>
 
 <template>
   <div class="c-combobox relative">
-    <Input v-bind="props" />
+    <Input
+      v-bind="
+        objectPick(props, ['border', 'color', 'outline', 'rounded', 'size'])
+      "
+      v-model="input"
+    />
     <VirtualList
       ref="listRef"
       key="data-virtuallist"
+      v-bind="objectPick(props, ['dataComponent', 'dataKey'])"
+      :data-ids="dataIds"
+      :data-getter="dataGetter"
       :keeps="50"
       :page-mode="false"
-      :data-ids="optionsIds"
-      :data-getter="optionGetter"
-      data-key="data-virtuallist"
       wrap-class="flex flex-col w-full"
-      class="flex flex-col items-center absolute top-full left-0 right-0 max-h-80"
+      class="flex flex-col items-center absolute top-full left-0 right-0 max-h-80 overflow-auto box-color__default--2 border"
       :estimate-size="800"
-      item-class="mb-8"
     >
       <template #item="{ item }">
         {{ item.label }}
