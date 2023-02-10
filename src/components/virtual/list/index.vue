@@ -72,7 +72,7 @@ const props = defineProps({
     default: 'div',
   },
   wrapClass: {
-    type: String,
+    type: [String, Array] as PropType<string | string[]>,
     default: '',
   },
   wrapStyle: {
@@ -88,7 +88,7 @@ const props = defineProps({
     default: 'div',
   },
   itemClass: {
-    type: String,
+    type: [String, Array] as PropType<string | string[]>,
     default: '',
   },
   itemClassAdd: {

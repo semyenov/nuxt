@@ -1,5 +1,5 @@
 import chroma from 'chroma-js'
-import { range } from '@antfu/utils'
+import { objectMap, range } from '@antfu/utils'
 import { presetScrollbar } from 'unocss-preset-scrollbar'
 import {
   presetUno as createPresetUno,
@@ -136,7 +136,7 @@ const shortcuts = {
       [`box-color__${c}--5`]: `
           bg-${c}-500
           text-${c}-50
-          border-${c}-400
+          border-${c}-550
 
           dark:bg-${c}-650
           dark:text-${c}-100
@@ -181,6 +181,7 @@ const shortcuts = {
         `,
 
       [`list-color__${c}`]: `
+          divide-y
           bg-white
           divide-${c}-300
           border-${c}-400
@@ -246,11 +247,19 @@ export default defineConfig<UnoTheme>({
       return
     }
 
-    theme.colors.default = createColorScale(theme.colors.coolGray)
-    theme.colors.primary = createColorScale(theme.colors.emerald)
-    theme.colors.secondary = createColorScale(theme.colors.sky)
-    theme.colors.third = createColorScale(theme.colors.rose)
-    theme.colors.fourth = createColorScale(theme.colors.yellow)
+    if (typeof theme.colors === 'string') {
+      return theme.colors
+    }
+
+    theme.colors = objectMap(theme.colors, (key, color) => {
+      return [key, createColorScale(color)]
+    })
+
+    theme.colors.default = theme.colors.coolGray
+    theme.colors.primary = theme.colors.emerald
+    theme.colors.secondary = theme.colors.sky
+    theme.colors.third = theme.colors.rose
+    theme.colors.fourth = theme.colors.yellow
 
     return theme
   },

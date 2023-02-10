@@ -43,7 +43,7 @@ const attrs = useAttrs()
         ? props.color &&
           `box-color__${props.color}--1 hover:box-color__${props.color}--3`
         : props.color &&
-          `box-color__${props.color}--6 hover:box-color__${props.color}--5`,
+          `box-color__${props.color}--5 hover:box-color__${props.color}--7`,
       props.border && `border`,
     ]"
   >

@@ -17,7 +17,7 @@ const item = toRef(props, 'item')
 </script>
 
 <template>
-  <div v-if="item" class="px-4 py-2 box-color__default--2">
+  <div v-if="item" class="px-4 py-2 text-left">
     {{ item.info.name }}
   </div>
 </template>

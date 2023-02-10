@@ -14,7 +14,7 @@ const props = defineProps({
   },
   color: {
     type: String as PropType<UIColorVariants>,
-    default: 'gray',
+    default: 'default',
   },
   size: {
     type: String as PropType<UISizeVariants>,
@@ -30,6 +30,11 @@ const emit = defineEmits<{
   (event: 'update:modelValue', val: string): void
 }>()
 const attrs = useAttrs()
+const rootRef = ref<HTMLInputElement | null>(null)
+
+defineExpose({
+  rootRef,
+})
 
 function handleInput(evt: Event) {
   const t = evt.target as HTMLInputElement
@@ -40,6 +45,7 @@ function handleInput(evt: Event) {
 <template>
   <input
     v-bind="attrs"
+    ref="rootRef"
     class="c-input flex flex-row items-center justify-center border transition-200 outline-none"
     :class="[
       props.color &&
