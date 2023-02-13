@@ -52,6 +52,10 @@ const props = defineProps({
   itemClass: {
     type: String,
   },
+  onItemClick: {
+    type: Function,
+    default: () => {},
+  },
 })
 
 const emit = defineEmits<{
