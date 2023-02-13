@@ -11,6 +11,11 @@ import type {
 import { Input, VirtualList } from '#components'
 
 const props = defineProps({
+  modelValue: {
+    type: Object as PropType<string>,
+    required: true,
+  },
+
   color: {
     type: String as PropType<UIColorVariants>,
     default: 'default',
@@ -29,8 +34,8 @@ const props = defineProps({
   },
 
   searchFields: {
-    type: Array,
-    default: () => [],
+    type: Array as PropType<string[]>,
+    default: () => ['info', 'name'],
   },
 
   options: {
@@ -48,26 +53,129 @@ const props = defineProps({
   },
 })
 
+const emit = defineEmits<{
+  (event: 'update:modelValue', val: string): void
+}>()
+
 const [isFocused, toggleFocused] = useToggle(false)
 
+const rootRef = ref<HTMLElement | null>(null)
 const inputRef = ref<InstanceType<typeof Input> | null>(null)
 const listRef = ref<InstanceType<typeof VirtualList> | null>(null)
 
-const input = ref<string>('аге')
-const current = ref(-1)
+const input = ref<string>('')
 
 const options = toRef(props, 'options')
 const dataIds = computed(() =>
   options.value
-    .filter((item) => findByOptionsFields(item, ['info', 'name'], input.value))
+    .filter((item) => filterByField(item, props.searchFields, input.value))
     .map((item) => item._id)
 )
 const dataGetter = async (id: string) =>
   computed(() => options.value.find((item) => item._id === id))
 
-const showList = computed(() => isFocused.value && dataIds.value.length > 0)
+const show = computed(() => isFocused.value && dataIds.value.length > 0)
+const current = ref(dataIds.value.findIndex((id) => id === props.modelValue))
 
-function findByOptionsFields(item: any, path: string[], str: string) {
+// watch(current, async (cur) => {
+//   if (!inputRef.value || !inputRef.value.rootRef) {
+//     return
+//   }
+
+//   const itemId = dataIds.value[cur]
+//   const item = await dataGetter(itemId)
+//   if (!item.value) {
+//     return
+//   }
+
+//   const field = getTextField(item.value, props.searchFields)
+//   const str = field ? field.toString() : ''
+
+//   inputRef.value.rootRef.value = ''
+//   inputRef.value.rootRef.placeholder = str
+// })
+
+watch(input, (i) => {
+  if (!listRef.value || !listRef.value.rootRef) {
+    return
+  }
+
+  listRef.value.scrollToIndex(0)
+  current.value = -1
+
+  if (i !== '' || !inputRef.value || !inputRef.value.rootRef) {
+    return
+  }
+
+  inputRef.value.rootRef.placeholder = ''
+  emit('update:modelValue', '')
+})
+
+onClickOutside(rootRef, () => {
+  toggleFocused(false)
+})
+
+onKeyStroke('ArrowUp', (event) => {
+  if (!isFocused) {
+    return
+  }
+
+  event.preventDefault()
+
+  current.value = clamp(current.value - 1, 0, dataIds.value.length - 1)
+  if (listRef.value) {
+    listRef.value.scrollToIndex(current.value)
+  }
+})
+
+onKeyStroke('ArrowDown', (event) => {
+  if (!isFocused) {
+    return
+  }
+
+  event.preventDefault()
+
+  current.value = clamp(current.value + 1, 0, dataIds.value.length - 1)
+  if (listRef.value) {
+    listRef.value.scrollToIndex(current.value)
+  }
+})
+
+onKeyStroke('Enter', async (event) => {
+  if (!isFocused || current.value < 0) {
+    return
+  }
+
+  event.preventDefault()
+
+  itemClickHandler(current.value)
+})
+
+onMounted(() => {
+  if (!inputRef.value || !inputRef.value.rootRef) {
+    return
+  }
+
+  inputRef.value.rootRef.blur()
+  inputRef.value.rootRef.addEventListener('focus', toggleShowHandler)
+
+  if (current.value < 0) {
+    return
+  }
+
+  itemClickHandler(current.value)
+})
+
+onUnmounted(() => {
+  if (!inputRef.value || !inputRef.value.rootRef) {
+    return
+  }
+
+  inputRef.value.rootRef.blur()
+  inputRef.value.rootRef.removeEventListener('focus', toggleShowHandler)
+})
+
+function filterByField(item: any, path: string[], str: string) {
   let val = item
   for (const p of path) {
     if (!Object.hasOwn(val, p)) {
@@ -84,47 +192,29 @@ function findByOptionsFields(item: any, path: string[], str: string) {
   return false
 }
 
-onKeyStroke('ArrowUp', (event) => {
-  event.preventDefault()
+function getTextField<T extends object>(
+  obj: T,
+  path: string[],
+  defaultValue?: string
+): string | object | undefined {
+  const travel = () => {
+    let val: object = obj
 
-  if (isFocused) {
-    current.value = clamp(current.value - 1, 0, dataIds.value.length)
-    if (listRef.value) {
-      listRef.value.scrollToIndex(current.value)
+    for (const i in path) {
+      const p = path[i] as keyof typeof val
+      if (!Object.hasOwn(val, p)) {
+        return
+      }
+
+      val = val[p] as T[typeof p]
     }
-  }
-})
 
-onKeyStroke('ArrowDown', (event) => {
-  event.preventDefault()
-
-  if (isFocused) {
-    current.value = clamp(current.value + 1, 0, dataIds.value.length)
-    if (listRef.value) {
-      listRef.value.scrollToIndex(current.value)
-    }
-  }
-})
-
-onMounted(() => {
-  if (!inputRef.value || !inputRef.value.rootRef) {
-    return
+    return val
   }
 
-  inputRef.value.rootRef.blur()
-  inputRef.value.rootRef.addEventListener('focus', toggleShowHandler)
-  inputRef.value.rootRef.addEventListener('focusout', toggleShowHandler)
-})
-
-onUnmounted(() => {
-  if (!inputRef.value || !inputRef.value.rootRef) {
-    return
-  }
-
-  inputRef.value.rootRef.blur()
-  inputRef.value.rootRef.removeEventListener('focus', toggleShowHandler)
-  inputRef.value.rootRef.removeEventListener('focusout', toggleShowHandler)
-})
+  const result = travel() || travel()
+  return result === undefined || result === obj ? defaultValue : result
+}
 
 function itemClassAdd(i: number) {
   if (i === current.value) {
@@ -135,12 +225,35 @@ function itemClassAdd(i: number) {
 }
 
 function toggleShowHandler() {
-  toggleFocused()
+  toggleFocused(true)
+}
+
+async function itemClickHandler(n: number) {
+  current.value = n
+  const itemId = dataIds.value[current.value]
+  const item = await dataGetter(itemId)
+  if (!item.value) {
+    return
+  }
+
+  emit('update:modelValue', itemId)
+
+  if (!inputRef.value || !inputRef.value.rootRef) {
+    return
+  }
+
+  toggleFocused(false)
+  inputRef.value.rootRef.blur()
+
+  const field = getTextField(item.value, props.searchFields)
+  const str = field ? field.toString() : ''
+
+  input.value = str
 }
 </script>
 
 <template>
-  <div class="c-combobox relative">
+  <div ref="rootRef" class="c-combobox relative">
     <Input
       ref="inputRef"
       v-model="input"
@@ -148,10 +261,10 @@ function toggleShowHandler() {
       :border="props.border"
       :size="props.size"
       :rounded="props.rounded"
-      :class="[showList && 'rounded-b-none']"
+      :class="[show && 'rounded-b-none']"
     />
     <VirtualList
-      v-if="showList"
+      v-if="show"
       ref="listRef"
       key="data-virtuallist"
       v-bind="objectPick(props, ['dataComponent', 'dataKey'])"
@@ -159,7 +272,7 @@ function toggleShowHandler() {
       :data-key="props.dataKey"
       :data-ids="dataIds"
       :data-getter="dataGetter"
-      :keeps="20"
+      :keeps="25"
       :page-mode="false"
       :wrap-class="[
         'flex flex-col w-full',
@@ -170,7 +283,8 @@ function toggleShowHandler() {
         props.rounded && `box-rounded__${props.rounded}`,
         props.color && `box-color__${props.color}--3`,
       ]"
-      :estimate-size="40"
+      :estimate-size="50"
+      :on-item-click="itemClickHandler"
       :item-class-add="itemClassAdd"
     />
   </div>

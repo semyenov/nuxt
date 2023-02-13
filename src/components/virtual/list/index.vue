@@ -94,6 +94,10 @@ const props = defineProps({
   itemClassAdd: {
     type: Function as PropType<(i: number) => string>,
   },
+  onItemClick: {
+    type: Function as PropType<(i: number) => void>,
+    default: () => {},
+  },
   itemStyle: {
     type: Object,
   },
@@ -484,6 +488,7 @@ function getWrapperStyle(
             (props.itemClassAdd ? ` ${props.itemClassAdd(i)}` : '')
           "
           @resize="onItemResized"
+          @click="() => onItemClick(i)"
         />
       </Component>
     </Component>

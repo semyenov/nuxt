@@ -16,7 +16,8 @@ const objectOptions = (
     )
   )
 ).filter(notUndefined)
-console.log(objectOptions)
+
+const input = ref('Ua9k8NbbXzeE991dMuyUX')
 </script>
 
 <template>
@@ -24,14 +25,15 @@ console.log(objectOptions)
     <div class="flex flex-col items-center w-full">
       <PageTitle>Test Page</PageTitle>
       <PageProse class="max-w-300">
-        <h2 class="mb-8 mt-6">Combobox</h2>
+        <h2 class="mb-8 mt-6">Combobox [{{ input }}]</h2>
         <div
           class="flex flex-row items-center justify-center flex-wrap mb-8 gap-4"
         >
           <Combobox
-            class="w-full"
+            v-model="input"
             :options="objectOptions"
             :data-component="ObjectsComboboxItem"
+            class="w-full"
           />
         </div>
 
