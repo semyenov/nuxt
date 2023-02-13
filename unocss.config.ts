@@ -283,7 +283,10 @@ export default defineConfig<UnoTheme>({
     }),
     presetTypography(),
     presetUno,
-    presetScrollbar(),
+    presetScrollbar({
+      scrollbarTrackColor: 'transparent',
+      scrollbarThumbColor: '#999999AA',
+    }),
   ],
   transformers: [transformerDirectives(), transformerVariantGroup()],
   shortcuts,

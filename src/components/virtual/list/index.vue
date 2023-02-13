@@ -98,6 +98,10 @@ const props = defineProps({
     type: Function as PropType<(i: number) => void>,
     default: () => {},
   },
+  onItemHover: {
+    type: Function as PropType<(i: number) => void>,
+    default: () => {},
+  },
   itemStyle: {
     type: Object,
   },
@@ -488,7 +492,8 @@ function getWrapperStyle(
             (props.itemClassAdd ? ` ${props.itemClassAdd(i)}` : '')
           "
           @resize="onItemResized"
-          @click="() => onItemClick(i)"
+          @click="() => props.onItemClick(i)"
+          @mouseover="() => props.onItemHover(i)"
         />
       </Component>
     </Component>

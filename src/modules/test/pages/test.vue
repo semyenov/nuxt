@@ -30,7 +30,9 @@ const input = ref('Ua9k8NbbXzeE991dMuyUX')
           class="flex flex-row items-center justify-center flex-wrap mb-8 gap-4"
         >
           <Combobox
-            v-model="input"
+            v-for="color in uiColorVariants"
+            :key="`combobox-${color}`"
+            :color="color"
             :options="objectOptions"
             :data-component="ObjectsComboboxItem"
             class="w-full"

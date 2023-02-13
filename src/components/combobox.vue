@@ -75,25 +75,7 @@ const dataGetter = async (id: string) =>
   computed(() => options.value.find((item) => item._id === id))
 
 const show = computed(() => isFocused.value && dataIds.value.length > 0)
-const current = ref(dataIds.value.findIndex((id) => id === props.modelValue))
-
-// watch(current, async (cur) => {
-//   if (!inputRef.value || !inputRef.value.rootRef) {
-//     return
-//   }
-
-//   const itemId = dataIds.value[cur]
-//   const item = await dataGetter(itemId)
-//   if (!item.value) {
-//     return
-//   }
-
-//   const field = getTextField(item.value, props.searchFields)
-//   const str = field ? field.toString() : ''
-
-//   inputRef.value.rootRef.value = ''
-//   inputRef.value.rootRef.placeholder = str
-// })
+const cursor = ref(dataIds.value.findIndex((id) => id === props.modelValue))
 
 watch(input, (i) => {
   if (!listRef.value || !listRef.value.rootRef) {
@@ -101,7 +83,7 @@ watch(input, (i) => {
   }
 
   listRef.value.scrollToIndex(0)
-  current.value = -1
+  cursor.value = -1
 
   if (i !== '' || !inputRef.value || !inputRef.value.rootRef) {
     return
@@ -122,9 +104,9 @@ onKeyStroke('ArrowUp', (event) => {
 
   event.preventDefault()
 
-  current.value = clamp(current.value - 1, 0, dataIds.value.length - 1)
+  cursor.value = clamp(cursor.value - 1, 0, dataIds.value.length - 1)
   if (listRef.value) {
-    listRef.value.scrollToIndex(current.value)
+    listRef.value.scrollToIndex(cursor.value)
   }
 })
 
@@ -135,20 +117,20 @@ onKeyStroke('ArrowDown', (event) => {
 
   event.preventDefault()
 
-  current.value = clamp(current.value + 1, 0, dataIds.value.length - 1)
+  cursor.value = clamp(cursor.value + 1, 0, dataIds.value.length - 1)
   if (listRef.value) {
-    listRef.value.scrollToIndex(current.value)
+    listRef.value.scrollToIndex(cursor.value)
   }
 })
 
 onKeyStroke('Enter', async (event) => {
-  if (!isFocused || current.value < 0) {
+  if (!isFocused || cursor.value < 0) {
     return
   }
 
   event.preventDefault()
 
-  itemClickHandler(current.value)
+  itemClickHandler(cursor.value)
 })
 
 onMounted(() => {
@@ -159,11 +141,11 @@ onMounted(() => {
   inputRef.value.rootRef.blur()
   inputRef.value.rootRef.addEventListener('focus', toggleShowHandler)
 
-  if (current.value < 0) {
+  if (cursor.value < 0) {
     return
   }
 
-  itemClickHandler(current.value)
+  itemClickHandler(cursor.value)
 })
 
 onUnmounted(() => {
@@ -216,8 +198,8 @@ function getTextField<T extends object>(
   return result === undefined || result === obj ? defaultValue : result
 }
 
-function itemClassAdd(i: number) {
-  if (i === current.value) {
+function itemClassAdd(n: number) {
+  if (n === cursor.value) {
     return props.color && `box-color__${props.color}--3`
   }
 
@@ -229,8 +211,8 @@ function toggleShowHandler() {
 }
 
 async function itemClickHandler(n: number) {
-  current.value = n
-  const itemId = dataIds.value[current.value]
+  cursor.value = n
+  const itemId = dataIds.value[cursor.value]
   const item = await dataGetter(itemId)
   if (!item.value) {
     return
@@ -250,10 +232,19 @@ async function itemClickHandler(n: number) {
 
   input.value = str
 }
+
+async function itemHoverHandler(n: number) {
+  cursor.value = n
+}
+
+function inputCleanHandler() {
+  emit('update:modelValue', '')
+  input.value = ''
+}
 </script>
 
 <template>
-  <div ref="rootRef" class="c-combobox relative">
+  <div ref="rootRef" class="c-combobox relative flex flex-row">
     <Input
       ref="inputRef"
       v-model="input"
@@ -261,6 +252,7 @@ async function itemClickHandler(n: number) {
       :border="props.border"
       :size="props.size"
       :rounded="props.rounded"
+      class="w-full"
       :class="[show && 'rounded-b-none']"
     />
     <VirtualList
@@ -278,14 +270,46 @@ async function itemClickHandler(n: number) {
         'flex flex-col w-full',
         props.color && `list-color__${props.color}`,
       ]"
-      class="flex flex-col items-center absolute top-full left-0 right-0 max-h-100 overflow-auto rounded-t-none border border-t-none"
+      class="flex flex-col items-center absolute top-full left-0 right-0 max-h-100 overflow-auto scrollbar scrollbar-rounded rounded-t-none border border-t-none z-1"
       :class="[
         props.rounded && `box-rounded__${props.rounded}`,
-        props.color && `box-color__${props.color}--3`,
+        props.color && `box-color__${props.color}--2`,
       ]"
       :estimate-size="50"
       :on-item-click="itemClickHandler"
+      :on-item-hover="itemHoverHandler"
       :item-class-add="itemClassAdd"
     />
+    <Button
+      v-if="input.length === 0"
+      size="sm"
+      outline
+      :color="props.color"
+      class="absolute right-0 top-0 bottom-0 rounded-l-none"
+      :class="[
+        show && `rounded-b-none`,
+        isFocused && `!box-color__${props.color}--3`,
+        props.color && `box-color__${props.color}--2`,
+      ]"
+      @click="() => toggleFocused()"
+    >
+      <i v-if="!isFocused" class="i-carbon:caret-down inline-block h-6" />
+      <i v-else class="i-carbon:caret-up inline-block h-6" />
+    </Button>
+    <Button
+      v-else
+      size="sm"
+      outline
+      :color="props.color"
+      class="absolute right-0 top-0 bottom-0 rounded-l-none"
+      :class="[
+        show && `rounded-b-none`,
+        isFocused && `box-color__${props.color}--3`,
+        props.color && `box-color__${props.color}--2`,
+      ]"
+      @click="inputCleanHandler"
+    >
+      <i class="i-carbon:close inline-block h-6" />
+    </Button>
   </div>
 </template>

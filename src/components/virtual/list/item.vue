@@ -56,6 +56,10 @@ const props = defineProps({
     type: Function,
     default: () => {},
   },
+  onItemHover: {
+    type: Function,
+    default: () => {},
+  },
 })
 
 const emit = defineEmits<{
