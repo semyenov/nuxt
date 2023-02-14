@@ -173,7 +173,7 @@ function filterByField(item: any, path: string[], str: string) {
   return false
 }
 
-function getTextField<T extends object>(
+function getField<T extends object>(
   obj: T,
   path: string[],
   defaultValue?: string
@@ -193,7 +193,7 @@ function getTextField<T extends object>(
     return val
   }
 
-  const result = travel() || travel()
+  const result = travel()
   return result === undefined || result === obj ? defaultValue : result
 }
 
@@ -226,7 +226,7 @@ async function itemClickHandler(n: number) {
   toggleFocused(false)
   inputRef.value.rootRef.blur()
 
-  const field = getTextField(item.value, props.searchFields)
+  const field = getField(item.value, props.searchFields)
   const str = field ? field.toString() : ''
 
   input.value = str
@@ -245,6 +245,7 @@ function inputCleanHandler() {
 
   toggleFocused(true)
   input.value = ''
+  cursor.value = -1
   inputRef.value.rootRef.focus()
 }
 
