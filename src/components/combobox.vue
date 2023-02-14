@@ -89,7 +89,6 @@ watch(input, (i) => {
     return
   }
 
-  inputRef.value.rootRef.placeholder = ''
   emit('update:modelValue', '')
 })
 
@@ -238,8 +237,24 @@ async function itemHoverHandler(n: number) {
 }
 
 function inputCleanHandler() {
+  if (!inputRef.value || !inputRef.value.rootRef) {
+    return
+  }
+
   emit('update:modelValue', '')
+
+  toggleFocused(true)
   input.value = ''
+  inputRef.value.rootRef.focus()
+}
+
+function inputFocusHandler() {
+  if (!inputRef.value || !inputRef.value.rootRef) {
+    return
+  }
+
+  toggleFocused(true)
+  inputRef.value.rootRef.focus()
 }
 </script>
 
@@ -253,18 +268,22 @@ function inputCleanHandler() {
       :size="props.size"
       :rounded="props.rounded"
       class="w-full"
-      :class="[show && 'rounded-b-none']"
+      :class="[
+        show && 'rounded-b-none',
+        isFocused
+          ? `!box-color__${props.color}--3`
+          : `!box-color__${props.color}--2`,
+      ]"
     />
     <VirtualList
       v-if="show"
       ref="listRef"
-      key="data-virtuallist"
       v-bind="objectPick(props, ['dataComponent', 'dataKey'])"
       :data-component="props.dataComponent"
       :data-key="props.dataKey"
       :data-ids="dataIds"
       :data-getter="dataGetter"
-      :keeps="25"
+      :keeps="40"
       :page-mode="false"
       :wrap-class="[
         'flex flex-col w-full',
@@ -273,7 +292,7 @@ function inputCleanHandler() {
       class="flex flex-col items-center absolute top-full left-0 right-0 max-h-100 overflow-auto scrollbar scrollbar-rounded rounded-t-none border border-t-none z-1"
       :class="[
         props.rounded && `box-rounded__${props.rounded}`,
-        props.color && `box-color__${props.color}--2`,
+        props.color && `box-color__${props.color}--3`,
       ]"
       :estimate-size="50"
       :on-item-click="itemClickHandler"
@@ -288,10 +307,11 @@ function inputCleanHandler() {
       class="absolute right-0 top-0 bottom-0 rounded-l-none"
       :class="[
         show && `rounded-b-none`,
-        isFocused && `!box-color__${props.color}--3`,
-        props.color && `box-color__${props.color}--2`,
+        isFocused
+          ? `!box-color__${props.color}--3`
+          : `!box-color__${props.color}--2`,
       ]"
-      @click="() => toggleFocused()"
+      @click="inputFocusHandler"
     >
       <i v-if="!isFocused" class="i-carbon:caret-down inline-block h-6" />
       <i v-else class="i-carbon:caret-up inline-block h-6" />
@@ -304,8 +324,9 @@ function inputCleanHandler() {
       class="absolute right-0 top-0 bottom-0 rounded-l-none"
       :class="[
         show && `rounded-b-none`,
-        isFocused && `box-color__${props.color}--3`,
-        props.color && `box-color__${props.color}--2`,
+        isFocused
+          ? `!box-color__${props.color}--3`
+          : `!box-color__${props.color}--2`,
       ]"
       @click="inputCleanHandler"
     >

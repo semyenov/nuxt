@@ -268,6 +268,7 @@ export default defineConfig<UnoTheme>({
     ...range(12).map((i) => `gap-${i / 2}`),
     ...Object.keys(shortcuts).flatMap((c) => [
       `${c}`,
+      `!${c}`,
       `hover:${c}`,
       `focus:${c}`,
     ]),

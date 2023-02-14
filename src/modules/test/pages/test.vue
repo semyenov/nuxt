@@ -32,6 +32,7 @@ const input = ref('Ua9k8NbbXzeE991dMuyUX')
           <Combobox
             v-for="color in uiColorVariants"
             :key="`combobox-${color}`"
+            v-model="input"
             :color="color"
             :options="objectOptions"
             :data-component="ObjectsComboboxItem"

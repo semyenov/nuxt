@@ -19,9 +19,9 @@ const item = toRef(props, 'item')
 <template>
   <div
     v-if="item"
-    class="px-4 py-2 text-left cursor-pointer flex flex-row items-center gap-4"
+    class="text-left cursor-pointer flex flex-row items-center box-size__md"
   >
-    <i class="i-carbon:download inline-block" />
+    <i class="i-carbon:building inline-block" />
     {{ item.info.name }}
   </div>
 </template>
