@@ -5,6 +5,7 @@ import { UsersItem, VirtualList } from '#components'
 definePageMeta({
   layout: 'default',
   title: 'Page Title',
+  middleware: 'authorization',
 })
 
 const { t } = useI18n()
@@ -65,9 +66,9 @@ function handleScrollerClick() {
           </Button>
         </div>
       </template>
-      <template #footer>
+      <!-- <template #footer>
         <div class="flex flex-row items-center w-full">test</div>
-      </template>
+      </template> -->
     </VirtualList>
   </div>
 </template>

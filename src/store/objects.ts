@@ -33,6 +33,8 @@ export const useObjectsStore = defineStore(objectsStoreKey, () => {
 
   const getItems = () =>
     backendStore.get<IObject>([IMetaScope.OBJECTS, 'items'])
+  const getOthers = () =>
+    backendStore.get<IObject>([IMetaScope.OBJECTS, 'others'])
   const getItem = (id: string) =>
     backendStore.get<IObject>([IMetaScope.OBJECTS, 'items', id])
   const putItem = (id: string, input: IObjectUpdateInput) =>
@@ -46,6 +48,7 @@ export const useObjectsStore = defineStore(objectsStoreKey, () => {
     itemGetter,
 
     getItems,
+    getOthers,
     getItem,
     putItem,
   }

@@ -12,8 +12,7 @@ import { Input, VirtualList } from '#components'
 
 const props = defineProps({
   modelValue: {
-    type: Object as PropType<string>,
-    required: true,
+    type: String as PropType<string>,
   },
 
   color: {
@@ -89,7 +88,7 @@ watch(input, (i) => {
     return
   }
 
-  emit('update:modelValue', '')
+  emit('update:modelValue', undefined)
 })
 
 onClickOutside(rootRef, () => {

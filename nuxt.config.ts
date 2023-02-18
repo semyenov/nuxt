@@ -11,6 +11,15 @@ import fr from './locales/fr.json'
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
+  alias: {
+    '@': resolve(__dirname, 'src'),
+    '~': resolve(__dirname, 'src'),
+    '@@': resolve(__dirname),
+    '~~': resolve(__dirname),
+    assets: resolve(__dirname, 'src', 'assets'),
+    public: resolve(__dirname, 'src', 'public'),
+  },
+
   telemetry: false,
 
   srcDir: resolve(__dirname, 'src'),
@@ -18,7 +27,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiUri: 'http://127.0.0.1:8080',
+      apiUri: 'http://localhost:3000/api',
     },
   },
 
@@ -28,14 +37,10 @@ export default defineNuxtConfig({
   },
 
   imports: {
-    dirs: ['store', 'composables'],
+    dirs: ['store', 'composables', 'utils'],
   },
 
   css: ['@unocss/reset/antfu.css', 'assets/styles/main.postcss'],
-
-  unocss: {
-    // autoImport: false,
-  },
 
   app: {
     head: {
@@ -86,4 +91,25 @@ export default defineNuxtConfig({
 
     '@/modules/test/index',
   ],
+
+  vite: {
+    optimizeDeps: {
+      exclude: [
+        '@iconify/utils/lib/loader/fs',
+        '@iconify/utils/lib/loader/install-pkg',
+        '@iconify/utils/lib/loader/node-loader',
+        '@iconify/utils/lib/loader/node-loaders',
+      ],
+    },
+    build: {
+      rollupOptions: {
+        external: [
+          '@iconify/utils/lib/loader/fs',
+          '@iconify/utils/lib/loader/install-pkg',
+          '@iconify/utils/lib/loader/node-loader',
+          '@iconify/utils/lib/loader/node-loaders',
+        ],
+      },
+    },
+  },
 })

@@ -193,6 +193,7 @@ const shortcuts = {
     }),
     {} as Record<string, string>
   ),
+
   'box-rounded__xs': 'rounded-sm',
   'box-rounded__sm': 'rounded',
   'box-rounded__md': 'rounded-md',

@@ -2,7 +2,7 @@ import z from 'zod'
 import { useSafeValidatedBody, useValidatedParams } from 'h3-zod'
 import { defineEventHandler } from 'h3'
 
-import { items } from '@/server/data'
+import { items } from '@/server/objects'
 
 export default defineEventHandler(async (event) => {
   const params = await useValidatedParams(event, z.object({ id: z.string() }))

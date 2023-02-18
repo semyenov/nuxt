@@ -17,7 +17,7 @@ const objectOptions = (
   )
 ).filter(notUndefined)
 
-const input = ref('Ua9k8NbbXzeE991dMuyUX')
+const input = ref<string | undefined>(undefined)
 </script>
 
 <template>
@@ -25,7 +25,8 @@ const input = ref('Ua9k8NbbXzeE991dMuyUX')
     <div class="flex flex-col items-center w-full">
       <PageTitle>Test Page</PageTitle>
       <PageProse class="max-w-300">
-        <h2 class="mb-8 mt-6">Combobox [{{ input }}]</h2>
+        <h2 class="mt-6" :class="!input ? 'mb-8' : 'mb-0'">Combobox</h2>
+        <h3 v-if="input" class="mb-8 mt-0">[{{ input }}]</h3>
         <div
           class="flex flex-row items-center justify-center flex-wrap mb-8 gap-4"
         >

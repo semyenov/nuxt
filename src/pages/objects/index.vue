@@ -5,6 +5,7 @@ import { ObjectsItem, VirtualList } from '#components'
 definePageMeta({
   layout: 'default',
   title: 'Page Title',
+  middleware: 'authorization',
 })
 
 const { t } = useI18n()
@@ -33,6 +34,10 @@ function handleScrollerClick() {
   listRef.value.scrollToIndex(listScrollIndex.value)
   listScrollIndex.value += listScrollStep
 }
+
+async function handleLoadMore() {
+  await objectsStore.getOthers()
+}
 </script>
 
 <template>
@@ -55,6 +60,15 @@ function handleScrollerClick() {
         <PageTitle>{{ t('objects.title') }}</PageTitle>
         <div class="fixed flex flex-col gap-4 right-8 bottom-8 z-10">
           <Button
+            color="third"
+            outline
+            rounded="md"
+            size="md"
+            @click.prevent="handleLoadMore"
+          >
+            <i class="i-carbon:download inline-block" />
+          </Button>
+          <Button
             color="fourth"
             outline
             rounded="md"
@@ -65,9 +79,9 @@ function handleScrollerClick() {
           </Button>
         </div>
       </template>
-      <template #footer>
+      <!-- <template #footer>
         <div class="flex flex-row items-center w-full">test</div>
-      </template>
+      </template> -->
     </VirtualList>
   </div>
 </template>

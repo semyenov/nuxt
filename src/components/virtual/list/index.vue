@@ -2,9 +2,6 @@
 import type { ComputedRef, PropType } from 'vue'
 import { range } from '@antfu/utils'
 
-import type { VirtualRange } from '@/utils'
-import { Virtual } from '@/utils'
-
 const props = defineProps({
   dataIds: {
     type: Array as PropType<string[]>,

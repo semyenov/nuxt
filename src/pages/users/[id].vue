@@ -2,9 +2,8 @@
 definePageMeta({
   layout: 'default',
   title: 'Page Title',
-  validate: (route) => {
-    return route.params.id.length === 21
-  },
+  middleware: 'authorization',
+  validate: (route) => validateUuid(route.params.id as string),
 })
 
 const route = useRoute('users-id')
