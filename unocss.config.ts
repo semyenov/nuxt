@@ -98,98 +98,108 @@ const shortcuts = {
     (s, c) => ({
       ...s,
       [`box-color__${c}--1`]: `
-          bg-${c}-50
-          text-${c}-600
-          border-${c}-250
+        bg-${c}-50
+        text-${c}-600
+        border-${c}-250
 
-          dark:bg-${c}-900
-          dark:text-${c}-400
-          dark:border-${c}-800
-        `,
+        dark:bg-${c}-900
+        dark:text-${c}-400
+        dark:border-${c}-800
+      `,
       [`box-color__${c}--2`]: `
-          bg-${c}-100
-          text-${c}-650
-          border-${c}-250
+        bg-${c}-100
+        text-${c}-650
+        border-${c}-250
 
-          dark:bg-${c}-850
-          dark:text-${c}-350
-          dark:border-${c}-750
-        `,
+        dark:bg-${c}-850
+        dark:text-${c}-350
+        dark:border-${c}-750
+      `,
       [`box-color__${c}--3`]: `
-          bg-${c}-150
-          text-${c}-700
-          border-${c}-300
+        bg-${c}-150
+        text-${c}-700
+        border-${c}-300
 
-          dark:bg-${c}-750
-          dark:text-${c}-100
-          dark:border-${c}-800
-        `,
+        dark:bg-${c}-750
+        dark:text-${c}-100
+        dark:border-${c}-800
+      `,
       [`box-color__${c}--4`]: `
-          bg-${c}-200
-          text-${c}-750
-          border-${c}-350
+        bg-${c}-200
+        text-${c}-750
+        border-${c}-350
 
-          dark:bg-${c}-700
-          dark:text-${c}-100
-          dark:border-${c}-750
-        `,
+        dark:bg-${c}-700
+        dark:text-${c}-100
+        dark:border-${c}-750
+      `,
       [`box-color__${c}--5`]: `
-          bg-${c}-500
-          text-${c}-50
-          border-${c}-550
+        bg-${c}-500
+        text-${c}-50
+        border-${c}-550
 
-          dark:bg-${c}-650
-          dark:text-${c}-100
-          dark:border-${c}-700
-        `,
+        dark:bg-${c}-650
+        dark:text-${c}-100
+        dark:border-${c}-700
+      `,
       [`box-color__${c}--6`]: `
-          bg-${c}-550
-          text-${c}-50
-          border-${c}-650
+        bg-${c}-550
+        text-${c}-50
+        border-${c}-650
 
-          dark:bg-${c}-550
-          dark:text-${c}-50
-          dark:border-${c}-650
-        `,
+        dark:bg-${c}-550
+        dark:text-${c}-50
+        dark:border-${c}-650
+      `,
       [`box-color__${c}--7`]: `
-          bg-${c}-650
-          text-${c}-100
-          border-${c}-700
+        bg-${c}-650
+        text-${c}-100
+        border-${c}-700
 
-          dark:bg-${c}-500
-          dark:text-${c}-900
-          dark:border-${c}-700
-        `,
+        dark:bg-${c}-500
+        dark:text-${c}-900
+        dark:border-${c}-700
+      `,
       [`box-color__${c}--8`]: `
-          bg-${c}-700
-          text-${c}-100
-          border-${c}-750
+        bg-${c}-700
+        text-${c}-100
+        border-${c}-750
 
-          dark:bg-${c}-450
-          dark:text-${c}-900
-          dark:border-${c}-650
-
-        `,
+        dark:bg-${c}-450
+        dark:text-${c}-900
+        dark:border-${c}-650
+      `,
       [`box-color__${c}--9`]: `
-          bg-${c}-750
-          text-${c}-100
-          border-${c}-800
+        bg-${c}-750
+        text-${c}-100
+        border-${c}-800
 
-          dark:bg-${c}-400
-          dark:text-${c}-900
-          dark:border-${c}-700
-        `,
+        dark:bg-${c}-400
+        dark:text-${c}-900
+        dark:border-${c}-700
+      `,
 
       [`list-color__${c}`]: `
-          divide-y
-          bg-white
-          divide-${c}-300
-          border-${c}-400
+        divide-y
+        bg-white
+        divide-${c}-300
+        border-${c}-400
 
-          dark:divide-${c}-800
-          dark:border-${c}-800
-          dark:bg-gray-900
-        `,
+        dark:divide-${c}-800
+        dark:border-${c}-800
+        dark:bg-gray-900
+      `,
+    }),
+    {} as Record<string, string>
+  ),
+
+  ...[...uiRoundedVariants].reduce(
+    (s, c) => ({
+      ...s,
+      [`list-rounded__${c}`]: `
+        last-rounded-b-${c}
+        first-rounded-t-${c}
+      `,
     }),
     {} as Record<string, string>
   ),

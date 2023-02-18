@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+
 import { UsersItem, VirtualList } from '#components'
 
 definePageMeta({
@@ -66,9 +67,6 @@ function handleScrollerClick() {
           </Button>
         </div>
       </template>
-      <!-- <template #footer>
-        <div class="flex flex-row items-center w-full">test</div>
-      </template> -->
     </VirtualList>
   </div>
 </template>

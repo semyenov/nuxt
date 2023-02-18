@@ -40,7 +40,13 @@ export default defineNuxtConfig({
     dirs: ['store', 'composables', 'utils'],
   },
 
-  css: ['@unocss/reset/antfu.css', 'assets/styles/main.postcss'],
+  css: [
+    '@unocss/reset/antfu.css',
+    'winbox/dist/css/winbox.min.css',
+    'winbox/dist/css/themes/modern.min.css',
+    'assets/styles/main.postcss',
+    'assets/styles/winbox.postcss',
+  ],
 
   app: {
     head: {
