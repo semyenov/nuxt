@@ -1,62 +1,42 @@
-@keyframes popup {
-  0% {
-    transform: scale(0.8);
-  }
-  to {
-    transform: scale(1);
-  }
-}
+@import 'winbox/dist/css/winbox.min.css';
+
 .winbox.simple {
-  background: linear-gradient(90deg, #ff00f0, #0050ff);
-  border-radius: 12px 12px 0 0;
-  animation: popup 0.3s cubic-bezier(0.3, 1, 0.3, 1) forwards;
+  z-index: 100;
+  @apply box-color__default--1 border border-default-300 shadow-xl shadow-default;
 }
-.winbox.simple:not(.min, .focus) {
-  background: #666;
-}
-@media (hover: hover) {
-  .winbox.simple.min:not(:hover) {
-    background: #666;
-  }
-  .winbox.simple .wb-control * {
-    opacity: 0.65;
-  }
-  .winbox.simple .wb-control :hover {
-    opacity: 1;
-  }
-}
-@media (hover: none) {
-  .winbox.simple.min {
-    background: #666;
-  }
-}
-.winbox.simple.max {
-  border-radius: 0;
+
+.winbox.simple .wb-header {
+  display: flex;
+  position: initial;
+  justify-content: center;
+  @apply box-color__default--2 px-6 py-2 h-auto border-gray-400 dark:border-gray-600 dark:text-gray-200 border-b border-dashed text-gray-700;
 }
 .winbox.simple .wb-title {
-  font-size: 13px;
-  text-transform: uppercase;
-  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  @apply text-xl font-extrabold font-sans;
 }
+.winbox.simple .wb-drag {
+  padding-left: 0;
+}
+.winbox.simple .wb-control {
+  filter: invert(1);
+  @apply dark:filter-invert-0 h-auto;
+}
+.winbox.simple .wb-control .wb-full {
+  display: none;
+}
+
 .winbox.simple .wb-body {
-  margin: 4px;
-  color: #fff;
-  background: #131820;
+  display: flex;
+  flex-grow: 1;
+  position: initial;
+  margin: 0;
+  background: transparent;
+  @apply text-base relative top-0 !text-sm;
 }
-.winbox.simple .wb-body::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
-}
-.winbox.simple .wb-body::-webkit-scrollbar-track {
-  background: 0 0;
-}
-.winbox.simple .wb-body::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background: #263040;
-}
-.winbox.simple .wb-body::-webkit-scrollbar-thumb:window-inactive {
-  background: #181f2a;
-}
-.winbox.simple .wb-body::-webkit-scrollbar-corner {
-  background: 0 0;
+.winbox.simple .wb-body .wb-content {
+  @apply absolute -left-10px -right-0px top-0 overflow-auto;
+  margin: auto;
 }

@@ -42,8 +42,6 @@ export default defineNuxtConfig({
 
   css: [
     '@unocss/reset/antfu.css',
-    'winbox/dist/css/winbox.min.css',
-    'winbox/dist/css/themes/modern.min.css',
     'assets/styles/main.postcss',
     'assets/styles/winbox.postcss',
   ],
@@ -61,10 +59,10 @@ export default defineNuxtConfig({
         },
       ],
     },
-    pageTransition: {
-      name: 'page',
-      mode: 'out-in',
-    },
+    // pageTransition: {
+    //   name: 'page',
+    //   mode: 'out-in',
+    // },
   },
 
   i18n: {
@@ -101,6 +99,7 @@ export default defineNuxtConfig({
   vite: {
     optimizeDeps: {
       exclude: [
+        'css-tree/lib',
         '@iconify/utils/lib/loader/fs',
         '@iconify/utils/lib/loader/install-pkg',
         '@iconify/utils/lib/loader/node-loader',
@@ -110,6 +109,7 @@ export default defineNuxtConfig({
     build: {
       rollupOptions: {
         external: [
+          'css-tree/lib',
           '@iconify/utils/lib/loader/fs',
           '@iconify/utils/lib/loader/install-pkg',
           '@iconify/utils/lib/loader/node-loader',

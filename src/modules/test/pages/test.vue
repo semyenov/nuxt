@@ -21,14 +21,18 @@ const input = ref<string | undefined>(undefined)
 </script>
 
 <template>
-  <div class="page page-test">
-    <div class="flex flex-col items-center w-full">
+  <div class="page page-test w-full h-full">
+    <div class="flex flex-row sticky box-color__default--2">
       <PageTitle>Test Page</PageTitle>
+    </div>
+    <div
+      class="flex flex-col items-center p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded max-w-200"
+    >
       <PageProse class="max-w-300">
-        <h2 class="mt-6" :class="!input ? 'mb-8' : 'mb-0'">Combobox</h2>
-        <h3 v-if="input" class="mb-8 mt-0">[{{ input }}]</h3>
+        <h4 class="mt-0" :class="!input ? 'mb-6' : 'mb-0'">Combobox</h4>
+        <h3 v-if="input" class="mb-6 mt-0">[{{ input }}]</h3>
         <div
-          class="flex flex-row items-center justify-center flex-wrap mb-8 gap-4"
+          class="flex flex-row items-center justify-start flex-wrap mb-6 gap-4"
         >
           <Combobox
             v-for="color in uiColorVariants"
@@ -41,11 +45,11 @@ const input = ref<string | undefined>(undefined)
           />
         </div>
 
-        <h2 class="mb-8 mt-6">Boxes</h2>
+        <h4 class="mb-6 mt-6">Boxes</h4>
         <div
           v-for="color in uiColorVariants"
           :key="`box-${color}`"
-          class="flex flex-row items-center justify-center flex-wrap mb-8 gap-4"
+          class="flex flex-row items-center justify-start flex-wrap mb-6 gap-4"
         >
           <div
             v-for="variant in 9"
@@ -57,7 +61,7 @@ const input = ref<string | undefined>(undefined)
             <div class="text-4xl font-bold">{{ variant }}</div>
           </div>
         </div>
-        <h2 class="mb-8 mt-6">Buttons</h2>
+        <h4 class="mb-6 mt-6">Buttons</h4>
         <template
           v-for="rounded in uiRoundedVariants"
           :key="`rounded-${rounded}`"
@@ -65,7 +69,7 @@ const input = ref<string | undefined>(undefined)
           <div
             v-for="(size, index) in uiSizeVariants"
             :key="`input-size__${size} input-rounded__${rounded}`"
-            class="flex flex-row items-center justify-center flex-wrap mb-8"
+            class="flex flex-row items-center justify-start flex-wrap mb-6"
             :class="`gap-${(index + 4) * 0.5}`"
           >
             <Button
@@ -84,7 +88,7 @@ const input = ref<string | undefined>(undefined)
           <div
             v-for="(size, index) in uiSizeVariants"
             :key="`input-size__${size} input-rounded__${rounded}`"
-            class="flex flex-row items-center justify-center flex-wrap mb-8"
+            class="flex flex-row items-center justify-start flex-wrap mb-6"
             :class="`gap-${(index + 4) * 0.5}`"
           >
             <Button
@@ -102,12 +106,12 @@ const input = ref<string | undefined>(undefined)
             </Button>
           </div>
         </template>
-        <h2 class="mb-8 mt-6">Inputs</h2>
+        <h4 class="mb-6 mt-6">Inputs</h4>
         <template v-for="rounded in uiRoundedVariants">
           <div
             v-for="(size, index) in uiSizeVariants"
             :key="`btn-size__${size} btn-rounded__${rounded}`"
-            class="flex flex-col items-center justify-center flex-wrap mb-8 w-full"
+            class="flex flex-col items-center justify-start flex-wrap mb-6 w-full"
             :class="`gap-${(index + 4) * 0.5}`"
           >
             <Input

@@ -228,10 +228,10 @@ function getField<T extends object>(
 
 function itemClassAdd(n: number) {
   if (n === cursor.value) {
-    return props.color && `box-color__${props.color}--3`
+    return props.color && `box-color__${props.color}--4`
   }
 
-  return `box-color__${props.color}--2`
+  return `box-color__${props.color}--3`
 }
 
 async function itemClickHandler(n: number) {
@@ -305,8 +305,8 @@ function documentFocusinEventListener() {
       :class="[
         show && 'rounded-b-none',
         isFocused
-          ? `!box-color__${props.color}--3`
-          : `!box-color__${props.color}--2`,
+          ? `!box-color__${props.color}--4`
+          : `!box-color__${props.color}--3`,
       ]"
     />
     <VirtualList
@@ -327,7 +327,7 @@ function documentFocusinEventListener() {
       class="flex flex-col items-center absolute top-full left-0 right-0 max-h-100 overflow-auto scrollbar scrollbar-rounded rounded-t-none border border-t-none z-1"
       :class="[
         props.rounded && `box-rounded__${props.rounded}`,
-        props.color && `box-color__${props.color}--3`,
+        props.color && `box-color__${props.color}--2`,
       ]"
       :estimate-size="50"
       :item-class-add="itemClassAdd"
@@ -343,8 +343,8 @@ function documentFocusinEventListener() {
       :class="[
         show && `rounded-b-none`,
         isFocused
-          ? `!box-color__${props.color}--3`
-          : `!box-color__${props.color}--2`,
+          ? `!box-color__${props.color}--4`
+          : `!box-color__${props.color}--3`,
       ]"
       @click="inputFocusHandler"
     >
@@ -360,8 +360,8 @@ function documentFocusinEventListener() {
       :class="[
         show && `rounded-b-none`,
         isFocused
-          ? `!box-color__${props.color}--3`
-          : `!box-color__${props.color}--2`,
+          ? `!box-color__${props.color}--4`
+          : `!box-color__${props.color}--3`,
       ]"
       @click="inputCleanHandler"
     >

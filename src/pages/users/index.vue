@@ -38,29 +38,32 @@ function handleScrollerClick() {
 </script>
 
 <template>
-  <div class="page page-users-index">
+  <div class="page page-users-index w-full h-full">
+    <div class="flex flex-row sticky box-color__default--2">
+      <PageTitle>{{ t('users.title') }}</PageTitle>
+    </div>
     <VirtualList
       ref="listRef"
-      key="data-virtuallist"
+      key="page-users-index-virtuallist"
       :keeps="50"
-      :page-mode="true"
+      :page-mode="false"
       :data-ids="usersIds"
       :data-getter="usersGetter"
       :data-component="UsersItem"
-      data-key="data-virtuallist"
+      data-key="page-users-index-virtuallist"
       wrap-class="flex flex-col w-full"
-      class="flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-200"
+      class="flex flex-col items-center gap-8 p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded max-w-200"
       :estimate-size="800"
-      item-class="mb-8"
+      item-class="mb-6"
     >
       <template #header>
-        <PageTitle>{{ t('users.title') }}</PageTitle>
-        <div class="fixed flex flex-col gap-4 right-8 bottom-8 z-10">
+        <div class="absolute flex flex-col gap-4 -right-16 bottom-8 z-10">
           <Button
+            class="h-11"
             color="fourth"
             outline
             rounded="md"
-            size="md"
+            size="sm"
             @click.prevent="handleScrollerClick"
           >
             <i class="i-carbon:arrow-down inline-block h-6" />

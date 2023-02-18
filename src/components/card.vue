@@ -11,6 +11,10 @@ const props = defineProps({
     type: String as PropType<UIRoundedVariants>,
     default: 'md',
   },
+  dashed: {
+    type: Boolean,
+    default: false,
+  },
 })
 const slots = useSlots()
 </script>
@@ -21,14 +25,16 @@ const slots = useSlots()
     :class="[
       props.color && `list-color__${props.color}`,
       props.rounded && `box-rounded__${props.rounded}`,
+      props.dashed && `divide-dashed dashed`,
     ]"
   >
     <div
       v-if="slots.header"
-      class="flex flex-row flex-grow text-lg leading-snug gap-1 justify-between items-center font-bold"
+      class="flex flex-row flex-grow text-base leading-snug gap-1 justify-between items-center font-bold"
       :class="[
-        props.color && `box-color__${props.color}--8`,
+        props.color && `box-color__${props.color}--3`,
         props.rounded && `list-rounded__${props.rounded}`,
+        props.dashed && `border-dashed`,
       ]"
     >
       <slot name="header" />
@@ -45,6 +51,7 @@ const slots = useSlots()
       :class="[
         props.color && `box-color__${props.color}--1`,
         props.rounded && `list-rounded__${props.rounded}`,
+        props.dashed && `border-dashed`,
       ]"
     >
       <slot name="default" />
@@ -55,6 +62,7 @@ const slots = useSlots()
       :class="[
         props.color && `box-color__${props.color}--2`,
         props.rounded && `list-rounded__${props.rounded}`,
+        props.dashed && `border-dashed`,
       ]"
     >
       <slot name="footer" />

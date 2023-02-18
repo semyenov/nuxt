@@ -41,9 +41,9 @@ const attrs = useAttrs()
       props.rounded && `box-rounded__${props.rounded}`,
       props.outline
         ? props.color &&
-          `box-color__${props.color}--1 hover:box-color__${props.color}--3`
+          `box-color__${props.color}--2 hover:box-color__${props.color}--4`
         : props.color &&
-          `box-color__${props.color}--5 hover:box-color__${props.color}--7`,
+          `box-color__${props.color}--6 hover:box-color__${props.color}--6`,
       props.border && `border`,
     ]"
   >

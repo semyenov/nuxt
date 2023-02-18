@@ -183,7 +183,7 @@ const shortcuts = {
         divide-y
         bg-white
         divide-${c}-300
-        border-${c}-400
+        border-${c}-350
 
         dark:divide-${c}-800
         dark:border-${c}-800
@@ -211,11 +211,11 @@ const shortcuts = {
   'box-rounded__xl': 'rounded-xl',
   'box-rounded__full': 'rounded-full',
 
-  'box-size__xs': 'gap-1 px-2.5 py-1 text-xs min-h-6',
-  'box-size__sm': 'gap-1.5 px-3 py-1.5 text-sm min-h-8',
-  'box-size__md': 'gap-2 px-3.5 py-2 text-base min-h-10',
-  'box-size__lg': 'gap-2.5 px-4 py-2.5 text-lg min-h-12',
-  'box-size__xl': 'gap-3 px-4.5 py-3 text-xl min-h-13',
+  'box-size__xs': 'gap-1 px-3 py-1.5 text-xs min-h-6',
+  'box-size__sm': 'gap-1.5 px-3.5 py-2 text-sm min-h-8',
+  'box-size__md': 'gap-2 px-3.5 py-2.25 text-base min-h-10',
+  'box-size__lg': 'gap-2.5 px-3.75 py-2.5 text-lg min-h-12',
+  'box-size__xl': 'gap-3 px-4 py-3 text-xl min-h-13',
 }
 
 const lightThemeBg = '#ffffff'
@@ -283,6 +283,7 @@ export default defineConfig<UnoTheme>({
       `hover:${c}`,
       `focus:${c}`,
     ]),
+    ...['p-4'],
   ],
   presets: [
     presetAttributify(),

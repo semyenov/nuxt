@@ -17,17 +17,17 @@ const item = toRef(props, 'item')
 </script>
 
 <template>
-  <Card v-if="item" color="secondary">
+  <Card v-if="item" dashed color="secondary">
     <template v-if="item.info.name" #header>
       <NuxtLink :to="`/objects/${item._id}`" class="w-full">
-        <div class="p-4">{{ `# ${item.info.name}` }}</div>
+        <div class="px-4 py-2">{{ `# ${item.info.name}` }}</div>
       </NuxtLink>
     </template>
     <template #default>
-      <pre class="p-4">{{ item }}</pre>
+      <pre class="px-4 py-2 text-xs">{{ item }}</pre>
     </template>
     <template #footer>
-      <div class="p-4">test</div>
+      <div class="px-4 py-1.5">test</div>
     </template>
   </Card>
 </template>
