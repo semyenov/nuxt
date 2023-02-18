@@ -9866,7 +9866,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^4.0.1":
+"nanoid@npm:^4.0.0, nanoid@npm:^4.0.1":
   version: 4.0.1
   resolution: "nanoid@npm:4.0.1"
   bin:
@@ -11912,6 +11912,7 @@ __metadata:
     unocss-preset-scrollbar: ^0.2.1
     vitest: ^0.28.5
     vue-tsc: ^1.1.2
+    vue-winbox: ^0.2.1
     zod: ^3.20.6
   languageName: unknown
   linkType: soft
@@ -14089,6 +14090,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"vue-winbox@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "vue-winbox@npm:0.2.1"
+  dependencies:
+    nanoid: ^4.0.0
+    winbox: ^0.2.6
+  peerDependencies:
+    vue: ">=3.2.0"
+  checksum: c0712b203238ffd65a36ba9f4ccb3f55d7475d97480f96973cdc98e7f44e4269139289cd9efc5d3f6a5877bbd7efc7eac2bfb088bfa31b68152ffd7897ed9c99
+  languageName: node
+  linkType: hard
+
 "vue@npm:^3.2.47":
   version: 3.2.47
   resolution: "vue@npm:3.2.47"
@@ -14230,6 +14243,13 @@ __metadata:
   dependencies:
     string-width: ^1.0.2 || 2 || 3 || 4
   checksum: d5fc37cd561f9daee3c80e03b92ed3e84d80dde3365a8767263d03dacfc8fa06b065ffe1df00d8c2a09f731482fcacae745abfbb478d4af36d0a891fad4834d3
+  languageName: node
+  linkType: hard
+
+"winbox@npm:^0.2.6":
+  version: 0.2.6
+  resolution: "winbox@npm:0.2.6"
+  checksum: 7216b0b7f40ef20058f43c3d7ef327cfaf1af26ac37ad6d27307cf7b2065aee1310684ae32aba28882a7cbbecc31e4d195c5b530111263464b3aee00f210b926
   languageName: node
   linkType: hard
 
