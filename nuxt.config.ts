@@ -11,14 +11,14 @@ import fr from './locales/fr.json'
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
-  alias: {
-    '@': resolve(__dirname, 'src'),
-    '~': resolve(__dirname, 'src'),
-    '@@': resolve(__dirname),
-    '~~': resolve(__dirname),
-    assets: resolve(__dirname, 'src', 'assets'),
-    public: resolve(__dirname, 'src', 'public'),
-  },
+  // alias: {
+  //   '@': resolve(__dirname, 'src'),
+  //   '~': resolve(__dirname, 'src'),
+  //   '@@': resolve(__dirname),
+  //   '~~': resolve(__dirname),
+  //   assets: resolve(__dirname, 'src', 'assets'),
+  //   public: resolve(__dirname, 'src', 'public'),
+  // },
 
   telemetry: false,
 
@@ -34,6 +34,7 @@ export default defineNuxtConfig({
   typescript: {
     shim: false,
     strict: true,
+    // typeCheck: true,
   },
 
   imports: {
@@ -96,25 +97,23 @@ export default defineNuxtConfig({
     '@/modules/test/index',
   ],
 
+  // vite: {
+  //   build: {
+  //     rollupOptions: {
+  //       external: (source, importer, ok) => {
+  //         console.log({ source, importer, ok })
+  //       },
+  //     },
+  //   },
+  // },
+
   vite: {
     optimizeDeps: {
-      exclude: [
-        'css-tree/lib',
-        '@iconify/utils/lib/loader/fs',
-        '@iconify/utils/lib/loader/install-pkg',
-        '@iconify/utils/lib/loader/node-loader',
-        '@iconify/utils/lib/loader/node-loaders',
-      ],
+      exclude: ['css-tree', 'winbox'],
     },
     build: {
       rollupOptions: {
-        external: [
-          'css-tree/lib',
-          '@iconify/utils/lib/loader/fs',
-          '@iconify/utils/lib/loader/install-pkg',
-          '@iconify/utils/lib/loader/node-loader',
-          '@iconify/utils/lib/loader/node-loaders',
-        ],
+        external: ['url', 'fs', 'module', 'path'],
       },
     },
   },

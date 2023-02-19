@@ -5,8 +5,8 @@
 
 <template>
   <div
-    class="component-page-title flex flex-row justify-between items-center border-b border-dashed w-full border-gray-400 py-2 px-6"
-    un-dark="border-gray-600"
+    class="component-page-title flex flex-row justify-between items-center border-b border-dashed w-full border-gray-300 text-gray-700 py-2 px-6"
+    un-dark="border-gray-700 text-gray-200"
   >
     <!-- <div
       class="flex flex-row items-center justify-center text-gray-600 text-base font-semibold gap-1 mb-1"

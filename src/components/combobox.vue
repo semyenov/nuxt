@@ -338,6 +338,7 @@ function documentFocusinEventListener() {
       v-if="input.length === 0"
       size="sm"
       outline
+      tabindex="-1"
       :color="props.color"
       class="absolute right-0 top-0 bottom-0 rounded-l-none"
       :class="[
@@ -355,6 +356,7 @@ function documentFocusinEventListener() {
       v-else
       size="sm"
       outline
+      tabindex="-1"
       :color="props.color"
       class="absolute right-0 top-0 bottom-0 rounded-l-none"
       :class="[

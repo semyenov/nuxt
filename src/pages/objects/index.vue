@@ -14,28 +14,28 @@ const objectsStore = useObjectsStore()
 const objectsIds = await objectsStore.itemsGetter
 const objectGetter = objectsStore.itemGetter
 
-const listRef = ref<InstanceType<typeof VirtualList> | null>(null)
+const listComponent = ref<InstanceType<typeof VirtualList> | null>(null)
 
 const listScrollStep = 10
 const listScrollIndex = ref(listScrollStep)
 
 function handleScrollerClick() {
-  if (!listRef.value) {
+  if (!listComponent.value) {
     return
   }
 
   if (listScrollIndex.value > objectsIds.value.length) {
-    listRef.value.scrollToBottom()
+    listComponent.value.scrollToBottom()
     listScrollIndex.value = 0
 
     return
   }
 
-  listRef.value.scrollToIndex(listScrollIndex.value)
+  listComponent.value.scrollToIndex(listScrollIndex.value)
   listScrollIndex.value += listScrollStep
 }
 
-async function handleLoadMore() {
+async function loadHandler() {
   await objectsStore.getOthers()
 }
 </script>
@@ -46,8 +46,7 @@ async function handleLoadMore() {
       <PageTitle>{{ t('objects.title') }}</PageTitle>
     </div>
     <VirtualList
-      ref="listRef"
-      key="page-objects-index-virtuallist"
+      ref="listComponent"
       :keeps="50"
       :page-mode="true"
       :data-ids="objectsIds"
@@ -60,19 +59,21 @@ async function handleLoadMore() {
       item-class="mb-6"
     >
       <template #header>
-        <div class="absolute flex flex-col gap-2 -right-16 bottom-8 z-10">
+        <div class="absolute flex flex-col gap-2 -right-16 bottom-28 z-10">
           <Button
             class="h-9"
             color="default"
+            outline
             rounded="md"
             size="xs"
-            @click.prevent="handleLoadMore"
+            @click.prevent="loadHandler"
           >
             <i class="i-carbon:download inline-block" />
           </Button>
           <Button
             class="h-9"
             color="default"
+            outline
             rounded="md"
             size="xs"
             @click.prevent="handleScrollerClick"

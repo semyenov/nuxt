@@ -1,11 +1,31 @@
 <script setup lang="ts">
 import { notUndefined } from '@antfu/utils'
 import { ObjectsComboboxItem } from '#components'
-import {
-  uiColorVariants,
-  uiRoundedVariants,
-  uiSizeVariants,
-} from '~~/unocss.config'
+import type {
+  UIColorVariants,
+  UIRoundedVariants,
+  UISizeVariants,
+} from '@/types/ui'
+
+const uiSizeVariants: UISizeVariants[] = ['xs', 'sm', 'md', 'lg', 'xl']
+
+const uiColorVariants: UIColorVariants[] = [
+  'default',
+  'primary',
+  'secondary',
+  'third',
+  'fourth',
+]
+
+const uiRoundedVariants: UIRoundedVariants[] = [
+  'none',
+  'xs',
+  'sm',
+  'md',
+  'lg',
+  'xl',
+  'full',
+]
 
 const objectsStore = useObjectsStore()
 const objectOptionsIds = await objectsStore.itemsGetter

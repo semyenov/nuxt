@@ -16,31 +16,8 @@ import type {
   UIColorVariants,
   UIRoundedVariants,
   UISizeVariants,
+  UnoColorVariants,
 } from '@/types/ui'
-
-export type UnoColorVariants =
-  | 'rose'
-  | 'pink'
-  | 'fuchsia'
-  | 'purple'
-  | 'violet'
-  | 'indigo'
-  | 'blue'
-  | 'sky'
-  | 'cyan'
-  | 'teal'
-  | 'emerald'
-  | 'green'
-  | 'lime'
-  | 'yellow'
-  | 'amber'
-  | 'orange'
-  | 'red'
-  | 'gray'
-  | 'slate'
-  | 'zinc'
-  | 'neutral'
-  | 'stone'
 
 export const unoColorVariants: UnoColorVariants[] = [
   'rose',

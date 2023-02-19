@@ -14,114 +14,103 @@ const props = defineProps({
   },
 })
 
+const winBox = ref<WinBox | null>(null)
+
 const rootEl = ref<HTMLElement | undefined>()
+const winBoxEl = ref<HTMLElement | undefined>()
 
 const item = toRef(props, 'item')
 const [isOpen, toggleOpen] = useToggle(false)
 
-const winBox = ref<WinBox | null>(null)
 const id = computed(() => {
   return `users-winbox__${item.value._id}`
 })
 
-const teleportRef = ref<HTMLElement | undefined>()
+onMounted(prepare)
+onActivated(prepare)
+watch(id, clean)
 
-const winBoxOptions = computed<WinBox.Params>(() => {
+function clickHandler() {
+  const w = winBox.value
+  if (w && w.id === id.value) {
+    w.focus().minimize(false)
+
+    return
+  }
+
+  const winBoxOptions = getWinBoxOptions()
+  winBox.value = new window.WinBox(winBoxOptions)
+
+  nextTick(() => {
+    const w = winBox.value
+    if (!w) {
+      return
+    }
+
+    w.mount(winBoxEl.value)
+    toggleOpen(true)
+    w.show()
+  })
+}
+
+function getWinBoxOptions() {
   return {
     id: id.value,
+    hidden: true,
     border: 10,
     root: rootEl.value,
     title: `${item.value.info.first_name} ${item.value.info.last_name} `,
     class: 'simple',
     top: 0,
     right: 0,
+    left: 0,
     bottom: 0,
     width: '30%',
     minwidth: '480px',
     height: '100%',
     x: 'right',
-    hidden: true,
+    y: 'center',
+
     onclose() {
-      if (!this) {
-        return false
-      }
-
       toggleOpen(false)
-      this.unmount()
-
-      nextTick(() => {
-        winBox.value = null
-      })
-
       return false
     },
   }
-})
+}
 
-onMounted(() => {
+function prepare() {
+  if (winBox.value) {
+    return
+  }
+
   const teleportEl = document.createElement('div')
   const contentEl = document.createElement('div')
 
-  teleportEl.classList.add('wb-content')
+  contentEl.classList.add('wb-content')
+  teleportEl.classList.add('wb-teleport')
   teleportEl.appendChild(contentEl)
-  teleportRef.value = teleportEl
+  winBoxEl.value = teleportEl
 
   rootEl.value = document.getElementById('teleport') as HTMLElement
-})
+}
 
-watch(id, () => {
-  const w = winBox.value
-  if (!w) {
+function clean() {
+  if (!winBox.value) {
     return
   }
 
-  w.close()
-})
+  winBox.value.close()
+  winBox.value = null
 
-onUnmounted(() => {
-  const w = winBox.value
-  if (!w) {
-    return
+  if (rootEl.value) {
+    rootEl.value.remove()
+    rootEl.value = undefined
   }
 
-  w.close()
-})
-
-onDeactivated(() => {
-  const w = winBox.value
-  if (!w) {
-    return
+  if (winBoxEl.value) {
+    winBoxEl.value.remove()
+    winBoxEl.value = undefined
   }
-
-  w.close()
-})
-
-function clickHandler() {
-  if (winBox.value) {
-    const w = winBox.value
-    w.show()
-    w.minimize(false)
-    w.focus()
-    return
-  }
-
-  winBox.value = new window.WinBox(winBoxOptions.value)
-
-  const w = winBox.value
-  if (!w) {
-    return
-  }
-
-  w.mount(teleportRef.value)
-  w.show()
-
-  toggleOpen(true)
-
-  nextTick(() => {
-    w.show()
-    w.minimize(false)
-    w.focus()
-  })
 }
 
 function handleChange() {
@@ -130,9 +119,9 @@ function handleChange() {
 </script>
 
 <template>
-  <div v-if="item" class="component-user-item">
+  <div :key="id" class="component-user-item">
     <Card dashed color="third">
-      <template v-if="item.info.first_name && item.info.last_name" #header>
+      <template v-if="item" #header>
         <div
           class="flex flex-row justify-between px-4 py-2 w-full cursor-pointer"
           @click="clickHandler"
@@ -154,10 +143,10 @@ function handleChange() {
     </Card>
     <Teleport
       v-if="isOpen"
-      :key="`${id}--${isOpen}`"
+      :key="`users-teleport-${id}`"
       :to="`#teleport #${id} .wb-body .wb-content`"
     >
-      <pre class="p-6">{{ item }}</pre>
+      <pre class="p-4">{{ item }}</pre>
     </Teleport>
   </div>
 </template>
