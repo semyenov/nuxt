@@ -38,21 +38,37 @@ function handleScrollerClick() {
 </script>
 
 <template>
-  <div class="page page-users-index w-full h-full">
+  <div class="page page-users-index">
     <Winbox
-      title="TEST"
+      init
+      :title="t('users.title')"
       :params="{
-        left: 20,
-        right: '50%',
+        class: [
+          'simple',
+          'no-min',
+          'no-max',
+          'no-full',
+          // 'no-resize',
+          'no-move',
+          'border-none',
+          'border-r',
+        ],
+        border: 0,
+        top: 0,
+        left: '45px',
+        bottom: 0,
+        right: '60%',
         height: '100%',
-        x: 'left',
+        width: '550px',
+        minwidth: '500px',
+        x: '45px',
         y: 'center',
       }"
-      init
     >
-      <div class="flex flex-row sticky box-color__default--2">
-        <PageTitle>{{ t('users.title') }}</PageTitle>
-      </div>
+      <!-- <div class="w-full h-full">
+        <div class="flex flex-row sticky box-color__default--2">
+          <PageTitle>{{ t('users.title') }}</PageTitle>
+        </div> -->
       <VirtualList
         ref="listComponent"
         key="page-users-index-virtuallist"
@@ -63,12 +79,12 @@ function handleScrollerClick() {
         :data-component="UsersItem"
         data-key="page-users-index-virtuallist"
         wrap-class="flex flex-col w-full"
-        class="flex flex-col items-center gap-8 p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded max-w-200"
+        class="flex flex-col items-center gap-8 p-6 flex-growoverflow-y-scroll scrollbar scrollbar-rounded"
         :estimate-size="70"
         item-class="mb-6"
       >
         <template #header>
-          <div class="absolute flex flex-col gap-4 -right-16 bottom-28 z-10">
+          <div class="absolute flex flex-col gap-4 right-8 bottom-8 z-10">
             <Button
               class="h-11"
               color="default"
@@ -82,6 +98,7 @@ function handleScrollerClick() {
           </div>
         </template>
       </VirtualList>
+      <!-- </div> -->
     </Winbox>
   </div>
 </template>

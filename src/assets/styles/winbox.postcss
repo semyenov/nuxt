@@ -2,7 +2,7 @@
 
 .winbox.simple {
   z-index: 100;
-  @apply box-color__default--1 border border-default-300 shadow-xl shadow-default;
+  @apply box-color__default--1 border border-default-300 shadow-xl shadow-default dark:shadow-gray-100/2;
 }
 .winbox.simple.min {
   z-index: 120;
@@ -18,7 +18,7 @@
   display: flex;
   position: initial;
   justify-content: center;
-  @apply box-color__default--2 px-6 0 h-auto border-gray-300 dark:border-gray-700 dark:text-gray-200 border-b border-dashed text-gray-700;
+  @apply box-color__default--2 px-6 h-auto border-gray-300 dark:border-gray-700 dark:text-gray-200 border-b border-dashed text-gray-700;
 }
 .winbox.simple.min .wb-header {
   display: flex;
@@ -35,33 +35,27 @@
   display: flex;
   @apply text-base;
 }
+
 .winbox.simple .wb-drag {
   display: flex;
   @apply py-2 pl-0;
 }
 .winbox.simple.min .wb-drag {
-  max-width: calc(100% - 30px);
   display: flex;
+  max-width: calc(100% - 30px);
   @apply py-2;
 }
 
 .winbox.simple .wb-control {
   filter: invert(1);
-  @apply dark:filter-invert-0 h-auto -mr-4;
-}
-.winbox.simple .wb-control .wb-full {
-  display: none;
+  @apply dark:filter-invert-0.4 h-auto -mr-4;
 }
 
 .winbox.simple .wb-body {
   display: flex;
-  flex-grow: 1;
-  position: initial;
-  margin: 0;
-  background: transparent;
-  @apply text-base relative top-0 !text-sm max-h-screen scrollbar scrollbar-rounded max-w-200;
+  @apply scrollbar scrollbar-rounded flex-grow box-color__default--1 w-full top-45px;
 }
 .winbox.simple .wb-body .wb-content {
-  @apply absolute -left-10px -right-0px top-0 overflow-auto;
+  @apply absolute top-0 overflow-auto w-full;
   margin: auto;
 }

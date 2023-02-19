@@ -5,6 +5,10 @@ import type { PropType } from 'vue'
 import type WinBox from 'winbox'
 
 const props = defineProps({
+  init: {
+    type: Boolean,
+    default: false,
+  },
   title: {
     type: String,
     default: '',
@@ -12,10 +16,6 @@ const props = defineProps({
   params: {
     type: Object as PropType<WinBox.Params>,
     default: () => ({}),
-  },
-  init: {
-    type: Boolean,
-    default: false,
   },
 })
 
@@ -30,11 +30,7 @@ defineExpose({
   getCurrentWinbox,
 })
 
-onMounted(() => {
-  if (props.init) {
-    init()
-  }
-})
+onMounted(() => props.init && init())
 
 onScopeDispose(() => {
   const w = getCurrentWinbox()
@@ -51,19 +47,17 @@ function init() {
 
   id.value = nanoid(8)
 
-  const rootEl = document.body as HTMLElement
-
+  const rootEl = document.getElementById('teleport') || document.body
   const mountEl = document.createElement('div')
   const contentEl = document.createElement('div')
+
   contentEl.classList.add('wb-content')
   mountEl.appendChild(contentEl)
 
-  const winBoxParams = getWinboxParams(id.value, props.title, rootEl, mountEl)
-  winbox.value = new window.WinBox(winBoxParams)
+  const winboxParams = getWinboxParams(id.value, props.title, rootEl, mountEl)
+  winbox.value = new window.WinBox(winboxParams)
 
-  nextTick(() => {
-    openToggle(true)
-  })
+  nextTick(() => openToggle(true))
 }
 
 function getCurrentWinbox() {
@@ -86,30 +80,14 @@ function getWinboxParams(
 ): WinBox.Params {
   return {
     title,
-    top: 0,
-    right: 0,
-    left: 0,
-    bottom: 0,
     border: 10,
-    width: '30%',
-    height: '100%',
-    minwidth: '480px',
     class: 'simple',
-    x: 'right',
-    y: 'center',
     mount,
     root,
     id,
 
-    onresize(w, h) {
-      console.log({ w, h })
-    },
-
     onclose(force) {
-      nextTick(() => {
-        openToggle(false)
-      })
-
+      nextTick(() => openToggle(false))
       return force || false
     },
 

@@ -46,7 +46,7 @@ const input = ref<string | undefined>(undefined)
       <PageTitle>Test Page</PageTitle>
     </div>
     <div
-      class="flex flex-col items-center p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded max-w-200"
+      class="flex flex-col items-center p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded max-w-200 box-color__default--1"
     >
       <PageProse class="max-w-300">
         <h4 class="mt-0" :class="!input ? 'mb-6' : 'mb-0'">Combobox</h4>

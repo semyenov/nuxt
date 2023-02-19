@@ -21,13 +21,13 @@ const authorizationStore = useAuthorizationStore()
       <AuthorizationCurrent />
     </div>
     <div
-      class="layout-default__left flex flex-row fixed top-0 left-0 bottom-0 z-2 box-color__default--1 border-r border-default-300 shadow-xl shadow-default"
+      class="layout-default__left flex flex-row fixed top-0 left-0 bottom-0 z-2"
     >
       <div class="layout-default__left box-color__default--2 border-r">
         <PageSidebar />
       </div>
       <div
-        class="layout-default__page flex flex-col items-start justify-items-stretch text-left box-color__default--1 min-w-150"
+        class="layout-default__page flex flex-col items-start justify-items-stretch text-left min-w-150"
       >
         <slot />
       </div>

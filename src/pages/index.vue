@@ -22,7 +22,7 @@ const { data } = await useFetch('/api/test', {
       <PageTitle>{{ t('index.title') }}</PageTitle>
     </div>
     <div
-      class="flex flex-col items-start p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded max-w-200"
+      class="flex flex-col items-start p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded max-w-200 box-color__default--1"
     >
       <PageProse v-if="data" class="mb-6">{{ data.text }}</PageProse>
       <div class="flex flex-row gap-2 text-3xl justify-center">
