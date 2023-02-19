@@ -11896,6 +11896,7 @@ __metadata:
     husky: ^8.0.3
     lint-staged: ^13.1.2
     magic-regexp: ^0.6.2
+    nanoid: ^4.0.1
     nuxt: ^3.2.2
     nuxt-typed-router: ^2.3.5
     ofetch: ^1.0.1

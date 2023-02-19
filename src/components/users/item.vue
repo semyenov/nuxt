@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import { hash } from 'ohash'
+import { nanoid } from 'nanoid'
 
 import type { IUser } from '@/types'
 
@@ -17,14 +17,17 @@ const props = defineProps({
 
 const winBox = ref<WinBox | null>(null)
 
+const id = ref<string>()
 const item = toRef(props, 'item')
 const [isOpen, toggleOpen] = useToggle(false)
 
-const id = ref<string>()
-
-// watch(item, clean)
-// onUnmounted(clean)
-onScopeDispose(clean)
+onScopeDispose(() => {
+  const w = getCurrentWinBox()
+  if (!w) {
+    return
+  }
+  w.close()
+})
 
 function clickHandler() {
   const w = getCurrentWinBox()
@@ -34,7 +37,7 @@ function clickHandler() {
     return
   }
 
-  id.value = createId()
+  id.value = nanoid()
   const title = `${item.value.info.first_name} ${item.value.info.last_name}`
 
   const mountEl = document.createElement('div')
@@ -89,19 +92,6 @@ function createWinBoxOptions(
   }
 }
 
-function createId() {
-  const ts = new Date().getUTCMilliseconds() + Math.random() + 1000
-  return `users-winbox__${hash(item.value._id + ts.toFixed(0).toString())}`
-}
-
-function clean() {
-  const w = getCurrentWinBox()
-  if (!w) {
-    return
-  }
-  w.close()
-}
-
 function getCurrentWinBox() {
   if (!id.value) {
     return
@@ -110,15 +100,13 @@ function getCurrentWinBox() {
   const el = document.getElementById(id.value) as HTMLElement & {
     winbox?: WinBox
   }
-  if (!el) {
-    return
-  }
 
-  return el.winbox
+  return el && el.winbox
 }
 
 function handleChange() {
-  item.value.mandate = item.value.mandate ? item.value.mandate + 1 : 0
+  item.value.mandate =
+    item.value.mandate !== undefined ? item.value.mandate + 1 : 0
 }
 </script>
 

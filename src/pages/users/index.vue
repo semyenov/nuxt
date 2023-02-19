@@ -39,37 +39,49 @@ function handleScrollerClick() {
 
 <template>
   <div class="page page-users-index w-full h-full">
-    <div class="flex flex-row sticky box-color__default--2">
-      <PageTitle>{{ t('users.title') }}</PageTitle>
-    </div>
-    <VirtualList
-      ref="listComponent"
-      key="page-users-index-virtuallist"
-      :keeps="50"
-      :page-mode="false"
-      :data-ids="usersIds"
-      :data-getter="usersGetter"
-      :data-component="UsersItem"
-      data-key="page-users-index-virtuallist"
-      wrap-class="flex flex-col w-full"
-      class="flex flex-col items-center gap-8 p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded max-w-200"
-      :estimate-size="70"
-      item-class="mb-6"
+    <Winbox
+      title="TEST"
+      :params="{
+        left: 20,
+        right: '50%',
+        height: '100%',
+        x: 'left',
+        y: 'center',
+      }"
+      init
     >
-      <template #header>
-        <div class="absolute flex flex-col gap-4 -right-16 bottom-28 z-10">
-          <Button
-            class="h-11"
-            color="default"
-            outline
-            rounded="md"
-            size="md"
-            @click.prevent="handleScrollerClick"
-          >
-            <i class="i-carbon:arrow-down inline-block" />
-          </Button>
-        </div>
-      </template>
-    </VirtualList>
+      <div class="flex flex-row sticky box-color__default--2">
+        <PageTitle>{{ t('users.title') }}</PageTitle>
+      </div>
+      <VirtualList
+        ref="listComponent"
+        key="page-users-index-virtuallist"
+        :keeps="50"
+        :page-mode="false"
+        :data-ids="usersIds"
+        :data-getter="usersGetter"
+        :data-component="UsersItem"
+        data-key="page-users-index-virtuallist"
+        wrap-class="flex flex-col w-full"
+        class="flex flex-col items-center gap-8 p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded max-w-200"
+        :estimate-size="70"
+        item-class="mb-6"
+      >
+        <template #header>
+          <div class="absolute flex flex-col gap-4 -right-16 bottom-28 z-10">
+            <Button
+              class="h-11"
+              color="default"
+              outline
+              rounded="md"
+              size="md"
+              @click.prevent="handleScrollerClick"
+            >
+              <i class="i-carbon:arrow-down inline-block" />
+            </Button>
+          </div>
+        </template>
+      </VirtualList>
+    </Winbox>
   </div>
 </template>
