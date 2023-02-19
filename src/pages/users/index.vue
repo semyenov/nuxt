@@ -53,6 +53,7 @@ function handleScrollerClick() {
           'border-none',
           'border-r',
         ],
+        index: 10,
         border: 0,
         top: 0,
         left: '45px',

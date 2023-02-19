@@ -24,7 +24,7 @@ const item = await objectGetter(id)
     </div>
     <div
       v-if="item"
-      class="flex flex-col items-center gap-8 p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded max-w-200"
+      class="flex flex-col items-center gap-8 p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded max-w-200 box-color__default--1"
     >
       <ObjectsItem :item="item" :index="0" />
     </div>

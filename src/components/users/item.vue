@@ -66,6 +66,7 @@ function createWinBoxOptions(
   mount: HTMLElement
 ): WinBox.Params {
   return {
+    index: 100,
     title,
     top: 0,
     left: 0,
