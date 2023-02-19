@@ -29,7 +29,7 @@ onScopeDispose(clean)
 function clickHandler() {
   const w = winBox.value
   if (w && w.id === id.value) {
-    w.minimize()
+    w.minimize(false).focus()
 
     return
   }
@@ -44,8 +44,8 @@ function clickHandler() {
 
   const rootEl = document.body as HTMLElement
   const winBoxOptions = createWinBoxOptions(id.value, title, rootEl, mountEl)
-  const newWinBox = new window.WinBox(winBoxOptions)
-  winBox.value = newWinBox
+
+  winBox.value = new window.WinBox(winBoxOptions)
 
   nextTick(() => {
     if (!winBox.value) {
