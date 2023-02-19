@@ -138,7 +138,7 @@ function handleChange() {
       </template>
     </Card>
     <Teleport v-if="isOpen" :to="`#${id} .wb-body .wb-content`">
-      <pre class="p-4">{{ item }}</pre>
+      <pre class="p-6">{{ item }}</pre>
     </Teleport>
   </div>
 </template>

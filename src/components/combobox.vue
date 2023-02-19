@@ -61,7 +61,7 @@ const [isFocused, toggleFocused] = useToggle(false)
 
 const rootRef = ref<HTMLElement | null>(null)
 const inputRef = ref<InstanceType<typeof Input> | null>(null)
-const listRef = ref<InstanceType<typeof VirtualList> | null>(null)
+const listComponent = ref<InstanceType<typeof VirtualList> | null>(null)
 
 const input = ref<string>('')
 
@@ -82,19 +82,19 @@ const cursor = ref(dataIds.value.findIndex((id) => id === props.modelValue))
 watch(isFocused, () => (dirty.value = true))
 
 watch(dataIds, () => {
-  if (!listRef.value) {
+  if (!listComponent.value) {
     return
   }
 
-  listRef.value.scrollToIndex(0)
+  listComponent.value.scrollToIndex(0)
 })
 
 watch(input, (i) => {
-  if (!listRef.value) {
+  if (!listComponent.value) {
     return
   }
 
-  listRef.value.scrollToIndex(0)
+  listComponent.value.scrollToIndex(0)
   cursor.value = -1
 
   if (i !== '') {
@@ -133,8 +133,8 @@ onKeyStroke('ArrowUp', (event) => {
   event.preventDefault()
 
   cursor.value = clamp(cursor.value - 1, 0, dataIds.value.length - 1)
-  if (listRef.value) {
-    listRef.value.scrollToIndex(cursor.value)
+  if (listComponent.value) {
+    listComponent.value.scrollToIndex(cursor.value)
   }
 })
 
@@ -146,8 +146,8 @@ onKeyStroke('ArrowDown', (event) => {
   event.preventDefault()
 
   cursor.value = clamp(cursor.value + 1, 0, dataIds.value.length - 1)
-  if (listRef.value) {
-    listRef.value.scrollToIndex(cursor.value)
+  if (listComponent.value) {
+    listComponent.value.scrollToIndex(cursor.value)
   }
 })
 
@@ -312,7 +312,7 @@ function documentFocusinEventListener() {
     <VirtualList
       v-if="dirty"
       v-show="show"
-      ref="listRef"
+      ref="listComponent"
       v-bind="objectPick(props, ['dataComponent', 'dataKey'])"
       :data-component="props.dataComponent"
       :data-key="props.dataKey"

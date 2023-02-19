@@ -19,7 +19,7 @@ const listComponent = ref<InstanceType<typeof VirtualList> | null>(null)
 const listScrollStep = 10
 const listScrollIndex = ref(listScrollStep)
 
-function handleScrollerClick() {
+function scrollerClickHandler() {
   if (!listComponent.value) {
     return
   }
@@ -35,7 +35,7 @@ function handleScrollerClick() {
   listScrollIndex.value += listScrollStep
 }
 
-async function loadHandler() {
+async function loadOthersHandler() {
   await objectsStore.getOthers()
 }
 </script>
@@ -61,22 +61,22 @@ async function loadHandler() {
       <template #header>
         <div class="absolute flex flex-col gap-2 -right-16 bottom-28 z-10">
           <Button
-            class="h-9"
+            class="h-11"
             color="default"
             outline
             rounded="md"
-            size="xs"
-            @click.prevent="loadHandler"
+            size="md"
+            @click.prevent="loadOthersHandler"
           >
             <i class="i-carbon:download inline-block" />
           </Button>
           <Button
-            class="h-9"
+            class="h-11"
             color="default"
             outline
             rounded="md"
-            size="xs"
-            @click.prevent="handleScrollerClick"
+            size="md"
+            @click.prevent="scrollerClickHandler"
           >
             <i class="i-carbon:arrow-down inline-block" />
           </Button>

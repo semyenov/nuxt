@@ -15,24 +15,24 @@ const usersStore = useUsersStore()
 const usersIds = await usersStore.itemsGetter
 const usersGetter = usersStore.itemGetter
 
-const listRef = ref<InstanceType<typeof VirtualList> | null>(null)
+const listComponent = ref<InstanceType<typeof VirtualList> | null>(null)
 
 const listScrollStep = 10
 const listScrollIndex = ref(listScrollStep)
 
 function handleScrollerClick() {
-  if (!listRef.value) {
+  if (!listComponent.value) {
     return
   }
 
   if (listScrollIndex.value > usersIds.value.length) {
-    listRef.value.scrollToBottom()
+    listComponent.value.scrollToBottom()
     listScrollIndex.value = 0
 
     return
   }
 
-  listRef.value.scrollToIndex(listScrollIndex.value)
+  listComponent.value.scrollToIndex(listScrollIndex.value)
   listScrollIndex.value += listScrollStep
 }
 </script>
@@ -43,7 +43,7 @@ function handleScrollerClick() {
       <PageTitle>{{ t('users.title') }}</PageTitle>
     </div>
     <VirtualList
-      ref="listRef"
+      ref="listComponent"
       key="page-users-index-virtuallist"
       :keeps="50"
       :page-mode="false"
@@ -59,11 +59,11 @@ function handleScrollerClick() {
       <template #header>
         <div class="absolute flex flex-col gap-4 -right-16 bottom-28 z-10">
           <Button
-            class="h-9"
+            class="h-11"
             color="default"
             outline
             rounded="md"
-            size="xs"
+            size="md"
             @click.prevent="handleScrollerClick"
           >
             <i class="i-carbon:arrow-down inline-block" />
