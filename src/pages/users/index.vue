@@ -53,20 +53,19 @@ function handleScrollerClick() {
       data-key="page-users-index-virtuallist"
       wrap-class="flex flex-col w-full"
       class="flex flex-col items-center gap-8 p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded max-w-200"
-      :estimate-size="800"
+      :estimate-size="70"
       item-class="mb-6"
     >
       <template #header>
         <div class="absolute flex flex-col gap-4 -right-16 bottom-8 z-10">
           <Button
-            class="h-11"
-            color="fourth"
-            outline
+            class="h-9"
+            color="default"
             rounded="md"
-            size="sm"
+            size="xs"
             @click.prevent="handleScrollerClick"
           >
-            <i class="i-carbon:arrow-down inline-block h-6" />
+            <i class="i-carbon:arrow-down inline-block" />
           </Button>
         </div>
       </template>
