@@ -11,5 +11,6 @@ declare global {
 export default defineNuxtPlugin(async (_nuxtApp) => {
   _nuxtApp.hooks.hookOnce('app:mounted', () => {
     window.WinBox = WinBox
+    console.log('WinBox')
   })
 })

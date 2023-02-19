@@ -27,8 +27,8 @@ const id = ref<string>()
 onScopeDispose(clean)
 
 function clickHandler() {
-  const w = winBox.value
-  if (w && w.id === id.value) {
+  const w = getCurrentWinBox()
+  if (w) {
     w.minimize(false).focus()
 
     return
@@ -95,18 +95,26 @@ function createId() {
 }
 
 function clean() {
+  const w = getCurrentWinBox()
+  if (!w) {
+    return
+  }
+  w.close()
+}
+
+function getCurrentWinBox() {
   if (!id.value) {
     return
   }
 
   const el = document.getElementById(id.value) as HTMLElement & {
-    winbox: WinBox
+    winbox?: WinBox
   }
   if (!el) {
     return
   }
 
-  el.winbox.close()
+  return el.winbox
 }
 
 function handleChange() {
