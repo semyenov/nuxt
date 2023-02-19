@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
+import { hash } from 'ohash'
 
 import type { IUser } from '@/types'
 
@@ -16,101 +17,96 @@ const props = defineProps({
 
 const winBox = ref<WinBox | null>(null)
 
-const rootEl = ref<HTMLElement | undefined>()
-const winBoxEl = ref<HTMLElement | undefined>()
-
 const item = toRef(props, 'item')
 const [isOpen, toggleOpen] = useToggle(false)
 
-const id = computed(() => {
-  return `users-winbox__${item.value._id}`
+const id = ref<string>()
+
+watch([isOpen], (o) => {
+  if (!o) {
+    clean()
+  }
 })
 
-onMounted(prepare)
-onActivated(prepare)
-watch(id, clean)
+onDeactivated(clean)
+onUnmounted(clean)
 
 function clickHandler() {
   const w = winBox.value
   if (w && w.id === id.value) {
-    w.focus().minimize(false)
+    w.minimize()
 
     return
   }
 
-  const winBoxOptions = getWinBoxOptions()
-  winBox.value = new window.WinBox(winBoxOptions)
+  id.value = createId()
+  const title = `${item.value.info.first_name} ${item.value.info.last_name}`
+
+  const mountEl = document.createElement('div')
+  const contentEl = document.createElement('div')
+  contentEl.classList.add('wb-content')
+  mountEl.appendChild(contentEl)
+
+  const rootEl = document.getElementById('teleport') as HTMLElement
+  const winBoxOptions = createWinBoxOptions(id.value, title, rootEl, mountEl)
+  const newWinBox = new window.WinBox(winBoxOptions)
+  winBox.value = newWinBox
 
   nextTick(() => {
-    const w = winBox.value
-    if (!w) {
+    if (!winBox.value) {
       return
     }
 
-    w.mount(winBoxEl.value)
     toggleOpen(true)
-    w.show()
   })
 }
 
-function getWinBoxOptions() {
+function createWinBoxOptions(
+  id: string,
+  title: string,
+  root: HTMLElement,
+  mount: HTMLElement
+): WinBox.Params {
   return {
-    id: id.value,
-    hidden: true,
-    border: 10,
-    root: rootEl.value,
-    title: `${item.value.info.first_name} ${item.value.info.last_name} `,
-    class: 'simple',
+    title,
     top: 0,
     right: 0,
     left: 0,
     bottom: 0,
+    border: 10,
     width: '30%',
-    minwidth: '480px',
     height: '100%',
+    minwidth: '480px',
+    class: 'simple',
     x: 'right',
     y: 'center',
+    mount,
+    root,
+    id,
 
-    onclose() {
+    onclose(force) {
       toggleOpen(false)
-      return false
+
+      nextTick(() => {
+        winBox.value = null
+      })
+
+      return force || false
     },
   }
 }
 
-function prepare() {
-  if (winBox.value) {
-    return
-  }
-
-  const teleportEl = document.createElement('div')
-  const contentEl = document.createElement('div')
-
-  contentEl.classList.add('wb-content')
-  teleportEl.classList.add('wb-teleport')
-  teleportEl.appendChild(contentEl)
-  winBoxEl.value = teleportEl
-
-  rootEl.value = document.getElementById('teleport') as HTMLElement
+function createId() {
+  const ts = new Date().getUTCMilliseconds() + Math.random() + 1000
+  return `users-winbox__${hash(item.value._id + ts.toFixed(0).toString())}`
 }
 
 function clean() {
-  if (!winBox.value) {
+  if (!winBox.value || !winBox.value.body) {
     return
   }
 
   winBox.value.close()
-  winBox.value = null
-
-  if (rootEl.value) {
-    rootEl.value.remove()
-    rootEl.value = undefined
-  }
-
-  if (winBoxEl.value) {
-    winBoxEl.value.remove()
-    winBoxEl.value = undefined
-  }
 }
 
 function handleChange() {
@@ -119,12 +115,12 @@ function handleChange() {
 </script>
 
 <template>
-  <div :key="id" class="component-user-item">
+  <div class="component-user-item">
     <Card dashed color="third">
       <template v-if="item" #header>
         <div
           class="flex flex-row justify-between px-4 py-2 w-full cursor-pointer"
-          @click="clickHandler"
+          @click="() => clickHandler()"
         >
           {{ `# ${item.info.first_name} ${item.info.last_name}` }}
           <div
@@ -143,7 +139,7 @@ function handleChange() {
     </Card>
     <Teleport
       v-if="isOpen"
-      :key="`users-teleport-${id}`"
+      :key="`${id}-teleport`"
       :to="`#teleport #${id} .wb-body .wb-content`"
     >
       <pre class="p-4">{{ item }}</pre>
