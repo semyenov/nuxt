@@ -81,12 +81,12 @@ function handleScrollerClick() {
         :data-component="UsersItem"
         data-key="page-users-index-virtuallist"
         wrap-class="flex flex-col w-full"
-        class="flex flex-col items-center gap-8 p-6 flex-growoverflow-y-scroll scrollbar scrollbar-rounded max-h-full h-auto"
+        class="flex flex-col items-center gap-8 p-6 flex-grow overflow-y-scroll scrollbar scrollbar-rounded max-h-full h-auto"
         :estimate-size="70"
         item-class="mb-6"
       >
         <template #header>
-          <div class="absolute flex flex-col gap-4 right-8 bottom-8 z-10">
+          <div class="absolute flex flex-col gap-4 -right-16 bottom-28 z-10">
             <Button
               class="h-11"
               color="default"

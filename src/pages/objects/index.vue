@@ -54,7 +54,7 @@ async function loadOthersHandler() {
       :data-component="ObjectsItem"
       data-key="page-objects-index-virtuallist"
       wrap-class="flex flex-col w-full"
-      class="flex flex-col items-center gap-8 p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded max-w-200 box-color__default--1"
+      class="flex flex-col items-center gap-8 p-6 flex-grow overflow-y-scroll scrollbar scrollbar-rounded max-h-full h-auto max-w-200 box-color__default--1"
       :estimate-size="70"
       item-class="mb-6"
     >

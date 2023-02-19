@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import { nanoid } from 'nanoid'
+// import { nanoid } from 'nanoid'
 
+import { hash } from 'ohash'
 import type { IUser } from '@/types'
 
 const props = defineProps({
@@ -37,7 +38,7 @@ function clickHandler() {
     return
   }
 
-  id.value = nanoid()
+  id.value = `id-${hash(item.value._id)}`
   const title = `${item.value.info.first_name} ${item.value.info.last_name}`
 
   const mountEl = document.createElement('div')
@@ -135,7 +136,7 @@ function handleChange() {
       </template>
     </Card>
     <Teleport v-if="isOpen" :to="`#${id} .wb-body .wb-content`">
-      <pre class="p-6">{{ item }}</pre>
+      <pre class="p-6 text-sm">{{ item }}</pre>
     </Teleport>
   </div>
 </template>

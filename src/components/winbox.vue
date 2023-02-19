@@ -45,7 +45,7 @@ function init() {
     return
   }
 
-  id.value = nanoid(8)
+  id.value = `id-${nanoid(8)}`
 
   const rootEl = document.getElementById('teleport') || document.body
   const mountEl = document.createElement('div')
