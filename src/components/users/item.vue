@@ -22,14 +22,9 @@ const [isOpen, toggleOpen] = useToggle(false)
 
 const id = ref<string>()
 
-watch([isOpen], (o) => {
-  if (!o) {
-    clean()
-  }
-})
-
-onDeactivated(clean)
-onUnmounted(clean)
+// watch(item, clean)
+// onUnmounted(clean)
+onScopeDispose(clean)
 
 function clickHandler() {
   const w = winBox.value
@@ -47,7 +42,7 @@ function clickHandler() {
   contentEl.classList.add('wb-content')
   mountEl.appendChild(contentEl)
 
-  const rootEl = document.getElementById('teleport') as HTMLElement
+  const rootEl = document.body as HTMLElement
   const winBoxOptions = createWinBoxOptions(id.value, title, rootEl, mountEl)
   const newWinBox = new window.WinBox(winBoxOptions)
   winBox.value = newWinBox
@@ -85,10 +80,8 @@ function createWinBoxOptions(
     id,
 
     onclose(force) {
-      toggleOpen(false)
-
       nextTick(() => {
-        winBox.value = null
+        toggleOpen(false)
       })
 
       return force || false
@@ -102,11 +95,18 @@ function createId() {
 }
 
 function clean() {
-  if (!winBox.value || !winBox.value.body) {
+  if (!id.value) {
     return
   }
 
-  winBox.value.close()
+  const el = document.getElementById(id.value) as HTMLElement & {
+    winbox: WinBox
+  }
+  if (!el) {
+    return
+  }
+
+  el.winbox.close()
 }
 
 function handleChange() {
@@ -120,7 +120,7 @@ function handleChange() {
       <template v-if="item" #header>
         <div
           class="flex flex-row justify-between px-4 py-2 w-full cursor-pointer"
-          @click="() => clickHandler()"
+          @click="clickHandler"
         >
           {{ `# ${item.info.first_name} ${item.info.last_name}` }}
           <div
@@ -137,11 +137,7 @@ function handleChange() {
         </div>
       </template>
     </Card>
-    <Teleport
-      v-if="isOpen"
-      :key="`${id}-teleport`"
-      :to="`#teleport #${id} .wb-body .wb-content`"
-    >
+    <Teleport v-if="isOpen" :to="`#${id} .wb-body .wb-content`">
       <pre class="p-4">{{ item }}</pre>
     </Teleport>
   </div>
