@@ -52,6 +52,7 @@ function handleScrollerClick() {
           'no-move',
           'border-none',
           'border-r',
+          'overflow-hidden',
         ],
         index: 10,
         border: 0,
@@ -80,7 +81,7 @@ function handleScrollerClick() {
         :data-component="UsersItem"
         data-key="page-users-index-virtuallist"
         wrap-class="flex flex-col w-full"
-        class="flex flex-col items-center gap-8 p-6 flex-growoverflow-y-scroll scrollbar scrollbar-rounded"
+        class="flex flex-col items-center gap-8 p-6 flex-growoverflow-y-scroll scrollbar scrollbar-rounded max-h-full h-auto"
         :estimate-size="70"
         item-class="mb-6"
       >
