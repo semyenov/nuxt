@@ -26,7 +26,7 @@ function handleChange() {
 <template>
   <div class="component-user-item">
     <Card
-      :color="showFlag ? 'fourth' : 'third'"
+      :color="showFlag ? 'third' : 'default'"
       class="cursor-pointer select-none"
       dashed
       @click="showToggle()"

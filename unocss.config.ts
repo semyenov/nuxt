@@ -232,6 +232,7 @@ function createColorScale(
           .darken((-steps - i) * 0.005)
           .saturate(i / steps / 4)
           .saturate(i / steps / 8 - 0.1)
+          .brighten((steps - i) * 0.02 - 0.1)
           .darken(i * 0.02)
           .hex(),
       }),
