@@ -110,12 +110,14 @@ function getCurrentWinBox() {
 
 <template>
   <div class="component-object-item">
-    <Card dashed color="secondary">
+    <Card
+      dashed
+      :color="isOpen ? 'fourth' : 'secondary'"
+      class="cursor-pointer"
+      @click="clickHandler"
+    >
       <template v-if="item" #header>
-        <div
-          class="flex flex-row justify-between px-4 py-2 w-full cursor-pointer"
-          @click="clickHandler"
-        >
+        <div class="flex flex-row justify-between px-4 py-2 w-full">
           {{ `# ${item.info.name}` }}
           <div
             class="inline-flex px-2 box-color__zinc--3 bg-white box-rounded__md border font-mono font-light text-sm"

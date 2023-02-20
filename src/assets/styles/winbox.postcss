@@ -36,6 +36,11 @@
   display: flex;
   @apply py-2 pl-0;
 }
+
+.winbox.simple.no-move .wb-drag {
+  pointer-events: none;
+}
+
 .winbox.simple.min .wb-drag {
   display: flex;
   max-width: calc(100% - 30px);
@@ -44,7 +49,7 @@
 
 .winbox.simple .wb-control {
   filter: invert(1);
-  @apply dark:filter-invert-0.4 h-auto -mr-4;
+  @apply dark:filter-invert-0 dark:opacity-70 h-auto -mr-4;
 }
 
 .winbox.simple .wb-body {

@@ -49,10 +49,8 @@ function handleScrollerClick() {
           'no-max',
           'no-full',
           // 'no-resize',
+          'border-l-none',
           'no-move',
-          'border-none',
-          'border-r',
-          'overflow-hidden',
         ],
         index: 10,
         border: 0,
@@ -61,6 +59,7 @@ function handleScrollerClick() {
         bottom: 0,
         right: '60%',
         height: '100%',
+        minheight: '100%',
         width: '550px',
         minwidth: '500px',
         x: '45px',
@@ -81,7 +80,7 @@ function handleScrollerClick() {
         :data-component="UsersItem"
         data-key="page-users-index-virtuallist"
         wrap-class="flex flex-col w-full"
-        class="flex flex-col items-center gap-8 p-6 flex-grow overflow-y-scroll scrollbar scrollbar-rounded max-h-full h-auto"
+        class="page-users-index-virtuallist flex flex-col items-center gap-8 p-6 flex-grow overflow-y-scroll scrollbar scrollbar-rounded max-h-full h-auto"
         :estimate-size="70"
         item-class="mb-6"
       >
@@ -104,3 +103,15 @@ function handleScrollerClick() {
     </Winbox>
   </div>
 </template>
+
+<style lang="postcss">
+.page-users-index-virtuallist .wb-n,
+.page-users-index-virtuallist .wb-s,
+.page-users-index-virtuallist .wb-w,
+.page-users-index-virtuallist .wb-nw,
+.page-users-index-virtuallist .wb-sw,
+.page-users-index-virtuallist .wb-ne,
+.page-users-index-virtuallist .wb-se {
+  display: none;
+}
+</style>
