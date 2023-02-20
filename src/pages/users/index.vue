@@ -20,7 +20,7 @@ const listComponent = ref<InstanceType<typeof VirtualList> | null>(null)
 const listScrollStep = 10
 const listScrollIndex = ref(listScrollStep)
 
-function handleScrollerClick() {
+function scrollClickHandler() {
   if (!listComponent.value) {
     return
   }
@@ -57,10 +57,6 @@ function handleScrollerClick() {
       y: 'center',
     }"
   >
-    <!-- <div class="w-full h-full">
-        <div class="flex flex-row sticky box-color__default--2">
-          <PageTitle>{{ t('users.title') }}</PageTitle>
-        </div> -->
     <VirtualList
       ref="listComponent"
       key="page-users-index-virtuallist"
@@ -83,7 +79,7 @@ function handleScrollerClick() {
             outline
             rounded="full"
             size="md"
-            @click="handleScrollerClick"
+            @click="scrollClickHandler"
           >
             <i class="i-carbon:arrow-down inline-block" />
           </Button>

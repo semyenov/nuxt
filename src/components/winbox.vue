@@ -60,15 +60,17 @@ function open() {
   const winboxParams = getWinboxParams(id.value, rootEl, mountEl)
 
   winbox.value = new window.WinBox(winboxParams)
-  showToggle(true)
 
   nextTick(() => {
+    showToggle(true)
+
     if (winboxParams.x === 'right') {
       const el = getWinboxEl()
       if (!el || !el.winbox) {
         return
       }
-      const x = window.screenX - el.clientWidth
+
+      const x = screen.width - el.clientWidth
       el.winbox.move(x, undefined, false)
     }
   })

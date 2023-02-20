@@ -19,7 +19,7 @@ const listComponent = ref<InstanceType<typeof VirtualList> | null>(null)
 const listScrollStep = 10
 const listScrollIndex = ref(listScrollStep)
 
-function scrollerClickHandler() {
+function scrollClickHandler() {
   if (!listComponent.value) {
     return
   }
@@ -74,7 +74,7 @@ async function loadOthersHandler() {
       item-class="mb-6"
     >
       <template #header>
-        <div class="absolute flex flex-col gap-2 -right-16 bottom-28 z-10">
+        <div class="absolute flex flex-col gap-2 right-16 bottom-20 z-10">
           <Button
             class="h-11"
             color="default"
@@ -91,7 +91,7 @@ async function loadOthersHandler() {
             outline
             rounded="md"
             size="md"
-            @click.prevent="scrollerClickHandler"
+            @click.prevent="scrollClickHandler"
           >
             <i class="i-carbon:arrow-down inline-block" />
           </Button>
