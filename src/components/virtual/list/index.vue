@@ -231,6 +231,9 @@ watch(
   (dataIds) => {
     v.updateParam('uniqueIds', dataIds.slice())
     v.handleDataSourcesChange()
+
+    const offset = getOffsetSize()
+    scrollToOffset(offset + 1)
   }
 )
 watch(
