@@ -1,14 +1,14 @@
 <script setup lang="ts">
-const now = useNow()
-const mouseStore = useMouseStore()
+// const now = useNow()
+// const mouseStore = useMouseStore()
 </script>
 
 <template>
   <div
-    class="component-page-title flex flex-col items-center justify-between border-b border-dashed w-full border-gray-400 py-6 px-6"
-    un-dark="border-gray-600"
+    class="component-page-title flex flex-row justify-between items-center border-b border-dashed w-full border-gray-300 text-gray-700 py-2 px-6"
+    un-dark="border-gray-700 text-gray-200"
   >
-    <div
+    <!-- <div
       class="flex flex-row items-center justify-center text-gray-600 text-base font-semibold gap-1 mb-1"
       un-dark="text-gray-400"
     >
@@ -17,18 +17,16 @@ const mouseStore = useMouseStore()
         &Cross;
       </span>
       <span>{{ mouseStore.y }}</span>
-    </div>
+    </div> -->
 
-    <div class="flex flex-row items-start justify-end gap-2 mb-4 ml-8">
-      <div class="text-6xl font-extrabold text-gray-800" un-dark="text-gray-50">
-        <slot />
-      </div>
-      <button
-        class="i-carbon:sun text-3xl text-gray-500 min-w-8"
-        un-dark="text-gray-400 i-carbon:moon"
-        @click="toggleDark()"
-      />
+    <div class="text-xl font-extrabold text-gray-700" un-dark="text-gray-200">
+      <slot />
     </div>
+    <button
+      class="i-carbon:sun text-xl text-gray-500"
+      un-dark="text-gray-400 i-carbon:moon"
+      @click="toggleDark()"
+    />
 
     <!-- <div class="flex text-gray-400" un-dark="text-gray-600">
       {{ now.toDateString() }}

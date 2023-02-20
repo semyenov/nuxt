@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="flex flex-col fixed top-0 left-0 bottom-0 box-color__default--1 border-r"
-  >
+  <div class="flex flex-col divide-y divide-dashed">
     <NuxtLink v-slot="{ isActive, navigate }" :to="{ name: 'index' }" custom>
       <Button
         color="primary"
@@ -11,7 +9,7 @@
         :border="false"
         @click="navigate"
       >
-        <i class="i-carbon:home inline-block h-6" />
+        <i class="i-carbon:home inline-block h-6.5" />
       </Button>
     </NuxtLink>
     <NuxtLink v-slot="{ isActive, navigate }" :to="{ name: 'objects' }" custom>
@@ -23,7 +21,7 @@
         :border="false"
         @click="navigate"
       >
-        <i class="i-carbon:data-blob inline-block h-6" />
+        <i class="i-carbon:data-blob inline-block h-6.5" />
       </Button>
     </NuxtLink>
     <NuxtLink v-slot="{ isActive, navigate }" :to="{ name: 'users' }" custom>
@@ -35,7 +33,7 @@
         :border="false"
         @click="navigate"
       >
-        <i class="i-carbon:user inline-block h-6" />
+        <i class="i-carbon:user inline-block h-6.5" />
       </Button>
     </NuxtLink>
     <NuxtLink v-slot="{ isActive, navigate }" :to="{ name: 'test' }" custom>
@@ -47,7 +45,7 @@
         :border="false"
         @click="navigate"
       >
-        <i class="i-carbon:text-scale inline-block h-6" />
+        <i class="i-carbon:text-scale inline-block h-6.5" />
       </Button>
     </NuxtLink>
     <NuxtLink
@@ -63,7 +61,7 @@
         :border="false"
         @click="navigate"
       >
-        <i class="i-carbon:book inline-block h-6" />
+        <i class="i-carbon:book inline-block h-6.5" />
       </Button>
     </NuxtLink>
   </div>

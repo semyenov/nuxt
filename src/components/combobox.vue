@@ -12,8 +12,7 @@ import { Input, VirtualList } from '#components'
 
 const props = defineProps({
   modelValue: {
-    type: Object as PropType<string>,
-    required: true,
+    type: String as PropType<string>,
   },
 
   color: {
@@ -54,22 +53,25 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-  (event: 'update:modelValue', val: string): void
+  (event: 'update:modelValue', val?: string): void
 }>()
 
+const dirty = ref(false)
 const [isFocused, toggleFocused] = useToggle(false)
 
 const rootRef = ref<HTMLElement | null>(null)
 const inputRef = ref<InstanceType<typeof Input> | null>(null)
-const listRef = ref<InstanceType<typeof VirtualList> | null>(null)
+const listComponent = ref<InstanceType<typeof VirtualList> | null>(null)
 
 const input = ref<string>('')
 
 const options = toRef(props, 'options')
 const dataIds = computed(() =>
-  options.value
-    .filter((item) => filterByField(item, props.searchFields, input.value))
-    .map((item) => item._id)
+  dirty.value
+    ? options.value
+        .filter((item) => filterByField(item, props.searchFields, input.value))
+        .map((item) => item._id)
+    : []
 )
 const dataGetter = async (id: string) =>
   computed(() => options.value.find((item) => item._id === id))
@@ -77,53 +79,80 @@ const dataGetter = async (id: string) =>
 const show = computed(() => isFocused.value && dataIds.value.length > 0)
 const cursor = ref(dataIds.value.findIndex((id) => id === props.modelValue))
 
-watch(input, (i) => {
-  if (!listRef.value || !listRef.value.rootRef) {
+watch(isFocused, () => (dirty.value = true))
+
+watch(dataIds, () => {
+  if (!listComponent.value) {
     return
   }
 
-  listRef.value.scrollToIndex(0)
+  listComponent.value.scrollToIndex(0)
+})
+
+watch(input, (i) => {
+  if (!listComponent.value) {
+    return
+  }
+
+  listComponent.value.scrollToIndex(0)
   cursor.value = -1
 
-  if (i !== '' || !inputRef.value || !inputRef.value.rootRef) {
+  if (i !== '') {
     return
   }
 
-  emit('update:modelValue', '')
+  emit('update:modelValue', undefined)
 })
 
 onClickOutside(rootRef, () => {
   toggleFocused(false)
 })
 
+onKeyStroke('Backspace', async () => {
+  if (!isFocused.value || !props.modelValue) {
+    return
+  }
+
+  const item = await dataGetter(props.modelValue)
+  if (!item) {
+    return
+  }
+
+  const field = getField(item, props.searchFields)
+  const str = field ? field.toString() : ''
+  if (input.value === str) {
+    input.value = ''
+  }
+})
+
 onKeyStroke('ArrowUp', (event) => {
-  if (!isFocused) {
+  if (!isFocused.value) {
     return
   }
 
   event.preventDefault()
 
   cursor.value = clamp(cursor.value - 1, 0, dataIds.value.length - 1)
-  if (listRef.value) {
-    listRef.value.scrollToIndex(cursor.value)
+  if (listComponent.value) {
+    listComponent.value.scrollToIndex(cursor.value)
   }
 })
 
 onKeyStroke('ArrowDown', (event) => {
-  if (!isFocused) {
+  if (!isFocused.value) {
     return
   }
 
   event.preventDefault()
 
   cursor.value = clamp(cursor.value + 1, 0, dataIds.value.length - 1)
-  if (listRef.value) {
-    listRef.value.scrollToIndex(cursor.value)
+  if (listComponent.value) {
+    listComponent.value.scrollToIndex(cursor.value)
   }
 })
 
 onKeyStroke('Enter', async (event) => {
-  if (!isFocused || cursor.value < 0) {
+  if (!isFocused.value || cursor.value < 0) {
     return
   }
 
@@ -133,12 +162,12 @@ onKeyStroke('Enter', async (event) => {
 })
 
 onMounted(() => {
-  if (!inputRef.value || !inputRef.value.rootRef) {
+  if (!inputRef.value?.rootRef) {
     return
   }
-
-  inputRef.value.rootRef.blur()
-  inputRef.value.rootRef.addEventListener('focus', toggleShowHandler)
+  // inputRef.value.rootRef.addEventListener('focus', focusEventListener)
+  document.addEventListener('focusin', documentFocusinEventListener)
+  documentFocusinEventListener()
 
   if (cursor.value < 0) {
     return
@@ -148,12 +177,12 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  if (!inputRef.value || !inputRef.value.rootRef) {
+  if (!inputRef.value?.rootRef) {
     return
   }
 
-  inputRef.value.rootRef.blur()
-  inputRef.value.rootRef.removeEventListener('focus', toggleShowHandler)
+  // inputRef.value.rootRef.removeEventListener('focus', focusEventListener)
+  document.removeEventListener('focusin', documentFocusinEventListener)
 })
 
 function filterByField(item: any, path: string[], str: string) {
@@ -199,14 +228,10 @@ function getField<T extends object>(
 
 function itemClassAdd(n: number) {
   if (n === cursor.value) {
-    return props.color && `box-color__${props.color}--3`
+    return props.color && `box-color__${props.color}--4`
   }
 
-  return `box-color__${props.color}--2`
-}
-
-function toggleShowHandler() {
-  toggleFocused(true)
+  return `box-color__${props.color}--3`
 }
 
 async function itemClickHandler(n: number) {
@@ -219,7 +244,7 @@ async function itemClickHandler(n: number) {
 
   emit('update:modelValue', itemId)
 
-  if (!inputRef.value || !inputRef.value.rootRef) {
+  if (!inputRef.value?.rootRef) {
     return
   }
 
@@ -237,7 +262,7 @@ async function itemHoverHandler(n: number) {
 }
 
 function inputCleanHandler() {
-  if (!inputRef.value || !inputRef.value.rootRef) {
+  if (!inputRef.value?.rootRef) {
     return
   }
 
@@ -250,12 +275,20 @@ function inputCleanHandler() {
 }
 
 function inputFocusHandler() {
-  if (!inputRef.value || !inputRef.value.rootRef) {
+  if (!inputRef.value?.rootRef) {
     return
   }
 
   toggleFocused(true)
   inputRef.value.rootRef.focus()
+}
+
+function documentFocusinEventListener() {
+  if (!inputRef.value?.rootRef || !document.activeElement) {
+    return
+  }
+
+  toggleFocused(document.activeElement.isEqualNode(inputRef.value.rootRef))
 }
 </script>
 
@@ -272,13 +305,14 @@ function inputFocusHandler() {
       :class="[
         show && 'rounded-b-none',
         isFocused
-          ? `!box-color__${props.color}--3`
-          : `!box-color__${props.color}--2`,
+          ? `!box-color__${props.color}--4`
+          : `!box-color__${props.color}--3`,
       ]"
     />
     <VirtualList
-      v-if="show"
-      ref="listRef"
+      v-if="dirty"
+      v-show="show"
+      ref="listComponent"
       v-bind="objectPick(props, ['dataComponent', 'dataKey'])"
       :data-component="props.dataComponent"
       :data-key="props.dataKey"
@@ -293,24 +327,25 @@ function inputFocusHandler() {
       class="flex flex-col items-center absolute top-full left-0 right-0 max-h-100 overflow-auto scrollbar scrollbar-rounded rounded-t-none border border-t-none z-1"
       :class="[
         props.rounded && `box-rounded__${props.rounded}`,
-        props.color && `box-color__${props.color}--3`,
+        props.color && `box-color__${props.color}--2`,
       ]"
       :estimate-size="50"
-      :on-item-click="itemClickHandler"
-      :on-item-hover="itemHoverHandler"
       :item-class-add="itemClassAdd"
+      @item-click="itemClickHandler"
+      @item-hover="itemHoverHandler"
     />
     <Button
       v-if="input.length === 0"
       size="sm"
       outline
+      tabindex="-1"
       :color="props.color"
       class="absolute right-0 top-0 bottom-0 rounded-l-none"
       :class="[
         show && `rounded-b-none`,
         isFocused
-          ? `!box-color__${props.color}--3`
-          : `!box-color__${props.color}--2`,
+          ? `!box-color__${props.color}--4`
+          : `!box-color__${props.color}--3`,
       ]"
       @click="inputFocusHandler"
     >
@@ -321,13 +356,14 @@ function inputFocusHandler() {
       v-else
       size="sm"
       outline
+      tabindex="-1"
       :color="props.color"
       class="absolute right-0 top-0 bottom-0 rounded-l-none"
       :class="[
         show && `rounded-b-none`,
         isFocused
-          ? `!box-color__${props.color}--3`
-          : `!box-color__${props.color}--2`,
+          ? `!box-color__${props.color}--4`
+          : `!box-color__${props.color}--3`,
       ]"
       @click="inputCleanHandler"
     >

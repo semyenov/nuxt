@@ -3,12 +3,12 @@ import { ofetch } from 'ofetch'
 
 export type ApiResponseStatus = 'success' | 'fail'
 
-interface IResponseError {
+export interface IResponseError {
   code?: number
   message?: any
 }
 
-interface IResponse<T> {
+export interface IResponse<T> {
   data?: T
   error?: IResponseError
 }
@@ -76,6 +76,8 @@ export class ApiClient {
       })
       return new ApiResponse<T>('success', res)
     } catch (err) {
+      console.log(err)
+
       return new ApiResponse('fail', undefined, err as Error)
     }
   }

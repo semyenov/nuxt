@@ -11,6 +11,15 @@ import fr from './locales/fr.json'
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
+  // alias: {
+  //   '@': resolve(__dirname, 'src'),
+  //   '~': resolve(__dirname, 'src'),
+  //   '@@': resolve(__dirname),
+  //   '~~': resolve(__dirname),
+  //   assets: resolve(__dirname, 'src', 'assets'),
+  //   public: resolve(__dirname, 'src', 'public'),
+  // },
+
   telemetry: false,
 
   srcDir: resolve(__dirname, 'src'),
@@ -18,24 +27,25 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiUri: 'http://127.0.0.1:8080',
+      apiUri: 'http://localhost:3000/api',
     },
   },
 
   typescript: {
     shim: false,
     strict: true,
+    // typeCheck: true,
   },
 
   imports: {
-    dirs: ['store', 'composables'],
+    dirs: ['store', 'composables', 'utils'],
   },
 
-  css: ['@unocss/reset/antfu.css', 'assets/styles/main.postcss'],
-
-  unocss: {
-    // autoImport: false,
-  },
+  css: [
+    '@unocss/reset/antfu.css',
+    'assets/styles/main.postcss',
+    'assets/styles/winbox.postcss',
+  ],
 
   app: {
     head: {
@@ -50,10 +60,10 @@ export default defineNuxtConfig({
         },
       ],
     },
-    pageTransition: {
-      name: 'page',
-      mode: 'out-in',
-    },
+    // pageTransition: {
+    //   name: 'page',
+    //   mode: 'out-in',
+    // },
   },
 
   i18n: {
@@ -86,4 +96,25 @@ export default defineNuxtConfig({
 
     '@/modules/test/index',
   ],
+
+  // vite: {
+  //   build: {
+  //     rollupOptions: {
+  //       external: (source, importer, ok) => {
+  //         console.log({ source, importer, ok })
+  //       },
+  //     },
+  //   },
+  // },
+
+  vite: {
+    optimizeDeps: {
+      exclude: ['css-tree', 'winbox'],
+    },
+    build: {
+      rollupOptions: {
+        external: ['url', 'fs', 'module', 'path'],
+      },
+    },
+  },
 })

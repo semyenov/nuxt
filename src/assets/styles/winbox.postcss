@@ -1,0 +1,62 @@
+@import 'winbox/dist/css/winbox.min.css';
+
+.winbox.simple {
+  @apply box-color__default--1 border border-default-300 shadow-xl shadow-default dark:shadow-gray-100/2 max-h-screen;
+}
+.winbox.simple.min {
+  height: 60px !important;
+  top: calc(100vh - 60px) !important;
+}
+.winbox.simple.min:hover {
+  height: 65px !important;
+  top: calc(100vh - 65px) !important;
+}
+
+.winbox.simple .wb-header {
+  display: flex;
+  position: initial;
+  justify-content: center;
+  @apply box-color__default--2 px-6 h-auto border-gray-300 dark:border-gray-700 dark:text-gray-200 border-b border-dashed text-gray-700;
+}
+.winbox.simple.min .wb-header {
+  display: flex;
+  @apply box-color__default--4 py-0;
+}
+
+.winbox.simple .wb-title {
+  display: flex;
+  @apply text-xl font-extrabold font-sans justify-center;
+}
+.winbox.simple.min .wb-title {
+  display: flex;
+  @apply text-base;
+}
+
+.winbox.simple .wb-drag {
+  display: flex;
+  @apply py-2 pl-0;
+}
+
+.winbox.simple.no-move .wb-drag {
+  pointer-events: none;
+}
+
+.winbox.simple.min .wb-drag {
+  display: flex;
+  max-width: calc(100% - 30px);
+  @apply py-2;
+}
+
+.winbox.simple .wb-control {
+  filter: invert(1);
+  @apply dark:filter-invert-0 dark:opacity-70 h-auto -mr-4;
+}
+
+.winbox.simple .wb-body {
+  display: flex;
+  @apply scrollbar scrollbar-rounded flex-grow box-color__default--1 w-full h-full top-0;
+}
+.winbox.simple .wb-body .wb-content {
+  margin: auto;
+  @apply absolute pt-45px overflow-auto w-full h-full;
+}

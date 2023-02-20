@@ -5,6 +5,7 @@ import { ObjectsItem, VirtualList } from '#components'
 definePageMeta({
   layout: 'default',
   title: 'Page Title',
+  middleware: 'authorization',
 })
 
 const { t } = useI18n()
@@ -13,61 +14,77 @@ const objectsStore = useObjectsStore()
 const objectsIds = await objectsStore.itemsGetter
 const objectGetter = objectsStore.itemGetter
 
-const listRef = ref<InstanceType<typeof VirtualList> | null>(null)
+const listComponent = ref<InstanceType<typeof VirtualList> | null>(null)
 
 const listScrollStep = 10
 const listScrollIndex = ref(listScrollStep)
 
-function handleScrollerClick() {
-  if (!listRef.value) {
+function scrollerClickHandler() {
+  if (!listComponent.value) {
     return
   }
 
   if (listScrollIndex.value > objectsIds.value.length) {
-    listRef.value.scrollToBottom()
+    listComponent.value.scrollToBottom()
     listScrollIndex.value = 0
 
     return
   }
 
-  listRef.value.scrollToIndex(listScrollIndex.value)
+  listComponent.value.scrollToIndex(listScrollIndex.value)
   listScrollIndex.value += listScrollStep
+}
+
+async function loadOthersHandler() {
+  await objectsStore.getOthers()
 }
 </script>
 
 <template>
-  <div class="page page-objects-index">
+  <div class="page page-objects-index w-full h-full">
+    <div class="flex flex-row sticky box-color__default--2">
+      <PageTitle>{{ t('objects.title') }}</PageTitle>
+    </div>
     <VirtualList
-      ref="listRef"
-      key="data-virtuallist"
+      ref="listComponent"
       :keeps="50"
       :page-mode="true"
       :data-ids="objectsIds"
       :data-getter="objectGetter"
       :data-component="ObjectsItem"
-      data-key="data-virtuallist"
+      data-key="page-objects-index-virtuallist"
       wrap-class="flex flex-col w-full"
-      class="flex flex-col items-center gap-8 p-8 pt-0 w-full max-w-200"
-      :estimate-size="800"
-      item-class="mb-8"
+      class="flex flex-col items-center gap-8 p-6 flex-grow overflow-y-scroll scrollbar scrollbar-rounded max-h-full h-auto max-w-200 box-color__default--1"
+      :estimate-size="70"
+      item-class="mb-6"
     >
       <template #header>
-        <PageTitle>{{ t('objects.title') }}</PageTitle>
-        <div class="fixed flex flex-col gap-4 right-8 bottom-8 z-10">
+        <div class="absolute flex flex-col gap-2 -right-16 bottom-28 z-10">
           <Button
-            color="fourth"
+            class="h-11"
+            color="default"
             outline
             rounded="md"
             size="md"
-            @click.prevent="handleScrollerClick"
+            @click.prevent="loadOthersHandler"
+          >
+            <i class="i-carbon:download inline-block" />
+          </Button>
+          <Button
+            class="h-11"
+            color="default"
+            outline
+            rounded="md"
+            size="md"
+            @click.prevent="scrollerClickHandler"
           >
             <i class="i-carbon:arrow-down inline-block" />
           </Button>
         </div>
       </template>
-      <template #footer>
+      <!-- <template #footer>
         <div class="flex flex-row items-center w-full">test</div>
-      </template>
+      </template> -->
     </VirtualList>
   </div>
 </template>

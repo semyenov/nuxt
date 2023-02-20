@@ -22,8 +22,8 @@ export const backendScopeTypesMap: Partial<Record<IMetaScope, string[]>> = {
 }
 
 export const useBackendStore = defineStore(backendStoreKey, () => {
-  const appConfig = useRuntimeConfig()
-  const baseURL = appConfig.public.apiUri
+  const runtimeConfig = useRuntimeConfig()
+  const baseURL = runtimeConfig.public.apiUri
 
   const authorizationStore = useAuthorizationStore()
 

@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import type { ComputedRef, PropType } from 'vue'
 import { range } from '@antfu/utils'
-
 import type { VirtualRange } from '@/utils'
-import { Virtual } from '@/utils'
 
 const props = defineProps({
   dataIds: {
@@ -94,14 +92,6 @@ const props = defineProps({
   itemClassAdd: {
     type: Function as PropType<(i: number) => string>,
   },
-  onItemClick: {
-    type: Function as PropType<(i: number) => void>,
-    default: () => {},
-  },
-  onItemHover: {
-    type: Function as PropType<(i: number) => void>,
-    default: () => {},
-  },
   itemStyle: {
     type: Object,
   },
@@ -137,6 +127,8 @@ const emit = defineEmits<{
   (event: 'resized', id: string, size: number): void
   (event: 'totop'): void
   (event: 'tobottom'): void
+  (event: 'itemHover', n: number): void
+  (event: 'itemClick', n: number): void
 }>()
 
 const slots = useSlots()
@@ -495,8 +487,8 @@ function getWrapperStyle(
             (props.itemClassAdd ? ` ${props.itemClassAdd(i)}` : '')
           "
           @resize="onItemResized"
-          @click="() => props.onItemClick(i)"
-          @mouseover="() => props.onItemHover(i)"
+          @click="emit('itemClick', i)"
+          @mouseover="emit('itemHover', i)"
         />
       </Component>
     </Component>
