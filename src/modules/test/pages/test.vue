@@ -7,6 +7,8 @@ import type {
   UISizeVariants,
 } from '@/types/ui'
 
+const { t } = useI18n()
+
 const uiSizeVariants: UISizeVariants[] = ['xs', 'sm', 'md', 'lg', 'xl']
 
 const uiColorVariants: UIColorVariants[] = [
@@ -41,16 +43,28 @@ const input = ref<string | undefined>(undefined)
 </script>
 
 <template>
-  <div class="page page-test w-full h-full">
-    <div class="flex flex-row sticky box-color__default--2">
-      <PageTitle>Test Page</PageTitle>
-    </div>
-    <div
-      class="flex flex-col items-center p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded max-w-200 box-color__default--1"
-    >
+  <Winbox
+    show
+    :params="{
+      title: t('content.title'),
+      class: ['simple', 'border-l-none', 'wb-left', 'no-move', 'no-close'],
+      index: 10,
+      border: 0,
+      top: 0,
+      left: '45px',
+      bottom: 0,
+      right: '50%',
+      height: '100%',
+      minheight: '100%',
+      width: '550px',
+      minwidth: '500px',
+      x: '45px',
+      y: 'center',
+    }"
+  >
+    <div class="flex flex-col items-center p-6">
       <PageProse class="max-w-300">
-        <h4 class="mt-0" :class="!input ? 'mb-6' : 'mb-0'">Combobox</h4>
-        <h3 v-if="input" class="mb-6 mt-0">[{{ input }}]</h3>
+        <h4 class="mt-0">Combobox</h4>
         <div
           class="flex flex-row items-center justify-start flex-wrap mb-6 gap-4"
         >
@@ -147,5 +161,5 @@ const input = ref<string | undefined>(undefined)
         </template>
       </PageProse>
     </div>
-  </div>
+  </Winbox>
 </template>

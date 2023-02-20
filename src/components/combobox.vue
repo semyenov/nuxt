@@ -56,18 +56,18 @@ const emit = defineEmits<{
   (event: 'update:modelValue', val?: string): void
 }>()
 
-const dirty = ref(false)
-const [isFocused, toggleFocused] = useToggle(false)
+const dirtyFlag = ref(false)
+const [focusFlag, toggleFocused] = useToggle(false)
 
 const rootRef = ref<HTMLElement | null>(null)
-const inputRef = ref<InstanceType<typeof Input> | null>(null)
+const inputComponent = ref<InstanceType<typeof Input> | null>(null)
 const listComponent = ref<InstanceType<typeof VirtualList> | null>(null)
 
 const input = ref<string>('')
 
 const options = toRef(props, 'options')
 const dataIds = computed(() =>
-  dirty.value
+  dirtyFlag.value
     ? options.value
         .filter((item) => filterByField(item, props.searchFields, input.value))
         .map((item) => item._id)
@@ -76,10 +76,10 @@ const dataIds = computed(() =>
 const dataGetter = async (id: string) =>
   computed(() => options.value.find((item) => item._id === id))
 
-const show = computed(() => isFocused.value && dataIds.value.length > 0)
+const showFlag = computed(() => focusFlag.value && dataIds.value.length > 0)
 const cursor = ref(dataIds.value.findIndex((id) => id === props.modelValue))
 
-watch(isFocused, () => (dirty.value = true))
+watch(focusFlag, () => (dirtyFlag.value = true))
 
 watch(dataIds, () => {
   if (!listComponent.value) {
@@ -109,7 +109,7 @@ onClickOutside(rootRef, () => {
 })
 
 onKeyStroke('Backspace', async () => {
-  if (!isFocused.value || !props.modelValue) {
+  if (!focusFlag.value || !props.modelValue) {
     return
   }
 
@@ -126,7 +126,7 @@ onKeyStroke('Backspace', async () => {
 })
 
 onKeyStroke('ArrowUp', (event) => {
-  if (!isFocused.value) {
+  if (!focusFlag.value) {
     return
   }
 
@@ -139,7 +139,7 @@ onKeyStroke('ArrowUp', (event) => {
 })
 
 onKeyStroke('ArrowDown', (event) => {
-  if (!isFocused.value) {
+  if (!focusFlag.value) {
     return
   }
 
@@ -152,7 +152,7 @@ onKeyStroke('ArrowDown', (event) => {
 })
 
 onKeyStroke('Enter', async (event) => {
-  if (!isFocused.value || cursor.value < 0) {
+  if (!focusFlag.value || cursor.value < 0) {
     return
   }
 
@@ -162,7 +162,7 @@ onKeyStroke('Enter', async (event) => {
 })
 
 onMounted(() => {
-  if (!inputRef.value?.rootRef) {
+  if (!inputComponent.value?.rootRef) {
     return
   }
   // inputRef.value.rootRef.addEventListener('focus', focusEventListener)
@@ -177,11 +177,10 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  if (!inputRef.value?.rootRef) {
+  if (!inputComponent.value?.rootRef) {
     return
   }
 
-  // inputRef.value.rootRef.removeEventListener('focus', focusEventListener)
   document.removeEventListener('focusin', documentFocusinEventListener)
 })
 
@@ -231,7 +230,7 @@ function itemClassAdd(n: number) {
     return props.color && `box-color__${props.color}--4`
   }
 
-  return `box-color__${props.color}--3`
+  return `box-color__${props.color}--2`
 }
 
 async function itemClickHandler(n: number) {
@@ -244,12 +243,12 @@ async function itemClickHandler(n: number) {
 
   emit('update:modelValue', itemId)
 
-  if (!inputRef.value?.rootRef) {
+  if (!inputComponent.value?.rootRef) {
     return
   }
 
   toggleFocused(false)
-  inputRef.value.rootRef.blur()
+  inputComponent.value.rootRef.blur()
 
   const field = getField(item.value, props.searchFields)
   const str = field ? field.toString() : ''
@@ -262,7 +261,7 @@ async function itemHoverHandler(n: number) {
 }
 
 function inputCleanHandler() {
-  if (!inputRef.value?.rootRef) {
+  if (!inputComponent.value?.rootRef) {
     return
   }
 
@@ -271,31 +270,33 @@ function inputCleanHandler() {
   toggleFocused(true)
   input.value = ''
   cursor.value = -1
-  inputRef.value.rootRef.focus()
+  inputComponent.value.rootRef.focus()
 }
 
 function inputFocusHandler() {
-  if (!inputRef.value?.rootRef) {
+  if (!inputComponent.value?.rootRef) {
     return
   }
 
   toggleFocused(true)
-  inputRef.value.rootRef.focus()
+  inputComponent.value.rootRef.focus()
 }
 
 function documentFocusinEventListener() {
-  if (!inputRef.value?.rootRef || !document.activeElement) {
+  if (!inputComponent.value?.rootRef || !document.activeElement) {
     return
   }
 
-  toggleFocused(document.activeElement.isEqualNode(inputRef.value.rootRef))
+  toggleFocused(
+    document.activeElement.isEqualNode(inputComponent.value.rootRef)
+  )
 }
 </script>
 
 <template>
   <div ref="rootRef" class="c-combobox relative flex flex-row">
     <Input
-      ref="inputRef"
+      ref="inputComponent"
       v-model="input"
       :color="props.color"
       :border="props.border"
@@ -303,15 +304,15 @@ function documentFocusinEventListener() {
       :rounded="props.rounded"
       class="w-full"
       :class="[
-        show && 'rounded-b-none',
-        isFocused
+        showFlag && 'rounded-b-none',
+        focusFlag
           ? `!box-color__${props.color}--4`
           : `!box-color__${props.color}--3`,
       ]"
     />
     <VirtualList
-      v-if="dirty"
-      v-show="show"
+      v-if="dirtyFlag"
+      v-show="showFlag"
       ref="listComponent"
       v-bind="objectPick(props, ['dataComponent', 'dataKey'])"
       :data-component="props.dataComponent"
@@ -327,7 +328,7 @@ function documentFocusinEventListener() {
       class="flex flex-col items-center absolute top-full left-0 right-0 max-h-100 overflow-auto scrollbar scrollbar-rounded rounded-t-none border border-t-none z-1"
       :class="[
         props.rounded && `box-rounded__${props.rounded}`,
-        props.color && `box-color__${props.color}--2`,
+        props.color && `box-color__${props.color}--4`,
       ]"
       :estimate-size="50"
       :item-class-add="itemClassAdd"
@@ -342,14 +343,14 @@ function documentFocusinEventListener() {
       :color="props.color"
       class="absolute right-0 top-0 bottom-0 rounded-l-none"
       :class="[
-        show && `rounded-b-none`,
-        isFocused
+        showFlag && `rounded-b-none`,
+        focusFlag
           ? `!box-color__${props.color}--4`
           : `!box-color__${props.color}--3`,
       ]"
       @click="inputFocusHandler"
     >
-      <i v-if="!isFocused" class="i-carbon:caret-down inline-block h-6" />
+      <i v-if="!focusFlag" class="i-carbon:caret-down inline-block h-6" />
       <i v-else class="i-carbon:caret-up inline-block h-6" />
     </Button>
     <Button
@@ -360,8 +361,8 @@ function documentFocusinEventListener() {
       :color="props.color"
       class="absolute right-0 top-0 bottom-0 rounded-l-none"
       :class="[
-        show && `rounded-b-none`,
-        isFocused
+        showFlag && `rounded-b-none`,
+        focusFlag
           ? `!box-color__${props.color}--4`
           : `!box-color__${props.color}--3`,
       ]"

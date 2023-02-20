@@ -63,7 +63,7 @@ async function loadOthersHandler() {
     <VirtualList
       ref="listComponent"
       :keeps="50"
-      :page-mode="true"
+      :page-mode="false"
       :data-ids="objectsIds"
       :data-getter="objectGetter"
       :data-component="ObjectsItem"

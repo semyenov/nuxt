@@ -1,14 +1,17 @@
 {
   "index": {
-    "title": "Welcome page"
+    "title": "Welcome Page"
   },
   "data": {
-    "title": "Data page"
+    "title": "Data Page"
   },
   "objects": {
-    "title": "Objects page"
+    "title": "Objects Page"
   },
   "users": {
     "title": "Users Page"
+  },
+  "content": {
+    "title": "Content  Page"
   }
 }

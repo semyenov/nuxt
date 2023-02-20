@@ -22,7 +22,7 @@ const { data } = await useFetch('/api/test', {
       <PageTitle>{{ t('index.title') }}</PageTitle>
     </div>
     <div
-      class="flex flex-col items-start p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded max-w-200 box-color__default--1"
+      class="flex flex-col items-start p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded box-color__default--1"
     >
       <PageProse
         v-if="data"
@@ -46,11 +46,11 @@ const { data } = await useFetch('/api/test', {
           class="i-twemoji:grinning-face-with-smiling-eyes hover:i-twemoji:face-with-tears-of-joy"
         />
         <i class="i-mdi:alarm text-orange-400" un-hover="text-blue-400" />
-        <i class="i-ph:anchor-simple text-gray-600" un-dark="text-gray-400" />
         <i
           class="i-ph:airplane-duotone text-blue-600"
           un-dark="text-blue-500"
         />
+        <i class="i-ph:anchor-simple text-gray-600" un-dark="text-gray-400" />
       </div>
     </div>
   </div>

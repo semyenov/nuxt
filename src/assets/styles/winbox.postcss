@@ -3,29 +3,29 @@
 .winbox.simple {
   @apply bg-transparent border border-default-300 dark:border-default-700 max-h-screen shadow-none;
 }
-.winbox.simple.min {
+/* .winbox.simple.min {
   height: 60px !important;
   top: calc(100vh - 60px) !important;
 }
 .winbox.simple.min:hover {
   height: 65px !important;
   top: calc(100vh - 65px) !important;
-}
+} */
 .winbox.simple.focus {
-  @apply shadow-xl shadow-default dark:shadow-gray-100/2;
+  @apply shadow-xl shadow-default dark:shadow-default-900;
 }
 
 .winbox.simple .wb-header {
   display: flex;
-  @apply flex flex-row box-color__default--1 px-0 h-auto border-gray-300 dark:border-gray-700 dark:text-gray-200 border-b border-dashed text-gray-700 justify-center relative;
+  @apply flex flex-row box-color__default--1 px-0 h-auto border-default-300 dark:border-default-700 dark:text-default-400 border-b border-dashed text-default-800 justify-center relative;
 }
 .winbox.simple.focus .wb-header {
   display: flex;
-  @apply flex flex-row box-color__default--2 border-gray-300 dark:border-gray-700;
+  @apply flex flex-row box-color__default--2 border-default-300 dark:border-default-700 text-default-600 dark:text-default-300;
 }
 .winbox.simple.min .wb-header {
   display: flex;
-  @apply box-color__default--3 py-0;
+  @apply box-color__default--4 py-0;
 }
 
 .winbox.simple .wb-title {

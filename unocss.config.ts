@@ -210,7 +210,7 @@ function createColorScale(
     return color
   }
 
-  const start = color[200] as string
+  const start = color[300] as string
   const base = color[500] as string
   const stop = color[700] as string
 
@@ -222,7 +222,17 @@ function createColorScale(
       (s, c, i) => ({
         ...s,
         [50 * (i + 1)]: chroma(c)
-          // .saturate((1 / steps) * i - 0.2)
+          .brighten(0.02 * i - 0.1)
+          .saturate(i / steps / 8)
+          .brighten(-i * 0.02)
+          .darken((steps - i) * 0.01)
+          .saturate((steps - i) / 80 - 0.2)
+          .darken((steps - i - 18) * 0.005)
+          .saturate(-i / steps / 8)
+          .darken((-steps - i) * 0.005)
+          .saturate(i / steps / 4)
+          .saturate(i / steps / 8 - 0.1)
+          .darken(i * 0.02)
           .hex(),
       }),
       {} as UnoColors
@@ -271,9 +281,10 @@ export default defineConfig<UnoTheme>({
         lato: 'Lato',
       },
     }),
-    presetTypography(),
     presetUno,
+    presetTypography(),
     presetScrollbar({
+      scrollbarWidth: '10px',
       scrollbarTrackColor: 'transparent',
       scrollbarThumbColor: '#999999AA',
     }),
