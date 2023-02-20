@@ -1,17 +1,15 @@
 @import 'winbox/dist/css/winbox.min.css';
 
 .winbox.simple {
-  z-index: 100;
   @apply box-color__default--1 border border-default-300 shadow-xl shadow-default dark:shadow-gray-100/2 max-h-screen;
 }
 .winbox.simple.min {
-  z-index: 120;
-  height: 80px !important;
-  top: calc(100vh - 80px) !important;
+  height: 60px !important;
+  top: calc(100vh - 60px) !important;
 }
 .winbox.simple.min:hover {
-  height: 85px !important;
-  top: calc(100vh - 85px) !important;
+  height: 65px !important;
+  top: calc(100vh - 65px) !important;
 }
 
 .winbox.simple .wb-header {
@@ -27,9 +25,7 @@
 
 .winbox.simple .wb-title {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  @apply text-xl font-extrabold font-sans;
+  @apply text-xl font-extrabold font-sans justify-center;
 }
 .winbox.simple.min .wb-title {
   display: flex;
@@ -53,9 +49,9 @@
 
 .winbox.simple .wb-body {
   display: flex;
-  @apply scrollbar scrollbar-rounded flex-grow box-color__default--1 w-full h-full top-45px;
+  @apply scrollbar scrollbar-rounded flex-grow box-color__default--1 w-full h-full top-0;
 }
 .winbox.simple .wb-body .wb-content {
-  @apply absolute top-0 overflow-auto w-full h-full;
   margin: auto;
+  @apply absolute pt-45px overflow-auto w-full h-full;
 }

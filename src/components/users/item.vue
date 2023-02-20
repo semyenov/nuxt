@@ -41,12 +41,13 @@ function clickHandler() {
   id.value = `id-${hash(item.value._id)}`
   const title = `${item.value.info.first_name} ${item.value.info.last_name}`
 
+  const rootEl = document.getElementById('teleport') || document.body
   const mountEl = document.createElement('div')
   const contentEl = document.createElement('div')
+
   contentEl.classList.add('wb-content')
   mountEl.appendChild(contentEl)
 
-  const rootEl = document.body as HTMLElement
   const winBoxOptions = createWinBoxOptions(id.value, title, rootEl, mountEl)
 
   winBox.value = new window.WinBox(winBoxOptions)

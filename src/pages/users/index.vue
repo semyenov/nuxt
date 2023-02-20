@@ -86,7 +86,7 @@ function handleScrollerClick() {
         item-class="mb-6"
       >
         <template #header>
-          <div class="absolute flex flex-col gap-4 -right-16 bottom-28 z-10">
+          <div class="absolute flex flex-col gap-4 right-16 bottom-28 z-10">
             <Button
               class="h-11"
               color="default"
