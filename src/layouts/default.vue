@@ -13,10 +13,10 @@ const authorizationStore = useAuthorizationStore()
     <div class="layout-default__loading h-2 z-3">
       <NuxtLoadingIndicator />
     </div>
-    <div
+    <!-- <div
       id="teleport"
       class="layout-default__teleport fixed right-0 left-0 flex w-full h-full relative"
-    ></div>
+    ></div> -->
     <div
       v-if="authorizationStore.current"
       class="layout-default__current-user flex flex-col z-1"

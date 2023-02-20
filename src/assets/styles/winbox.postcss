@@ -39,31 +39,33 @@
 
 .winbox.simple .wb-drag {
   display: flex;
-  @apply py-2 pl-0 flex flex-grow pl-6 pr-4;
+  @apply flex flex-grow py-2 pl-6 pr-4;
 }
 
 .winbox.simple.no-move .wb-drag {
-  pointer-events: none;
+  display: flex;
+  @apply pointer-events-none;
 }
 
 .winbox.simple.min .wb-drag {
   display: flex;
   max-width: calc(100% - 30px);
-  @apply flex flex-grow py-2;
+  @apply flex flex-grow py-2 pointer-events-auto;
 }
 
 .winbox.simple .wb-control {
-  filter: invert(1);
-  @apply flex flex-row order-2 h-auto dark:filter-invert-0 dark:opacity-70 pr-4 opacity-60;
+  display: flex;
+  @apply flex flex-row order-2 h-auto filter-invert-100 dark:filter-invert-0 dark:opacity-70 pr-4 opacity-60;
 }
 
 .winbox.simple .wb-body {
   display: flex;
-  @apply flex-grow box-color__default--1 w-full h-full top-0 overflow-auto scrollbar scrollbar-rounded;
+  @apply flex-grow box-color__default--1 w-full h-auto overflow-auto scrollbar scrollbar-rounded;
 }
-.winbox.simple .wb-body .wb-content {
+
+.winbox.simple .wb-content {
   margin: auto;
-  @apply absolute w-full h-full;
+  @apply absolute top-0 left-0 right-0 top-0 w-full h-full;
 }
 
 .wb-left .wb-n,

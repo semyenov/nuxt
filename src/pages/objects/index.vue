@@ -45,7 +45,7 @@ async function loadOthersHandler() {
     show
     :params="{
       title: t('objects.title'),
-      class: ['simple', 'border-l-none', 'wb-left', 'no-move'],
+      class: ['simple', 'border-l-none', 'wb-left', 'no-move', 'no-close'],
       index: 10,
       border: 0,
       top: 0,

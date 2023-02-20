@@ -52,6 +52,8 @@ function handleChange() {
       v-model:show="showFlag"
       :params="{
         title: `${item.info.first_name} ${item.info.last_name}`,
+        top: 0,
+        bottom: 0,
         left: 44,
         right: 0,
         border: 0,

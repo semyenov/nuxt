@@ -23,51 +23,29 @@ const emit = defineEmits<{
   (event: 'update:show', value: boolean): void
 }>()
 
-const input = toRef(props, 'show')
-
 const id = ref<string>(props.dataId)
 const winbox = ref<WinBox | null>(null)
 const [showFlag, showToggle] = useToggle(false)
 
+const show = toRef(props, 'show')
+
 defineExpose({
   id,
 
-  init,
-  getCurrentWinbox,
+  open,
+  winbox,
 })
 
-watch(showFlag, (o) => {
-  emit('update:show', o)
-})
+watch(show, (s) => (s ? open() : close()))
+watch(showFlag, (o) => emit('update:show', o))
 
-watch(input, (s) => {
-  if (s) {
-    init()
+onMounted(() => show.value && open())
+onScopeDispose(close)
 
-    return
-  }
-
-  const w = getCurrentWinbox()
-  w && w.close()
-})
-
-onMounted(() => {
-  if (!input.value) {
-    return
-  }
-
-  init()
-})
-
-onScopeDispose(() => {
-  const w = getCurrentWinbox()
-  w && w.close()
-})
-
-function init() {
-  const w = getCurrentWinbox()
-  if (w) {
-    w.minimize(false).focus()
+function open() {
+  const el = getWinboxEl()
+  if (el && el.winbox) {
+    el.winbox.minimize(false).focus()
 
     return
   }
@@ -80,21 +58,39 @@ function init() {
   mountEl.appendChild(contentEl)
 
   const winboxParams = getWinboxParams(id.value, rootEl, mountEl)
-  winbox.value = new window.WinBox(winboxParams)
 
-  nextTick(() => showToggle(true))
+  winbox.value = new window.WinBox(winboxParams)
+  showToggle(true)
+
+  nextTick(() => {
+    if (winboxParams.x === 'right') {
+      const el = getWinboxEl()
+      if (!el || !el.winbox) {
+        return
+      }
+      const x = window.screenX - el.clientWidth
+      el.winbox.move(x, undefined, false)
+    }
+  })
 }
 
-function getCurrentWinbox() {
-  if (!id.value) {
+function close() {
+  const el = getWinboxEl()
+  if (!el || !el.winbox) {
     return
   }
 
-  const el = document.getElementById(id.value) as HTMLElement & {
-    winbox?: WinBox
-  }
+  el.winbox.close()
+}
 
-  return el && el.winbox
+function getWinboxEl() {
+  const el = document.getElementById(id.value) as
+    | (HTMLElement & {
+        winbox?: WinBox
+      })
+    | null
+
+  return el
 }
 
 function getWinboxParams(
