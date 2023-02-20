@@ -446,7 +446,7 @@ function getWrapperStyle(
   >
     <!-- <div class="fixed left-0 top-0">{{ vr }}</div> -->
     <VirtualListSlot
-      :key="`${props.dataKey}-list_header`"
+      :key="`${props.dataKey}_list_header`"
       :tag="props.headerTag"
       :class="props.headerClass"
       :style="props.headerStyle"
@@ -466,7 +466,7 @@ function getWrapperStyle(
       <Component
         :is="props.itemWrapTag"
         v-for="i in range(...vr).concat()"
-        :key="`${props.dataKey}-list_component-${dataIds[i]}-${i}`"
+        :key="`${props.dataKey}_list_component_wrap_${dataIds[i]}`"
         role="listitem"
       >
         <VirtualListItem

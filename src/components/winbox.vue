@@ -5,13 +5,13 @@ import type { PropType } from 'vue'
 import type WinBox from 'winbox'
 
 const props = defineProps({
-  init: {
+  dataId: {
+    type: String,
+    default: () => `id-${nanoid(8)}`,
+  },
+  show: {
     type: Boolean,
     default: false,
-  },
-  title: {
-    type: String,
-    default: '',
   },
   params: {
     type: Object as PropType<WinBox.Params>,
@@ -19,9 +19,15 @@ const props = defineProps({
   },
 })
 
-const id = ref<string>()
+const emit = defineEmits<{
+  (event: 'update:show', value: boolean): void
+}>()
+
+const input = toRef(props, 'show')
+
+const id = ref<string>(props.dataId)
 const winbox = ref<WinBox | null>(null)
-const [openFlag, openToggle] = useToggle(false)
+const [showFlag, showToggle] = useToggle(false)
 
 defineExpose({
   id,
@@ -30,7 +36,28 @@ defineExpose({
   getCurrentWinbox,
 })
 
-onMounted(() => props.init && init())
+watch(showFlag, (o) => {
+  emit('update:show', o)
+})
+
+watch(input, (s) => {
+  if (s) {
+    init()
+
+    return
+  }
+
+  const w = getCurrentWinbox()
+  w && w.close()
+})
+
+onMounted(() => {
+  if (!input.value) {
+    return
+  }
+
+  init()
+})
 
 onScopeDispose(() => {
   const w = getCurrentWinbox()
@@ -45,8 +72,6 @@ function init() {
     return
   }
 
-  id.value = `id-${nanoid(8)}`
-
   const rootEl = document.getElementById('teleport') || document.body
   const mountEl = document.createElement('div')
   const contentEl = document.createElement('div')
@@ -54,10 +79,10 @@ function init() {
   contentEl.classList.add('wb-content')
   mountEl.appendChild(contentEl)
 
-  const winboxParams = getWinboxParams(id.value, props.title, rootEl, mountEl)
+  const winboxParams = getWinboxParams(id.value, rootEl, mountEl)
   winbox.value = new window.WinBox(winboxParams)
 
-  nextTick(() => openToggle(true))
+  nextTick(() => showToggle(true))
 }
 
 function getCurrentWinbox() {
@@ -74,20 +99,20 @@ function getCurrentWinbox() {
 
 function getWinboxParams(
   id: string,
-  title: string,
   root: HTMLElement,
   mount: HTMLElement
 ): WinBox.Params {
   return {
-    title,
+    // @ts-expect-error fffffuuuuccc...
+    header: 45,
     border: 10,
-    class: 'simple',
+    class: ['simple'],
     mount,
     root,
     id,
 
     onclose(force) {
-      nextTick(() => openToggle(false))
+      nextTick(() => showToggle(false))
       return force || false
     },
 
@@ -97,7 +122,7 @@ function getWinboxParams(
 </script>
 
 <template>
-  <Teleport v-if="openFlag" :to="`#${id} .wb-content`">
+  <Teleport v-if="showFlag" :to="`#${id} .wb-content`">
     <slot name="default" />
   </Teleport>
 </template>

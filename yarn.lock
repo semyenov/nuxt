@@ -1774,7 +1774,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:3.2.2, @nuxt/kit@npm:^3.2.0":
+"@nuxt/kit@npm:3.2.2, @nuxt/kit@npm:^3.1.1, @nuxt/kit@npm:^3.2.0":
   version: 3.2.2
   resolution: "@nuxt/kit@npm:3.2.2"
   dependencies:
@@ -3514,7 +3514,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vueuse/core@npm:9.13.0, @vueuse/core@npm:^9.13.0":
+"@vueuse/core@npm:9.13.0, @vueuse/core@npm:^9.11.1, @vueuse/core@npm:^9.13.0":
   version: 9.13.0
   resolution: "@vueuse/core@npm:9.13.0"
   dependencies:
@@ -3547,6 +3547,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vueuse/motion@npm:^2.0.0-beta.12":
+  version: 2.0.0-beta.27
+  resolution: "@vueuse/motion@npm:2.0.0-beta.27"
+  dependencies:
+    "@nuxt/kit": ^3.1.1
+    "@vueuse/core": ^9.11.1
+    "@vueuse/shared": ^9.11.1
+    csstype: ^3.1.1
+    framesync: ^6.1.2
+    popmotion: ^11.0.5
+    style-value-types: ^5.1.2
+  peerDependencies:
+    vue: ">=3.0.0"
+  dependenciesMeta:
+    "@nuxt/kit":
+      optional: true
+  checksum: dd5df04bf1df54a4f899d4eb5b0866bcc9dd91b916ca23b40d308dfdc4f098720ece666c063eef782a6b97bfa22348adcba9b60967acd7879b97c7b4a64775db
+  languageName: node
+  linkType: hard
+
 "@vueuse/nuxt@npm:^9.13.0":
   version: 9.13.0
   resolution: "@vueuse/nuxt@npm:9.13.0"
@@ -3562,7 +3582,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vueuse/shared@npm:9.13.0":
+"@vueuse/shared@npm:9.13.0, @vueuse/shared@npm:^9.11.1":
   version: 9.13.0
   resolution: "@vueuse/shared@npm:9.13.0"
   dependencies:
@@ -4927,7 +4947,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"csstype@npm:^3.0.2":
+"csstype@npm:^3.0.2, csstype@npm:^3.1.1":
   version: 3.1.1
   resolution: "csstype@npm:3.1.1"
   checksum: 1f7b4f5fdd955b7444b18ebdddf3f5c699159f13e9cf8ac9027ae4a60ae226aef9bbb14a6e12ca7dba3358b007cee6354b116e720262867c398de6c955ea451d
@@ -6712,6 +6732,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"framesync@npm:6.1.2, framesync@npm:^6.1.2":
+  version: 6.1.2
+  resolution: "framesync@npm:6.1.2"
+  dependencies:
+    tslib: 2.4.0
+  checksum: 250dec78c351b087a47558b8bcf85a91a878507a73f05c095f7728617d40432b8ca0cb21deee98026d582c67610e961f83e535990035f6c9902e721580daff76
+  languageName: node
+  linkType: hard
+
 "fresh@npm:0.5.2":
   version: 0.5.2
   resolution: "fresh@npm:0.5.2"
@@ -7446,6 +7475,13 @@ __metadata:
   bin:
     he: bin/he
   checksum: 3d4d6babccccd79c5c5a3f929a68af33360d6445587d628087f39a965079d84f18ce9c3d3f917ee1e3978916fc833bb8b29377c3b403f919426f91bc6965e7a7
+  languageName: node
+  linkType: hard
+
+"hey-listen@npm:^1.0.8":
+  version: 1.0.8
+  resolution: "hey-listen@npm:1.0.8"
+  checksum: 6bad60b367688f5348e25e7ca3276a74b59ac5a09b0455e6ff8ab7d4a9e38cd2116c708a7dcd8a954d27253ce1d8717ec891d175723ea739885b828cf44e4072
   languageName: node
   linkType: hard
 
@@ -10763,6 +10799,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"popmotion@npm:^11.0.5":
+  version: 11.0.5
+  resolution: "popmotion@npm:11.0.5"
+  dependencies:
+    framesync: 6.1.2
+    hey-listen: ^1.0.8
+    style-value-types: 5.1.2
+    tslib: 2.4.0
+  checksum: f6990d7a59eff402356efd3c9874c3b32bdfd0890ef1da97c71b20ea5ca8f85c17e2daaf11d1328d2756999b0f8222b3b4ec73b4558246843f100053b5a389d7
+  languageName: node
+  linkType: hard
+
 "postcss-calc@npm:^8.2.3":
   version: 8.2.4
   resolution: "postcss-calc@npm:8.2.4"
@@ -11882,6 +11930,7 @@ __metadata:
     "@unocss/nuxt": ^0.49.7
     "@unocss/reset": ^0.49.7
     "@vueuse/core": ^9.13.0
+    "@vueuse/motion": ^2.0.0-beta.12
     "@vueuse/nuxt": ^9.13.0
     chroma-js: ^2.4.2
     css-tree: ^2.3.1
@@ -12599,6 +12648,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"style-value-types@npm:5.1.2, style-value-types@npm:^5.1.2":
+  version: 5.1.2
+  resolution: "style-value-types@npm:5.1.2"
+  dependencies:
+    hey-listen: ^1.0.8
+    tslib: 2.4.0
+  checksum: 262d89aa3131d9076f8699cb38119740beadff901732c5f71bd3a34fcc398246a398d74057ca4ed3c06aeb44d8c5022839f6203a9a1bc7fdde2965674e3eaa31
+  languageName: node
+  linkType: hard
+
 "stylehacks@npm:^5.1.1":
   version: 5.1.1
   resolution: "stylehacks@npm:5.1.1"
@@ -13031,17 +13090,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tslib@npm:2.4.0, tslib@npm:^2.1.0, tslib@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "tslib@npm:2.4.0"
+  checksum: 8c4aa6a3c5a754bf76aefc38026134180c053b7bd2f81338cb5e5ebf96fefa0f417bff221592bf801077f5bf990562f6264fecbc42cd3309b33872cb6fc3b113
+  languageName: node
+  linkType: hard
+
 "tslib@npm:^1.8.1":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd
-  languageName: node
-  linkType: hard
-
-"tslib@npm:^2.1.0, tslib@npm:^2.4.0":
-  version: 2.4.0
-  resolution: "tslib@npm:2.4.0"
-  checksum: 8c4aa6a3c5a754bf76aefc38026134180c053b7bd2f81338cb5e5ebf96fefa0f417bff221592bf801077f5bf990562f6264fecbc42cd3309b33872cb6fc3b113
   languageName: node
   linkType: hard
 

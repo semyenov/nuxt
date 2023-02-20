@@ -41,10 +41,25 @@ async function loadOthersHandler() {
 </script>
 
 <template>
-  <div class="page page-objects-index w-full h-full">
-    <div class="flex flex-row sticky box-color__default--2">
-      <PageTitle>{{ t('objects.title') }}</PageTitle>
-    </div>
+  <Winbox
+    show
+    :params="{
+      title: t('objects.title'),
+      class: ['simple', 'border-l-none', 'wb-left', 'no-move'],
+      index: 10,
+      border: 0,
+      top: 0,
+      left: '45px',
+      bottom: 0,
+      right: '50%',
+      height: '100%',
+      minheight: '100%',
+      width: '550px',
+      minwidth: '500px',
+      x: '45px',
+      y: 'center',
+    }"
+  >
     <VirtualList
       ref="listComponent"
       :keeps="50"
@@ -54,7 +69,7 @@ async function loadOthersHandler() {
       :data-component="ObjectsItem"
       data-key="page-objects-index-virtuallist"
       wrap-class="flex flex-col w-full"
-      class="flex flex-col items-center gap-8 p-6 flex-grow overflow-y-scroll scrollbar scrollbar-rounded max-h-full h-auto max-w-200 box-color__default--1"
+      class="page page-objects-index flex flex-col items-center gap-8 p-6 flex-grow overflow-y-scroll scrollbar scrollbar-rounded max-h-full h-auto"
       :estimate-size="70"
       item-class="mb-6"
     >
@@ -86,5 +101,5 @@ async function loadOthersHandler() {
         <div class="flex flex-row items-center w-full">test</div>
       </template> -->
     </VirtualList>
-  </div>
+  </Winbox>
 </template>

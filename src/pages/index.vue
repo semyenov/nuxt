@@ -24,7 +24,22 @@ const { data } = await useFetch('/api/test', {
     <div
       class="flex flex-col items-start p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded max-w-200 box-color__default--1"
     >
-      <PageProse v-if="data" class="mb-6">{{ data.text }}</PageProse>
+      <PageProse
+        v-if="data"
+        v-motion
+        :initial="{
+          y: -100,
+          opacity: 0,
+        }"
+        :enter="{
+          y: 0,
+          opacity: 1,
+        }"
+        class="mb-6"
+      >
+        {{ data.text }}
+      </PageProse>
+
       <div class="flex flex-row gap-2 text-3xl justify-center">
         <i class="i-logos:vue text-6xl" />
         <div

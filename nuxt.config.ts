@@ -19,6 +19,9 @@ export default defineNuxtConfig({
   //   assets: resolve(__dirname, 'src', 'assets'),
   //   public: resolve(__dirname, 'src', 'public'),
   // },
+  build: {
+    transpile: ['winbox'],
+  },
 
   telemetry: false,
 
@@ -92,6 +95,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/emotion',
     'magic-regexp/nuxt',
+    '@vueuse/motion/nuxt',
     'nuxt-typed-router',
 
     '@/modules/test/index',
@@ -107,14 +111,14 @@ export default defineNuxtConfig({
   //   },
   // },
 
-  vite: {
-    optimizeDeps: {
-      exclude: ['css-tree', 'winbox'],
-    },
-    build: {
-      rollupOptions: {
-        external: ['url', 'fs', 'module', 'path'],
-      },
-    },
-  },
+  // vite: {
+  //   optimizeDeps: {
+  //     exclude: ['css-tree', 'winbox'],
+  //   },
+  //   build: {
+  //     rollupOptions: {
+  //       external: ['url', 'fs', 'module', 'path'],
+  //     },
+  //   },
+  // },
 })

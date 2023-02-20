@@ -13,7 +13,10 @@ const authorizationStore = useAuthorizationStore()
     <div class="layout-default__loading h-2 z-3">
       <NuxtLoadingIndicator />
     </div>
-    <div id="teleport" class="layout-default__teleport"></div>
+    <div
+      id="teleport"
+      class="layout-default__teleport fixed right-0 left-0 flex w-full h-full relative"
+    ></div>
     <div
       v-if="authorizationStore.current"
       class="layout-default__current-user flex flex-col z-1"
@@ -21,13 +24,13 @@ const authorizationStore = useAuthorizationStore()
       <AuthorizationCurrent />
     </div>
     <div
-      class="layout-default__left flex flex-row fixed top-0 left-0 bottom-0 z-2"
+      class="layout-default__left flex flex-row fixed top-0 left-0 bottom-0 z-3"
     >
       <div class="layout-default__left box-color__default--2 border-r">
         <PageSidebar />
       </div>
       <div
-        class="layout-default__page flex flex-col items-start justify-items-stretch text-left min-w-150"
+        class="layout-default__page flex flex-col items-start justify-items-stretch text-left z-0"
       >
         <slot />
       </div>
