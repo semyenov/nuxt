@@ -74,7 +74,7 @@ async function loadOthersHandler() {
       :estimate-size="70"
       item-class="mb-6"
     >
-      <template #header>
+      <!-- <template #header>
         <div class="absolute flex flex-col gap-2 right-16 bottom-20 z-10">
           <Button
             class="h-11"
@@ -97,7 +97,7 @@ async function loadOthersHandler() {
             <i class="i-carbon:arrow-down inline-block" />
           </Button>
         </div>
-      </template>
+      </template> -->
     </VirtualList>
   </Winbox>
 </template>

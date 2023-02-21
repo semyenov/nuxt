@@ -72,7 +72,7 @@ function scrollClickHandler() {
       :estimate-size="70"
       item-class="mb-6"
     >
-      <template #header>
+      <!-- <template #header>
         <div class="absolute flex flex-col gap-4 right-8 bottom-20 z-10">
           <Button
             class="h-11"
@@ -85,7 +85,7 @@ function scrollClickHandler() {
             <i class="i-carbon:arrow-down inline-block" />
           </Button>
         </div>
-      </template>
+      </template> -->
     </VirtualList>
   </Winbox>
 </template>
