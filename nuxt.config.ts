@@ -19,9 +19,9 @@ export default defineNuxtConfig({
   //   assets: resolve(__dirname, 'src', 'assets'),
   //   public: resolve(__dirname, 'src', 'public'),
   // },
-  build: {
-    transpile: ['winbox'],
-  },
+  // build: {
+  //   transpile: ['winbox', 'flexsearch'],
+  // },
 
   telemetry: false,
 

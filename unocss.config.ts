@@ -222,8 +222,9 @@ function createColorScale(
       (s, c, i) => ({
         ...s,
         [50 * (i + 1)]: chroma(c)
-          .brighten(0.05 * i - 0.2)
-          .saturate((-i + steps) * 0.02 - 0.5)
+          .brighten(0.05 * i - 0.5)
+          .saturate((-i + steps) * 0.02 - 0.3)
+          .darken(0.05 * i - 0.5)
           // .brighten((-steps + i) * 0.01 + 0.3)
           .hex(),
       }),

@@ -40,6 +40,7 @@ function scrollClickHandler() {
 <template>
   <Winbox
     show
+    teleport-id="teleport-layer--10"
     :params="{
       title: t('users.title'),
       class: ['simple', 'wb-left', 'no-move', 'no-close', 'border-l-none'],

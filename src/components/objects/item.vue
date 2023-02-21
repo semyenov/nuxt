@@ -46,6 +46,7 @@ const item = toRef(props, 'item')
     </Card>
     <Winbox
       v-model:show="showFlag"
+      teleport-id="teleport-layer--20"
       :params="{
         index: 100,
         title: `${item.info.name}`,

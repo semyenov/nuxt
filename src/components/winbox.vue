@@ -5,6 +5,10 @@ import type { PropType } from 'vue'
 import type WinBox from 'winbox'
 
 const props = defineProps({
+  teleportId: {
+    type: String,
+    default: 'teleport',
+  },
   dataId: {
     type: String,
     default: () => `id-${nanoid(8)}`,
@@ -50,7 +54,7 @@ function open() {
     return
   }
 
-  const rootEl = document.getElementById('teleport') || document.body
+  const rootEl = document.getElementById(props.teleportId) || document.body
   const mountEl = document.createElement('div')
   const contentEl = document.createElement('div')
 

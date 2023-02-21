@@ -50,6 +50,7 @@ function handleChange() {
     </Card>
     <Winbox
       v-model:show="showFlag"
+      teleport-id="teleport-layer--20"
       :params="{
         title: `${item.info.first_name} ${item.info.last_name}`,
         top: 0,

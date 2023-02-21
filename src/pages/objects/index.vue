@@ -43,6 +43,7 @@ async function loadOthersHandler() {
 <template>
   <Winbox
     show
+    teleport-id="teleport-layer--10"
     :params="{
       title: t('objects.title'),
       class: ['simple', 'border-l-none', 'wb-left', 'no-move', 'no-close'],
