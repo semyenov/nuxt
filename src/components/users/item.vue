@@ -35,7 +35,7 @@ function handleChange() {
         <div class="flex flex-row justify-between px-4 py-2 w-full">
           {{ `# ${item.info.first_name} ${item.info.last_name}` }}
           <div
-            class="inline-flex px-2 box-color__default--3 bg-white box-rounded__md border font-mono font-light text-sm"
+            class="inline-flex px-2 box-rounded__sm border font-mono font-light text-sm box-color__default--6"
             @click="handleChange"
           >
             {{ item.email }}

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const keys = useMagicKeys()
-const tildaKey = keys['~']
+const tildaKey = keys['\\']
 
 watch(tildaKey, (v) => v && toggleDark())
 const authorizationStore = useAuthorizationStore()
@@ -10,16 +10,23 @@ const authorizationStore = useAuthorizationStore()
   <div
     class="layout layout-default flex flex-grow box-color__default--3 overflow-hidden"
   >
-    <div class="layout-default__loading h-2 z-3">
+    <div class="layout-default__loading h-2 z-100">
       <NuxtLoadingIndicator />
     </div>
+
     <div
-      id="teleport"
-      class="layout-default__teleport fixed right-0 left-0 flex w-full h-full relative"
+      id="teleport-layer--20"
+      class="layout-default__teleport fixed right-0 left-0 flex w-full h-full relative z-20"
     ></div>
+
+    <div
+      id="teleport-layer--10"
+      class="layout-default__teleport fixed right-0 left-0 flex w-full h-full relative z-20"
+    ></div>
+
     <div
       v-if="authorizationStore.current"
-      class="layout-default__current-user flex flex-col z-1"
+      class="layout-default__current-user flex flex-col z-10"
     >
       <AuthorizationCurrent />
     </div>

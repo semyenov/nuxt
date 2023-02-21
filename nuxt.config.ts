@@ -94,6 +94,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@pinia/nuxt',
     '@nuxtjs/emotion',
+    '@vue-macros/nuxt',
     'magic-regexp/nuxt',
     '@vueuse/motion/nuxt',
     'nuxt-typed-router',

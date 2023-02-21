@@ -64,10 +64,10 @@ const input = ref<string | undefined>(undefined)
   >
     <div class="flex flex-col items-center p-6">
       <PageProse class="max-w-300">
-        <h4 class="mt-0">Combobox</h4>
-        <div
-          class="flex flex-row items-center justify-start flex-wrap mb-6 gap-4"
-        >
+        <h4 class="mt-0 text-default-500 dark:text-default-400 font-medium">
+          Combobox
+        </h4>
+        <div class="flex flex-row items-center justify-start flex-wrap gap-4">
           <Combobox
             v-for="color in uiColorVariants"
             :key="`combobox-${color}`"
@@ -79,7 +79,9 @@ const input = ref<string | undefined>(undefined)
           />
         </div>
 
-        <h4 class="mb-6 mt-6">Boxes</h4>
+        <h4 class="text-default-500 dark:text-default-400 font-medium">
+          Boxes
+        </h4>
         <div
           v-for="color in uiColorVariants"
           :key="`box-${color}`"
@@ -95,7 +97,9 @@ const input = ref<string | undefined>(undefined)
             <div class="text-4xl font-bold">{{ variant }}</div>
           </div>
         </div>
-        <h4 class="mb-6 mt-6">Buttons</h4>
+        <h4 class="text-default-500 dark:text-default-400 font-medium">
+          Buttons
+        </h4>
         <template
           v-for="rounded in uiRoundedVariants"
           :key="`rounded-${rounded}`"
@@ -140,7 +144,9 @@ const input = ref<string | undefined>(undefined)
             </Button>
           </div>
         </template>
-        <h4 class="mb-6 mt-6">Inputs</h4>
+        <h4 class="text-default-500 dark:text-default-400 font-medium">
+          Inputs
+        </h4>
         <template v-for="rounded in uiRoundedVariants">
           <div
             v-for="(size, index) in uiSizeVariants"

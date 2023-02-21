@@ -486,6 +486,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/parser@npm:^7.20.15":
+  version: 7.21.1
+  resolution: "@babel/parser@npm:7.21.1"
+  bin:
+    parser: ./bin/babel-parser.js
+  checksum: a564cff6dec4201a611d1f2ae5af8d7436ce80550e75a77ee72dca6b094df6188b5a4ccfae6a98c85991b56a51e6c48159e466cc5a374c7a37af706fcb5a6bc2
+  languageName: node
+  linkType: hard
+
 "@babel/parser@npm:^7.20.5":
   version: 7.20.5
   resolution: "@babel/parser@npm:7.20.5"
@@ -1774,7 +1783,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:3.2.2, @nuxt/kit@npm:^3.1.1, @nuxt/kit@npm:^3.2.0":
+"@nuxt/kit@npm:3.2.2, @nuxt/kit@npm:^3.1.1, @nuxt/kit@npm:^3.2.0, @nuxt/kit@npm:^3.2.2":
   version: 3.2.2
   resolution: "@nuxt/kit@npm:3.2.2"
   dependencies:
@@ -3247,12 +3256,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@volar/language-core@npm:1.0.24":
+  version: 1.0.24
+  resolution: "@volar/language-core@npm:1.0.24"
+  dependencies:
+    "@volar/source-map": 1.0.24
+    muggle-string: ^0.1.0
+  checksum: 87e86cec11d1db19eb9eaff78ff5920030fcdc0f427878531d008627d5b95e7f4f9d972c220e600a6c7b7b0b4a5cfe739a3b594ffc60138c81bb709769952274
+  languageName: node
+  linkType: hard
+
 "@volar/language-core@npm:1.2.0-alpha.16":
   version: 1.2.0-alpha.16
   resolution: "@volar/language-core@npm:1.2.0-alpha.16"
   dependencies:
     "@volar/source-map": 1.2.0-alpha.16
   checksum: 5d9a35a49e4a3a7f51f5edb27db3d42de462f3159d10fc7b8ef872fb29e6480d602e1f5a9f7e19412f9377cedaed42617cf08063f28e9908565dd7af32e4d3c3
+  languageName: node
+  linkType: hard
+
+"@volar/source-map@npm:1.0.24":
+  version: 1.0.24
+  resolution: "@volar/source-map@npm:1.0.24"
+  dependencies:
+    muggle-string: ^0.1.0
+  checksum: 3fb385758320ed3ea14f8a9212f01fcc9696576051908b9b1d4adfd64cee3f5ab8a0a2afed127edb66dc49cf6774b629621c7f709726e96350cccd806e960943
   languageName: node
   linkType: hard
 
@@ -3301,6 +3329,269 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vue-macros/api@npm:~0.4.3":
+  version: 0.4.3
+  resolution: "@vue-macros/api@npm:0.4.3"
+  dependencies:
+    "@babel/types": ^7.20.7
+    "@vue-macros/common": ~1.0.1
+  checksum: 3fc45b8af63bc53b1f4d6e4235bc20c89205ba679d97544f5173e8c9a4d0c02e8cd300a639aa553f809b436973d929b131a048766349f27d7721f675de8417c4
+  languageName: node
+  linkType: hard
+
+"@vue-macros/better-define@npm:1.3.3":
+  version: 1.3.3
+  resolution: "@vue-macros/better-define@npm:1.3.3"
+  dependencies:
+    "@rollup/pluginutils": ^5.0.2
+    "@vue-macros/api": ~0.4.3
+    "@vue-macros/common": ~1.0.1
+    unplugin: ^1.1.0
+  checksum: 762ef63c3427ad4e56e7ee9517ab8c9c6f909f0a1149a4d32f9352d98a5f06dd97d193d54d7e58bb39591baab7c3583e0c8c48b25b7ad913280dc8f66f866ed7
+  languageName: node
+  linkType: hard
+
+"@vue-macros/common@npm:1.0.1, @vue-macros/common@npm:~1.0.1":
+  version: 1.0.1
+  resolution: "@vue-macros/common@npm:1.0.1"
+  dependencies:
+    "@babel/types": ^7.20.7
+    "@vue/compiler-sfc": ^3.2.47
+    local-pkg: ^0.4.3
+    magic-string: ^0.29.0
+  peerDependencies:
+    vue: ^2.7.0 || ^3.2.25
+  peerDependenciesMeta:
+    vue:
+      optional: true
+  checksum: e7b4e9732c5d62d9c313802cfa294c7bcc9ad7c75753af1cb07937a0e87d914feb09445571fba701685d81ddec801a732ab81a04703e5c3b152c65a0a831e5bb
+  languageName: node
+  linkType: hard
+
+"@vue-macros/define-model@npm:1.3.2":
+  version: 1.3.2
+  resolution: "@vue-macros/define-model@npm:1.3.2"
+  dependencies:
+    "@rollup/pluginutils": ^5.0.2
+    "@vue-macros/common": ~1.0.1
+    ast-walker-scope: ^0.4.0
+    unplugin: ^1.1.0
+  peerDependencies:
+    "@vueuse/core": ^9.0.0
+  peerDependenciesMeta:
+    "@vueuse/core":
+      optional: true
+  checksum: 8b17ab1838f4e2953abc4216eab348e1d51fb5b49998af3ed47ea36a0d9d916b37ef280da76dc815fb2cfca11665e3ed1d23c2bf508d859882ff34dc083e1c72
+  languageName: node
+  linkType: hard
+
+"@vue-macros/define-props-refs@npm:0.2.1":
+  version: 0.2.1
+  resolution: "@vue-macros/define-props-refs@npm:0.2.1"
+  dependencies:
+    "@rollup/pluginutils": ^5.0.2
+    "@vue-macros/common": ~1.0.1
+    unplugin: ^1.1.0
+  peerDependencies:
+    vue: ^2.7.0 || ^3.2.25
+  checksum: c9667877751dc3d78a6f7833c1d29abf214ad58ec95c97be9cb5cb1cc08334d426f0db313f7b6fe243ae92714e200c8651d4a73696e236720a7efd5e6899d88d
+  languageName: node
+  linkType: hard
+
+"@vue-macros/define-props@npm:0.3.2, @vue-macros/define-props@npm:~0.3.2":
+  version: 0.3.2
+  resolution: "@vue-macros/define-props@npm:0.3.2"
+  dependencies:
+    "@rollup/pluginutils": ^5.0.2
+    "@vue-macros/common": ~1.0.1
+    unplugin: ^1.1.0
+  peerDependencies:
+    vue: ^2.7.0 || ^3.2.25
+  checksum: 4ced3a3a5c15628e951bbccd9372c866a21b1bbc10bb2c4f3cc88a6ceaf2703a76b0dc3a52ca5df14553129ab3b21ff3c7f99830bb0e4d97493959f43685c0f3
+  languageName: node
+  linkType: hard
+
+"@vue-macros/define-render@npm:1.2.2":
+  version: 1.2.2
+  resolution: "@vue-macros/define-render@npm:1.2.2"
+  dependencies:
+    "@rollup/pluginutils": ^5.0.2
+    "@vue-macros/common": ~1.0.1
+    unplugin: ^1.1.0
+  peerDependencies:
+    vue: ^2.7.0 || ^3.0.0
+  checksum: 853d114e1342bab3d1d2e5970f5962bb38f3532b40e4b6957f312ecbfebf13cc969514492382b68558558deb2efa51c5204f08181de6c66ad687a6627e1cd8e0
+  languageName: node
+  linkType: hard
+
+"@vue-macros/define-slots@npm:0.2.2":
+  version: 0.2.2
+  resolution: "@vue-macros/define-slots@npm:0.2.2"
+  dependencies:
+    "@rollup/pluginutils": ^5.0.2
+    "@vue-macros/common": ~1.0.1
+    unplugin: ^1.1.0
+  peerDependencies:
+    vue: ^2.7.0 || ^3.0.0
+  checksum: f441f323cb6b793c52551c809c15cada9ff872d690d8052fdd08f8da94f4ad99e7cecaa2320791952d95a8814a20baf8c3c8f7cfca386f979e4cee9a9ca2ac63
+  languageName: node
+  linkType: hard
+
+"@vue-macros/devtools@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "@vue-macros/devtools@npm:0.1.2"
+  dependencies:
+    sirv: ^2.0.2
+    vue: ^3.2.47
+  peerDependencies:
+    vite: ^4.0.0
+  peerDependenciesMeta:
+    vite:
+      optional: true
+  checksum: 5deb32f34c2fab01c66416602e5c1e80a9268648330c33f17b47a0e39501c4553396e12f7087049b5a335cb495e8d725e7d2d210b3ac205e2bb20f865a09f33b
+  languageName: node
+  linkType: hard
+
+"@vue-macros/export-props@npm:0.2.1":
+  version: 0.2.1
+  resolution: "@vue-macros/export-props@npm:0.2.1"
+  dependencies:
+    "@rollup/pluginutils": ^5.0.2
+    "@vue-macros/common": ~1.0.1
+    unplugin: ^1.1.0
+  peerDependencies:
+    vue: ^2.7.0 || ^3.2.25
+  checksum: df7798375a55ab081e2a3083d4960a6f1ed2c3c9ad52f3b90af44b677ab94266062d545656a30effbc7d04183b5de02ec31a0c0027b67be2d78b6af2b4bc87a9
+  languageName: node
+  linkType: hard
+
+"@vue-macros/hoist-static@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@vue-macros/hoist-static@npm:1.2.1"
+  dependencies:
+    "@rollup/pluginutils": ^5.0.2
+    "@vue-macros/common": ~1.0.1
+    unplugin: ^1.1.0
+  checksum: e37c8f0125df3ffd8eaf48fc38c5b0c07986537fe4c6ab14208b681607c47f0a3c32dfbe88051b7ac0be8048949860bb8420ef2ca8692841e5cd79c3a9e0e0ca
+  languageName: node
+  linkType: hard
+
+"@vue-macros/named-template@npm:0.2.2":
+  version: 0.2.2
+  resolution: "@vue-macros/named-template@npm:0.2.2"
+  dependencies:
+    "@rollup/pluginutils": ^5.0.2
+    "@vue-macros/common": ~1.0.1
+    "@vue/compiler-dom": ^3.2.47
+    unplugin: ^1.1.0
+  checksum: 5641c3e93bca3ef8113f100836f3489674a25ffbfe44deb1bffe429c41b50a6ede93a28c578752c375f4ed15a5d773f6e6255af0a3c13211612cca16c9589763
+  languageName: node
+  linkType: hard
+
+"@vue-macros/nuxt@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "@vue-macros/nuxt@npm:1.1.2"
+  dependencies:
+    "@nuxt/kit": ^3.2.2
+    "@vue-macros/short-vmodel": ~1.1.1
+    "@vue-macros/volar": ~0.8.2
+    unplugin-vue-macros: ~1.8.2
+  peerDependencies:
+    nuxt: ^3.0.0
+  checksum: 179f786f22091ce5c0f3e03d10daf9ecb38ab267de9e4fef579df6229cf5405dab282727802a0b88224bd12663856fce734c8349880b86846533fbd00bc1948d
+  languageName: node
+  linkType: hard
+
+"@vue-macros/reactivity-transform@npm:0.2.3":
+  version: 0.2.3
+  resolution: "@vue-macros/reactivity-transform@npm:0.2.3"
+  dependencies:
+    "@babel/parser": ^7.20.15
+    "@rollup/pluginutils": ^5.0.2
+    "@vue-macros/common": ~1.0.1
+    "@vue/compiler-core": ^3.2.47
+    "@vue/shared": ^3.2.47
+    magic-string: ^0.29.0
+    unplugin: ^1.1.0
+  peerDependencies:
+    vue: ^2.7.0 || ^3.2.25
+  checksum: 2d864dd2aaa51a58f85124225a2a4b9c0457321eecfd97b440958a6bdb9dbe7d4b0c91b1c83a2578ab3a87382bb12d3539c6659d010c5d5cd983826bd1b65b9c
+  languageName: node
+  linkType: hard
+
+"@vue-macros/setup-block@npm:0.1.1":
+  version: 0.1.1
+  resolution: "@vue-macros/setup-block@npm:0.1.1"
+  dependencies:
+    "@rollup/pluginutils": ^5.0.2
+    "@vue-macros/common": ~1.0.1
+    "@vue/compiler-dom": ^3.2.47
+    unplugin: ^1.1.0
+  checksum: 7a2e64af4687d887d1651a25ef167d8c3a30d066710d11a53ae911368d02a7309798b5e65a980185603d658a70453cdd9f00a680b2310c1897e5698704247ccb
+  languageName: node
+  linkType: hard
+
+"@vue-macros/setup-component@npm:0.15.2":
+  version: 0.15.2
+  resolution: "@vue-macros/setup-component@npm:0.15.2"
+  dependencies:
+    "@rollup/pluginutils": ^5.0.2
+    "@vue-macros/common": ~1.0.1
+    unplugin: ^1.1.0
+  checksum: 9103089a1c49b7a99e8bd4bd3f7cb7c7e61856e6dc4fe632e9a848a1b035e065f7305e276363dcfad465ab56bf81f9f83a5c747fb89cf6cbe53c9457c0904557
+  languageName: node
+  linkType: hard
+
+"@vue-macros/setup-sfc@npm:0.14.1":
+  version: 0.14.1
+  resolution: "@vue-macros/setup-sfc@npm:0.14.1"
+  dependencies:
+    "@rollup/pluginutils": ^5.0.2
+    "@vue-macros/common": ~1.0.1
+    unplugin: ^1.1.0
+  checksum: 46dc0737cb7169f25b8af48a5c3fc36f7def1a1ff4e384a264156f0ed67a22f4eefdf7bf9fb7123f2ccc109092f77c95bc1b96be4c4a23e34de02417f28b572d
+  languageName: node
+  linkType: hard
+
+"@vue-macros/short-emits@npm:1.2.2":
+  version: 1.2.2
+  resolution: "@vue-macros/short-emits@npm:1.2.2"
+  dependencies:
+    "@rollup/pluginutils": ^5.0.2
+    "@vue-macros/common": ~1.0.1
+    unplugin: ^1.1.0
+  checksum: 060ffaadc0c07d920c3e54c2a3175022e6129fc018b100b348278b918c74438c72d7814699ab42fdd1260a928c4675304ce8fe260027df5ca89079b3b5057cc4
+  languageName: node
+  linkType: hard
+
+"@vue-macros/short-vmodel@npm:~1.1.1":
+  version: 1.1.1
+  resolution: "@vue-macros/short-vmodel@npm:1.1.1"
+  dependencies:
+    "@vue-macros/common": ~1.0.1
+    "@vue/compiler-core": ^3.2.47
+  checksum: 1779f9201bfd1aab0c11bbef1dbd2a64145f63144004ec462732f79dff30484f97fa6e2c026fbd23a13119b8fdce66ab33af31595e15f40ad29261d9117b8b02
+  languageName: node
+  linkType: hard
+
+"@vue-macros/volar@npm:~0.8.2":
+  version: 0.8.2
+  resolution: "@vue-macros/volar@npm:0.8.2"
+  dependencies:
+    "@volar/language-core": 1.0.24
+    "@vue-macros/common": ~1.0.1
+    "@vue-macros/define-props": ~0.3.2
+    "@vue-macros/short-vmodel": ~1.1.1
+    muggle-string: ^0.2.2
+  peerDependencies:
+    vue-tsc: ^1.0.24
+  peerDependenciesMeta:
+    vue-tsc:
+      optional: true
+  checksum: cac940b8335a348e5ddc1a321517008f5689b80adc639900bdb6143a0e1994251fc07564e5a9191b09674b89b465184e1450ecd31920fe06a7f9bfb306e42f1b
+  languageName: node
+  linkType: hard
+
 "@vue/babel-helper-vue-transform-on@npm:^1.0.2":
   version: 1.0.2
   resolution: "@vue/babel-helper-vue-transform-on@npm:1.0.2"
@@ -3337,7 +3628,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/compiler-core@npm:3.2.47":
+"@vue/compiler-core@npm:3.2.47, @vue/compiler-core@npm:^3.2.47":
   version: 3.2.47
   resolution: "@vue/compiler-core@npm:3.2.47"
   dependencies:
@@ -3933,6 +4224,16 @@ __metadata:
   version: 1.1.0
   resolution: "assertion-error@npm:1.1.0"
   checksum: fd9429d3a3d4fd61782eb3962ae76b6d08aa7383123fca0596020013b3ebd6647891a85b05ce821c47d1471ed1271f00b0545cf6a4326cf2fc91efcc3b0fbecf
+  languageName: node
+  linkType: hard
+
+"ast-walker-scope@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "ast-walker-scope@npm:0.4.0"
+  dependencies:
+    "@babel/parser": ^7.20.13
+    "@babel/types": ^7.20.7
+  checksum: 44ea061b26c7fa2cdc3fc395f1a9b5198fa4c420ace0e0d40373b8721f5727ca3ce4f6ccf8b33e3477876389bd20f2e7e96624aff5011f9dd182cfc67c16c156
   languageName: node
   linkType: hard
 
@@ -9867,6 +10168,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"muggle-string@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "muggle-string@npm:0.1.0"
+  checksum: c892cb53c9e066185913e4d6d0af71df6a2a8d8fd614903d13cd6b260c32ebc7b08ae7190a5faf3f7a25ba01cb9be34844d2a069351c090e4a6013f1eee58a50
+  languageName: node
+  linkType: hard
+
 "muggle-string@npm:^0.2.2":
   version: 0.2.2
   resolution: "muggle-string@npm:0.2.2"
@@ -11929,6 +12237,7 @@ __metadata:
     "@typescript-eslint/parser": ^5.52.0
     "@unocss/nuxt": ^0.49.7
     "@unocss/reset": ^0.49.7
+    "@vue-macros/nuxt": ^1.1.2
     "@vueuse/core": ^9.13.0
     "@vueuse/motion": ^2.0.0-beta.12
     "@vueuse/nuxt": ^9.13.0
@@ -13568,6 +13877,72 @@ __metadata:
     "@unocss/webpack":
       optional: true
   checksum: 543fed4035e113f3d4156ce307d18e866aa2285aa3cb748ea0eed340dd6b63fa16da7c4e08b285880e4818f3b9bce7311e7fe51188234f427660408a15285a7a
+  languageName: node
+  linkType: hard
+
+"unplugin-combine@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "unplugin-combine@npm:0.6.0"
+  dependencies:
+    "@antfu/utils": ^0.7.2
+    unplugin: ^1.0.1
+  peerDependencies:
+    esbuild: ">=0.13"
+    rollup: ^3.2.0
+    vite: ^2.3.0 || ^3.0.0 || ^4.0.0
+    webpack: 4 || 5
+  peerDependenciesMeta:
+    esbuild:
+      optional: true
+    rollup:
+      optional: true
+    vite:
+      optional: true
+    webpack:
+      optional: true
+  checksum: 4c35acb86c0d9095e44bbef068a84b8ecbdd07b24927d840b8db827a71463b69c45166e1eb22da294dbec90ce14e618d96d1bd74b3738c6b9c975257e9c63807
+  languageName: node
+  linkType: hard
+
+"unplugin-vue-define-options@npm:1.2.2":
+  version: 1.2.2
+  resolution: "unplugin-vue-define-options@npm:1.2.2"
+  dependencies:
+    "@rollup/pluginutils": ^5.0.2
+    "@vue-macros/common": ~1.0.1
+    ast-walker-scope: ^0.4.0
+    unplugin: ^1.1.0
+  checksum: 1eca242310a038eafc5bf2ad70a8e64ab75ef1febedd9b47a123b7b9270d5d5ffa2dece5da20f26194f384d13b4992d41d7a3c080d154d307e8a479829e79588
+  languageName: node
+  linkType: hard
+
+"unplugin-vue-macros@npm:~1.8.2":
+  version: 1.8.2
+  resolution: "unplugin-vue-macros@npm:1.8.2"
+  dependencies:
+    "@rollup/pluginutils": ^5.0.2
+    "@vue-macros/better-define": 1.3.3
+    "@vue-macros/common": 1.0.1
+    "@vue-macros/define-model": 1.3.2
+    "@vue-macros/define-props": 0.3.2
+    "@vue-macros/define-props-refs": 0.2.1
+    "@vue-macros/define-render": 1.2.2
+    "@vue-macros/define-slots": 0.2.2
+    "@vue-macros/devtools": ^0.1.2
+    "@vue-macros/export-props": 0.2.1
+    "@vue-macros/hoist-static": 1.2.1
+    "@vue-macros/named-template": 0.2.2
+    "@vue-macros/reactivity-transform": 0.2.3
+    "@vue-macros/setup-block": 0.1.1
+    "@vue-macros/setup-component": 0.15.2
+    "@vue-macros/setup-sfc": 0.14.1
+    "@vue-macros/short-emits": 1.2.2
+    unplugin: ^1.1.0
+    unplugin-combine: ^0.6.0
+    unplugin-vue-define-options: 1.2.2
+  peerDependencies:
+    vue: ^2.7.0 || ^3.2.25
+  checksum: 133113cc01f0a0536b1aac0b12f14dbc2f172ba1b47fc8c5ed1138ebc718f08f8686048b43a0ac7dab42e07ecb9fa79f41f7ac13b058a84bf07d68a12021385d
   languageName: node
   linkType: hard
 

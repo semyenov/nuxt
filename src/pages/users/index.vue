@@ -86,6 +86,5 @@ function scrollClickHandler() {
         </div>
       </template>
     </VirtualList>
-    <!-- </div> -->
   </Winbox>
 </template>

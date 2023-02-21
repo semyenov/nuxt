@@ -97,9 +97,6 @@ async function loadOthersHandler() {
           </Button>
         </div>
       </template>
-      <!-- <template #footer>
-        <div class="flex flex-row items-center w-full">test</div>
-      </template> -->
     </VirtualList>
   </Winbox>
 </template>

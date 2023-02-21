@@ -17,12 +17,27 @@ const { data } = await useFetch('/api/test', {
 </script>
 
 <template>
-  <div class="page page-index w-full h-full">
-    <div class="flex flex-row sticky box-color__default--2">
-      <PageTitle>{{ t('index.title') }}</PageTitle>
-    </div>
+  <Winbox
+    show
+    :params="{
+      title: t('index.title'),
+      class: ['simple', 'border-l-none', 'wb-left', 'no-move', 'no-close'],
+      index: 10,
+      border: 0,
+      top: 0,
+      left: '45px',
+      bottom: 0,
+      right: '50%',
+      height: '100%',
+      minheight: '100%',
+      width: '550px',
+      minwidth: '500px',
+      x: '45px',
+      y: 'center',
+    }"
+  >
     <div
-      class="flex flex-col items-start p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded box-color__default--1"
+      class="page page-index flex flex-col items-start p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded box-color__default--1"
     >
       <PageProse
         v-if="data"
@@ -41,17 +56,23 @@ const { data } = await useFetch('/api/test', {
       </PageProse>
 
       <div class="flex flex-row gap-2 text-3xl justify-center">
-        <i class="i-logos:vue text-6xl" />
+        <i class="i-logos:vue text-9xl" />
         <div
-          class="i-twemoji:grinning-face-with-smiling-eyes hover:i-twemoji:face-with-tears-of-joy"
+          class="i-twemoji:grinning-face-with-smiling-eyes hover:i-twemoji:face-with-tears-of-joy text-7xl"
         />
-        <i class="i-mdi:alarm text-orange-400" un-hover="text-blue-400" />
         <i
-          class="i-ph:airplane-duotone text-blue-600"
+          class="i-mdi:alarm text-orange-400 text-6xl"
+          un-hover="text-blue-400"
+        />
+        <i
+          class="i-ph:airplane-duotone text-blue-600 text-4xl"
           un-dark="text-blue-500"
         />
-        <i class="i-ph:anchor-simple text-gray-600" un-dark="text-gray-400" />
+        <i
+          class="i-ph:anchor-simple text-gray-600 text-3xl"
+          un-dark="text-gray-400"
+        />
       </div>
     </div>
-  </div>
+  </Winbox>
 </template>

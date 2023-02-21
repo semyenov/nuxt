@@ -29,10 +29,12 @@ const item = toRef(props, 'item')
       <template v-if="item" #header>
         <div class="flex flex-row justify-between px-4 py-2 w-full">
           {{ `# ${item.info.name}` }}
+
           <div
-            class="inline-flex px-2 box-color__default--3 bg-white box-rounded__md border font-mono font-light text-sm"
+            v-if="item.feature && item.feature.geometry.coordinates[1]"
+            class="inline-flex flex-row items-center px-2 box-color__default--6 box-rounded__sm border border-dashed font-mono font-light text-sm"
           >
-            {{ item.feature?.geometry.coordinates.join(', ') }}
+            {{ item.feature.geometry.coordinates.join(', ') }}
           </div>
         </div>
       </template>

@@ -222,18 +222,9 @@ function createColorScale(
       (s, c, i) => ({
         ...s,
         [50 * (i + 1)]: chroma(c)
-          .brighten(0.02 * i - 0.1)
-          .saturate(i / steps / 8)
-          .brighten(-i * 0.02)
-          .darken((steps - i) * 0.01)
-          .saturate((steps - i) / 80 - 0.2)
-          .darken((steps - i - 18) * 0.005)
-          .saturate(-i / steps / 8)
-          .darken((-steps - i) * 0.005)
-          .saturate(i / steps / 4)
-          .saturate(i / steps / 8 - 0.1)
-          .brighten((steps - i) * 0.02 - 0.1)
-          .darken(i * 0.02)
+          .brighten(0.05 * i - 0.2)
+          .saturate((-i + steps) * 0.02 - 0.5)
+          // .brighten((-steps + i) * 0.01 + 0.3)
           .hex(),
       }),
       {} as UnoColors
