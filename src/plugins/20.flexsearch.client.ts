@@ -1,4 +1,5 @@
 import { Document } from 'flexsearch/dist/flexsearch.bundle'
+
 import type { IUser } from '@/types'
 import { IMetaScope } from '@/types'
 

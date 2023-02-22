@@ -1,10 +1,10 @@
 {
   // https://v3.nuxtjs.org/concepts/typescript
-  "compilerOptions": {
-    "paths": {
-      "flexsearch/dist/flexsearch.bundle": ["./node_modules/@types/flexsearch"]
-    }
-  },
+  // "compilerOptions": {
+  //   "paths": {
+  //     "flexsearch/dist/flexsearch.bundle": ["./node_modules/@types/flexsearch"]
+  //   }
+  // },
 
   "extends": "./.nuxt/tsconfig.json"
 }

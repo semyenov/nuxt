@@ -17,24 +17,24 @@ const usersGetter = usersStore.itemGetter
 
 const listComponent = ref<InstanceType<typeof VirtualList> | null>(null)
 
-const listScrollStep = 10
-const listScrollIndex = ref(listScrollStep)
+// const listScrollStep = 10
+// const listScrollIndex = ref(listScrollStep)
 
-function scrollClickHandler() {
-  if (!listComponent.value) {
-    return
-  }
+// function scrollClickHandler() {
+//   if (!listComponent.value) {
+//     return
+//   }
 
-  if (listScrollIndex.value > usersIds.value.length) {
-    listComponent.value.scrollToBottom()
-    listScrollIndex.value = 0
+//   if (listScrollIndex.value > usersIds.value.length) {
+//     listComponent.value.scrollToBottom()
+//     listScrollIndex.value = 0
 
-    return
-  }
+//     return
+//   }
 
-  listComponent.value.scrollToIndex(listScrollIndex.value)
-  listScrollIndex.value += listScrollStep
-}
+//   listComponent.value.scrollToIndex(listScrollIndex.value)
+//   listScrollIndex.value += listScrollStep
+// }
 </script>
 
 <template>
@@ -75,11 +75,11 @@ function scrollClickHandler() {
       <!-- <template #header>
         <div class="absolute flex flex-col gap-4 right-8 bottom-20 z-10">
           <Button
-            class="h-11"
-            color="default"
             outline
-            rounded="full"
             size="md"
+            class="h-11"
+            rounded="full"
+            color="default"
             @click="scrollClickHandler"
           >
             <i class="i-carbon:arrow-down inline-block" />

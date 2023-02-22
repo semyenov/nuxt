@@ -26,7 +26,7 @@ const contentPath = route.path.replace(/^\/content/s, '/')
     }"
   >
     <div
-      class="flex flex-col items-start p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded box-color__default--2"
+      class="flex flex-col items-start p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded"
     >
       <ContentDoc :path="contentPath" />
     </div>
