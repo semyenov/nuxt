@@ -237,8 +237,8 @@ export const useWinboxStore = defineStore('winbox', () => {
         height: winbox.body.parentElement?.clientHeight || 0,
         minimized: false,
         fullscreen: false,
-        active: true,
         maximized: winbox.max,
+        active: true,
       })
     }
 
