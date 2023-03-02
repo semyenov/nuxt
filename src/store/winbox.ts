@@ -227,6 +227,7 @@ export const useWinboxStore = defineStore('winbox', () => {
     }
 
     winbox = new window.WinBox(params)
+    winbox.focus()
 
     if (!windows.value.has(id)) {
       windows.value.set(id, {
@@ -236,7 +237,7 @@ export const useWinboxStore = defineStore('winbox', () => {
         height: winbox.body.parentElement?.clientHeight || 0,
         minimized: false,
         fullscreen: false,
-        active: false,
+        active: true,
         maximized: winbox.max,
       })
     }

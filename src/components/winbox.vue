@@ -117,7 +117,7 @@ function getWinboxParams(
 
 <template>
   <Teleport v-if="showFlag" :to="`#${id} .wb-content`">
-    <pre class="w-full p-6 box-color__default--2 border-b">{{
+    <pre class="w-full p-6 text-xs box-color__default--2 border-b">{{
       winboxStore.windows.get(id)
     }}</pre>
     <slot name="default" />
