@@ -1,10 +1,6 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import type WinBox from 'winbox'
 
-// declare namespace WinBox {
-//   interface Params {}
-// }
-
 interface IWindowInfo {
   x: number
   y: number
@@ -16,10 +12,6 @@ interface IWindowInfo {
 
 export type WinBoxParamsTether = 'right' | 'left' | 'top' | 'bottom'
 export type WinBoxParams = WinBox.Params & {
-  header?: number
-  onmaximize?: () => void
-  onminimize?: () => void
-  onrestore?: () => void
   tether?: WinBoxParamsTether[]
 }
 
