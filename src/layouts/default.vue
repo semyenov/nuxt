@@ -16,12 +16,12 @@ const authorizationStore = useAuthorizationStore()
 
     <div
       id="teleport-layer--20"
-      class="layout-default__teleport fixed right-0 left-0 flex w-full h-full relative z-20"
+      class="layout-default__teleport fixed right-0 left-0 flex relative z-20"
     ></div>
 
     <div
       id="teleport-layer--10"
-      class="layout-default__teleport fixed right-0 left-0 flex w-full h-full relative z-10"
+      class="layout-default__teleport fixed right-0 left-0 flex relative z-10"
     ></div>
 
     <div
