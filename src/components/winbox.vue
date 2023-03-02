@@ -4,6 +4,8 @@ import { nanoid } from 'nanoid'
 import type { PropType } from 'vue'
 import type WinBox from 'winbox'
 
+import type { WinBoxParams } from '@/store/winbox'
+
 const props = defineProps({
   teleportId: {
     type: String,
@@ -18,7 +20,7 @@ const props = defineProps({
     default: false,
   },
   params: {
-    type: Object as PropType<WinBox.Params>,
+    type: Object as PropType<WinBoxParams>,
     default: () => ({}),
   },
 })
@@ -26,6 +28,8 @@ const props = defineProps({
 const emit = defineEmits<{
   (event: 'update:show', value: boolean): void
 }>()
+
+const winboxStore = useWinboxStore()
 
 const id = ref<string>(props.dataId)
 const winbox = ref<WinBox | null>(null)
@@ -63,20 +67,10 @@ function open() {
 
   const winboxParams = getWinboxParams(id.value, rootEl, mountEl)
 
-  winbox.value = new window.WinBox(winboxParams)
+  winboxStore.register(id.value, winboxParams)
 
   nextTick(() => {
     showToggle(true)
-
-    if (winboxParams.x === 'right') {
-      const el = getWinboxEl()
-      if (!el || !el.winbox) {
-        return
-      }
-
-      const x = screen.width - el.clientWidth
-      el.winbox.move(x, undefined, false)
-    }
   })
 }
 
@@ -103,19 +97,18 @@ function getWinboxParams(
   id: string,
   root: HTMLElement,
   mount: HTMLElement
-): WinBox.Params {
+): WinBoxParams {
   return {
-    // @ts-expect-error fffffuuuuccc...
     header: 45,
-    border: 10,
+    border: 100,
     class: ['simple'],
     mount,
     root,
     id,
 
-    onclose(force) {
+    onclose(forceFlag = false) {
       nextTick(() => showToggle(false))
-      return force || false
+      return forceFlag
     },
 
     ...props.params,
@@ -124,6 +117,7 @@ function getWinboxParams(
 </script>
 
 <template>
+  <!-- {{ winboxStore.windows }} -->
   <Teleport v-if="showFlag" :to="`#${id} .wb-content`">
     <slot name="default" />
   </Teleport>

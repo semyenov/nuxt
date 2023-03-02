@@ -16,28 +16,28 @@ const objectGetter = objectsStore.itemGetter
 
 const listComponent = ref<InstanceType<typeof VirtualList> | null>(null)
 
-const listScrollStep = 10
-const listScrollIndex = ref(listScrollStep)
+// const listScrollStep = 10
+// const listScrollIndex = ref(listScrollStep)
 
-function scrollClickHandler() {
-  if (!listComponent.value) {
-    return
-  }
+// function scrollClickHandler() {
+//   if (!listComponent.value) {
+//     return
+//   }
 
-  if (listScrollIndex.value > objectsIds.value.length) {
-    listComponent.value.scrollToBottom()
-    listScrollIndex.value = 0
+//   if (listScrollIndex.value > objectsIds.value.length) {
+//     listComponent.value.scrollToBottom()
+//     listScrollIndex.value = 0
 
-    return
-  }
+//     return
+//   }
 
-  listComponent.value.scrollToIndex(listScrollIndex.value)
-  listScrollIndex.value += listScrollStep
-}
+//   listComponent.value.scrollToIndex(listScrollIndex.value)
+//   listScrollIndex.value += listScrollStep
+// }
 
-async function loadOthersHandler() {
-  await objectsStore.getOthers()
-}
+// async function loadOthersHandler() {
+//   await objectsStore.getOthers()
+// }
 </script>
 
 <template>
@@ -46,19 +46,18 @@ async function loadOthersHandler() {
     teleport-id="teleport-layer--10"
     :params="{
       title: t('objects.title'),
-      class: ['simple', 'border-l-none', 'wb-left', 'no-move', 'no-close'],
+      class: ['simple', 'wb-left', 'no-move', 'no-close', 'border-l-none'],
       index: 10,
       border: 0,
       top: 0,
-      left: '45px',
+      left: 45,
       bottom: 0,
       right: '50%',
       height: '100%',
       minheight: '100%',
       width: '550px',
       minwidth: '500px',
-      x: '45px',
-      y: 'center',
+      tether: ['left', 'top', 'bottom'],
     }"
   >
     <VirtualList

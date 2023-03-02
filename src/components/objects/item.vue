@@ -31,8 +31,8 @@ const item = toRef(props, 'item')
           {{ `# ${item.info.name}` }}
 
           <div
-            v-if="item.feature && item.feature.geometry.coordinates[1]"
-            class="inline-flex flex-row items-center px-2 box-color__default--6 box-rounded__sm border border-dashed font-mono font-light text-sm"
+            v-if="item.feature && item.feature.geometry.coordinates"
+            class="inline-flex flex-row items-center px-2 box-color__default--6 box-rounded__md border border-dashed font-mono font-light text-sm"
           >
             {{ item.feature.geometry.coordinates.join(', ') }}
           </div>
@@ -48,19 +48,17 @@ const item = toRef(props, 'item')
       v-model:show="showFlag"
       teleport-id="teleport-layer--20"
       :params="{
-        index: 100,
         title: `${item.info.name}`,
+        class: ['simple', 'wb-right', 'no-move', 'border-r-none'],
         top: 0,
-        right: 0,
-        left: '44px',
         bottom: 0,
+        left: 44,
+        right: 0,
         border: 0,
         width: '550px',
         height: '100%',
         minwidth: '500px',
-        class: ['simple'],
-        x: 'right',
-        y: 'top',
+        tether: ['right', 'top', 'bottom'],
       }"
     >
       <pre class="p-6 text-sm">{{ item }}</pre>

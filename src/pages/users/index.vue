@@ -47,15 +47,14 @@ const listComponent = ref<InstanceType<typeof VirtualList> | null>(null)
       index: 10,
       border: 0,
       top: 0,
-      left: '45px',
+      left: 45,
       bottom: 0,
       right: '50%',
       height: '100%',
       minheight: '100%',
       width: '550px',
       minwidth: '500px',
-      x: '45px',
-      y: 'center',
+      tether: ['left', 'top', 'bottom'],
     }"
   >
     <VirtualList
