@@ -1,6 +1,6 @@
-export as namespace WinBox
-
 declare module 'winbox' {
+  export as namespace WinBox
+
   interface WinBoxConstructor {
     (title: string, params?: Params): WinBox
     (params: Params): WinBox
@@ -114,11 +114,3 @@ declare module 'winbox' {
     onrestore?: (this: WinBox) => void
   }
 }
-
-declare const WinBox: WinBox.WinBoxConstructor & {
-  new:
-    | ((title: string, params?: WinBox.Params) => WinBox)
-    | ((params: WinBox.Params) => WinBox)
-}
-
-export = WinBox
