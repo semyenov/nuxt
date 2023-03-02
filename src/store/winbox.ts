@@ -22,6 +22,8 @@ export const useWinboxStore = defineStore('winbox', () => {
 
   function register(id: string, params: WinBoxParams) {
     const winbox = new window.WinBox(params)
+    const body = winbox.body
+
     const update = ref<boolean>(false)
 
     const onclose = params.onclose
@@ -31,20 +33,17 @@ export const useWinboxStore = defineStore('winbox', () => {
     const onblur = params.onblur
     const minimize = winbox.minimize
 
-    let w = windows.value.get(id)
-    const body = winbox.body
-
-    if (!w) {
-      w = {
+    if (!windows.value.has(id)) {
+      windows.value.set(id, {
         x: body.parentElement?.offsetLeft || 0,
         y: body.parentElement?.offsetTop || 0,
         width: body.parentElement?.clientWidth || 0,
         height: body.parentElement?.clientHeight || 0,
         minimized: false,
-      }
-
-      windows.value.set(id, w)
+      })
     }
+
+    const w = windows.value.get(id)!
 
     watch([update], ([upd]) => {
       if (!w || !upd) {
@@ -73,6 +72,7 @@ export const useWinboxStore = defineStore('winbox', () => {
         }
 
         update.value = true
+
         return
       }
 
