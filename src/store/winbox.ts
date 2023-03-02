@@ -1,3 +1,4 @@
+import { debounce } from '@antfu/utils'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import type WinBox from 'winbox'
 
@@ -70,7 +71,7 @@ export const useWinboxStore = defineStore('winbox', () => {
       update.value = false
     })
 
-    const resizeEventListener = () => {
+    const resizeEventListener = debounce(50, () => {
       if (!w || !params.tether || w.minimized || w.maximized) {
         return
       }
@@ -107,7 +108,7 @@ export const useWinboxStore = defineStore('winbox', () => {
 
         update.value = true
       }
-    }
+    })
 
     window.addEventListener('resize', resizeEventListener)
     resizeEventListener()
@@ -139,6 +140,7 @@ export const useWinboxStore = defineStore('winbox', () => {
 
       w.maximized = false
       w.minimized = false
+      resizeEventListener()
 
       return !!onrestore && onrestore.call(this)
     }

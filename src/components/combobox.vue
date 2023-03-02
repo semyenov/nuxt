@@ -306,8 +306,8 @@ function documentFocusinEventListener() {
       :class="[
         showFlag && 'rounded-b-none',
         focusFlag
-          ? `!box-color__${props.color}--4`
-          : `!box-color__${props.color}--3`,
+          ? `!box-color__${props.color}--3`
+          : `!box-color__${props.color}--2`,
       ]"
     />
     <VirtualList
@@ -345,8 +345,8 @@ function documentFocusinEventListener() {
       :class="[
         showFlag && `rounded-b-none`,
         focusFlag
-          ? `!box-color__${props.color}--4`
-          : `!box-color__${props.color}--3`,
+          ? `!box-color__${props.color}--3`
+          : `!box-color__${props.color}--2`,
       ]"
       @click="inputFocusHandler"
     >
@@ -363,8 +363,8 @@ function documentFocusinEventListener() {
       :class="[
         showFlag && `rounded-b-none`,
         focusFlag
-          ? `!box-color__${props.color}--4`
-          : `!box-color__${props.color}--3`,
+          ? `!box-color__${props.color}--3`
+          : `!box-color__${props.color}--2`,
       ]"
       @click="inputCleanHandler"
     >
