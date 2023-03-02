@@ -1,17 +1,25 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import type WinBox from 'winbox'
 
+// declare namespace WinBox {
+//   interface Params {}
+// }
+
 interface IWindowInfo {
   x: number
   y: number
   width: number
   height: number
   minimized: boolean
+  maximized: boolean
 }
 
 export type WinBoxParamsTether = 'right' | 'left' | 'top' | 'bottom'
 export type WinBoxParams = WinBox.Params & {
   header?: number
+  onmaximize?: () => void
+  onminimize?: () => void
+  onrestore?: () => void
   tether?: WinBoxParamsTether[]
 }
 
@@ -43,7 +51,9 @@ export const useWinboxStore = defineStore('winbox', () => {
     const onmove = params.onmove
     const onfocus = params.onfocus
     const onblur = params.onblur
-    const minimize = winbox.minimize
+    const onminimize = params.onminimize
+    const onmaximize = params.onmaximize
+    const onrestore = params.onrestore
 
     if (!windows.value.has(id)) {
       windows.value.set(id, {
@@ -52,6 +62,7 @@ export const useWinboxStore = defineStore('winbox', () => {
         width: body.parentElement?.clientWidth || 0,
         height: body.parentElement?.clientHeight || 0,
         minimized: false,
+        maximized: winbox.max,
       })
     }
 
@@ -68,7 +79,7 @@ export const useWinboxStore = defineStore('winbox', () => {
     })
 
     const resizeEventListener = () => {
-      if (!w || !params.tether || w.minimized) {
+      if (!w || !params.tether || w.minimized || w.maximized) {
         return
       }
 
@@ -109,14 +120,35 @@ export const useWinboxStore = defineStore('winbox', () => {
     window.addEventListener('resize', resizeEventListener)
     resizeEventListener()
 
-    winbox.minimize = function (state) {
+    winbox.onminimize = function () {
       if (!w) {
         return this
       }
 
       w.minimized = true
 
-      return minimize.call(this, state)
+      return !!onminimize && onminimize.call(this)
+    }
+
+    winbox.onmaximize = function () {
+      if (!w) {
+        return this
+      }
+
+      w.maximized = true
+
+      return !!onmaximize && onmaximize.call(this)
+    }
+
+    winbox.onrestore = function () {
+      if (!w) {
+        return this
+      }
+
+      w.maximized = false
+      w.minimized = false
+
+      return !!onrestore && onrestore.call(this)
     }
 
     winbox.onclose = function (forceFlag = false) {
