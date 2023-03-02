@@ -7,13 +7,23 @@ interface IWindowInfo {
   y: number
   width: number
   height: number
+  fullscreen: boolean
   minimized: boolean
   maximized: boolean
+  active: boolean
 }
 
 export type WinBoxParamsTether = 'right' | 'left' | 'top' | 'bottom'
 export type WinBoxParams = WinBox.Params & {
   tether?: WinBoxParamsTether[]
+}
+
+function convertUnits(value?: string | number) {
+  return typeof value === 'number'
+    ? value
+    : typeof value === 'string'
+    ? (parseFloat(value.slice(0, value.length - 1)) * window.innerWidth) / 100
+    : 0
 }
 
 export const winboxStoreKey = 'winbox' as const
@@ -28,7 +38,7 @@ export const useWinboxStore = defineStore('winbox', () => {
       }
 
       if (params.tether.includes('left')) {
-        params.x = typeof params.width === 'number' ? -params.width : 0
+        params.x = -convertUnits(params.width)
       }
 
       if (params.tether.includes('bottom')) {
@@ -40,10 +50,10 @@ export const useWinboxStore = defineStore('winbox', () => {
       }
     }
 
-    const winbox = new window.WinBox(params)
-    const body = winbox.body
+    let w: IWindowInfo
+    let winbox: WinBox.WinBox
 
-    const update = ref<boolean>(false)
+    // const update = ref<boolean>(false)
 
     const onclose = params.onclose
     const onresize = params.onresize
@@ -53,75 +63,63 @@ export const useWinboxStore = defineStore('winbox', () => {
     const onminimize = params.onminimize
     const onmaximize = params.onmaximize
     const onrestore = params.onrestore
+    const onfullscreen = params.onfullscreen
 
-    if (!windows.value.has(id)) {
-      windows.value.set(id, {
-        x: body.parentElement?.offsetLeft || 0,
-        y: body.parentElement?.offsetTop || 0,
-        width: body.parentElement?.clientWidth || 0,
-        height: body.parentElement?.clientHeight || 0,
-        minimized: false,
-        maximized: winbox.max,
-      })
-    }
-
-    const w = windows.value.get(id)!
-
-    watch([update], ([upd]) => {
-      if (!w || !upd) {
+    const resizeEventListener = debounce(50, () => {
+      if (!w || !params.tether || w.minimized) {
         return
       }
 
-      winbox.move(w.x, w.y)
-      winbox.resize(w.width, w.height)
-      update.value = false
-    })
+      if (w.fullscreen) {
+        w.fullscreen = false
 
-    const resizeEventListener = debounce(50, () => {
-      if (!w || !params.tether || w.minimized || w.maximized) {
+        return
+      }
+
+      if (w.maximized) {
+        winbox.maximize(false)
+        winbox.maximize(true)
+
         return
       }
 
       if (params.tether.includes('left')) {
-        w.x = typeof params.left === 'number' ? params.left : 0
+        w.x = convertUnits(params.left)
 
         if (params.tether.includes('top')) {
-          w.y = typeof params.top === 'number' ? params.top : 0
+          w.y = convertUnits(params.top)
+
+          if (params.tether.includes('bottom')) {
+            w.height = window.innerHeight
+            winbox.resize(undefined, w.height)
+          }
         }
 
-        if (params.tether.includes('bottom')) {
-          w.height = window.innerHeight
-        }
-
-        update.value = true
-
+        winbox.move(w.x, w.y)
         return
       }
 
       if (params.tether.includes('right')) {
-        w.x =
-          typeof params.right === 'number'
-            ? window.innerWidth - w.width - params.right
-            : window.innerWidth - w.width
+        w.x = window.innerWidth - w.width - convertUnits(params.right)
 
         if (params.tether.includes('top')) {
           w.y = typeof params.top === 'number' ? params.top : 0
+
+          if (params.tether.includes('bottom')) {
+            w.height = window.innerHeight
+            winbox.resize(undefined, w.height)
+          }
         }
 
-        if (params.tether.includes('bottom')) {
-          w.height = window.innerHeight
-        }
-
-        update.value = true
+        winbox.move(w.x, w.y)
       }
     })
 
-    window.addEventListener('resize', resizeEventListener)
-    resizeEventListener()
+    params.onminimize = function () {
+      console.log('onminimize')
 
-    winbox.onminimize = function () {
       if (!w) {
-        return this
+        return
       }
 
       w.minimized = true
@@ -129,36 +127,57 @@ export const useWinboxStore = defineStore('winbox', () => {
       return !!onminimize && onminimize.call(this)
     }
 
-    winbox.onmaximize = function () {
+    params.onmaximize = function (state = true) {
+      console.log('onmaximize')
+
       if (!w) {
-        return this
+        return
       }
 
-      w.maximized = true
+      w.maximized = state
 
-      return !!onmaximize && onmaximize.call(this)
+      return !!onmaximize && onmaximize.call(this, state)
     }
 
-    winbox.onrestore = function () {
+    params.onfullscreen = function () {
+      console.log('onfullscreen')
+
       if (!w) {
-        return this
+        return
+      }
+
+      w.fullscreen = true
+
+      return !!onfullscreen && onfullscreen.call(this)
+    }
+
+    params.onrestore = function () {
+      console.log('onrestore')
+
+      if (!w) {
+        return
       }
 
       w.maximized = false
       w.minimized = false
+
       resizeEventListener()
 
       return !!onrestore && onrestore.call(this)
     }
 
-    winbox.onclose = function (forceFlag = false) {
+    params.onclose = function (forceFlag = false) {
+      console.log('onclose')
+
       windows.value.delete(id)
       window.removeEventListener('resize', resizeEventListener)
 
       return !!onclose && onclose.call(this, forceFlag)
     }
 
-    winbox.onresize = function (width, height) {
+    params.onresize = function (width, height) {
+      console.log('onresize')
+
       if (!w) {
         return
       }
@@ -169,7 +188,9 @@ export const useWinboxStore = defineStore('winbox', () => {
       return !!onresize && onresize.call(this, width, height)
     }
 
-    winbox.onmove = function (x, y) {
+    params.onmove = function (x, y) {
+      console.log('onmove')
+
       if (!w) {
         return
       }
@@ -180,23 +201,49 @@ export const useWinboxStore = defineStore('winbox', () => {
       return !!onmove && onmove.call(this, x, y)
     }
 
-    winbox.onfocus = function () {
+    params.onfocus = function () {
+      console.log('onfocus')
+
       if (!w) {
         return
       }
 
       w.minimized = false
+      w.active = true
 
       return !!onfocus && onfocus.call(this)
     }
 
-    winbox.onblur = function () {
+    params.onblur = function () {
+      console.log('onblur')
+
       if (!w) {
         return
       }
 
+      w.active = false
+
       return !!onblur && onblur.call(this)
     }
+
+    winbox = new window.WinBox(params)
+
+    if (!windows.value.has(id)) {
+      windows.value.set(id, {
+        x: winbox.body.parentElement?.offsetLeft || 0,
+        y: winbox.body.parentElement?.offsetTop || 0,
+        width: winbox.body.parentElement?.clientWidth || 0,
+        height: winbox.body.parentElement?.clientHeight || 0,
+        minimized: false,
+        fullscreen: false,
+        active: false,
+        maximized: winbox.max,
+      })
+    }
+
+    w = windows.value.get(id)!
+    window.addEventListener('resize', resizeEventListener)
+    resizeEventListener()
 
     return winbox
   }

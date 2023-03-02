@@ -30,14 +30,14 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiUri: 'http://localhost:3000/api',
+      apiUri: '/api',
     },
   },
 
   typescript: {
     shim: false,
     strict: true,
-    // typeCheck: true,
+    typeCheck: true,
   },
 
   imports: {

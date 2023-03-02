@@ -2,7 +2,6 @@
 import { nanoid } from 'nanoid'
 
 import type { PropType } from 'vue'
-import type WinBox from 'winbox'
 
 import type { WinBoxParams } from '@/store/winbox'
 
@@ -117,8 +116,10 @@ function getWinboxParams(
 </script>
 
 <template>
-  <!-- {{ winboxStore.windows }} -->
   <Teleport v-if="showFlag" :to="`#${id} .wb-content`">
+    <pre class="w-full p-6 box-color__default--2 border-b">{{
+      winboxStore.windows.get(id)
+    }}</pre>
     <slot name="default" />
   </Teleport>
 </template>

@@ -3,7 +3,8 @@ const keys = useMagicKeys()
 const tildaKey = keys['\\']
 
 watch(tildaKey, (v) => v && toggleDark())
-const authorizationStore = useAuthorizationStore()
+// const authorizationStore = useAuthorizationStore()
+const winboxStore = useWinboxStore()
 </script>
 
 <template>
@@ -15,32 +16,34 @@ const authorizationStore = useAuthorizationStore()
     </div>
 
     <div
-      id="teleport-layer--20"
-      class="layout-default__teleport fixed right-0 left-0 flex relative z-20"
-    ></div>
-
-    <div
-      id="teleport-layer--10"
-      class="layout-default__teleport fixed right-0 left-0 flex relative z-10"
-    ></div>
-
-    <div
-      v-if="authorizationStore.current"
-      class="layout-default__current-user flex flex-col z-10"
+      v-if="winboxStore.windows.size > 0"
+      class="layout-default__current-user flex flex-col z-10 bottom-0 fixed p-4 box-color__default--2 border"
     >
-      <AuthorizationCurrent />
+      <!-- <pre>{{
+        [...winboxStore.windows.entries()]
+          .map(([id, item]) => ` ${id}: ${JSON.stringify(item, undefined, 2)}`)
+          .join('\n')
+      }}</pre> -->
+      <!-- <AuthorizationCurrent /> -->
     </div>
-    <div
-      class="layout-default__left flex flex-row fixed top-0 left-0 bottom-0 z-3"
-    >
-      <div class="box-color__default--2 border-r">
+    <div class="layout-default__left flex flex-row fixed top-0 left-0 bottom-0">
+      <div class="box-color__default--2 border-r z-40">
         <PageSidebar />
       </div>
       <div
-        class="layout-default__page flex flex-col items-start justify-items-stretch text-left z-0"
+        class="layout-default__page flex flex-col items-start justify-items-stretch text-left z-10"
       >
         <slot />
       </div>
+      <div
+        id="teleport-layer--20"
+        class="layout-default__teleport fixed right-0 left-0 flex relative z-20"
+      ></div>
+
+      <div
+        id="teleport-layer--10"
+        class="layout-default__teleport fixed right-0 left-0 flex relative z-10"
+      ></div>
     </div>
   </div>
 </template>

@@ -45,24 +45,26 @@ const input = ref<string | undefined>(undefined)
 <template>
   <Winbox
     show
+    teleport-id="teleport-layer--10"
     :params="{
-      title: t('content.title'),
-      class: ['simple', 'border-l-none', 'wb-left', 'no-move', 'no-close'],
+      title: t('test.title'),
+      class: ['simple', 'wb-left', 'no-move', 'no-close', 'border-l-none'],
       index: 10,
       border: 0,
       top: 0,
-      left: '45px',
+      left: 45,
       bottom: 0,
       right: '50%',
       height: '100%',
       minheight: '100%',
-      width: '550px',
-      minwidth: '500px',
-      x: '45px',
-      y: 'center',
+      width: 550,
+      minwidth: 500,
+      tether: ['left', 'top', 'bottom'],
     }"
   >
-    <div class="flex flex-col items-center p-6">
+    <div
+      class="page page-test flex flex-col items-center gap-8 p-6 flex-grow overflow-y-scroll scrollbar scrollbar-rounded max-h-full h-auto"
+    >
       <PageProse class="max-w-300">
         <h4 class="mt-0 text-default-500 dark:text-default-400 font-medium">
           Combobox

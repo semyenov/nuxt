@@ -2,9 +2,6 @@
   "index": {
     "title": "Welcome Page"
   },
-  "data": {
-    "title": "Data Page"
-  },
   "objects": {
     "title": "Objects Page"
   },
@@ -13,5 +10,8 @@
   },
   "content": {
     "title": "Content  Page"
+  },
+  "test": {
+    "title": "Test page"
   }
 }

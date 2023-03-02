@@ -25,9 +25,9 @@ declare module 'winbox' {
     title: string
     url: string
     onfocus: (this: WinBox) => void
-    onmaximize: (this: WinBox) => void
-    onminimize: (this: WinBox) => void
-    onrestore: (this: WinBox) => void
+    onmaximize: (this: WinBox, state?: boolean) => void
+    onminimize: (this: WinBox, state?: boolean) => void
+    onrestore: (this: WinBox, state?: boolean) => void
     onblur: (this: WinBox) => void
     onresize: (this: WinBox, width: number, height: number) => void
     onmove: (this: WinBox, x: number, y: number) => void
@@ -89,15 +89,15 @@ declare module 'winbox' {
     y: number
 
     // viewport boundaries:
-    top: number
-    right: number
-    bottom: number
-    left: number
+    top: number | string
+    right: number | string
+    bottom: number | string
+    left: number | string
 
     // contents (choose from):
-    url: false
-    mount: false
-    html: 'width: 250, height: 200'
+    url: false | string
+    mount: false | HTMLElement
+    html: string
 
     // callbacks:
     oncreate?: (options: Params) => void
@@ -109,7 +109,7 @@ declare module 'winbox' {
     onmove?: (this: WinBox, x: number, y: number) => void
     onclose?: (this: WinBox, force?: boolean) => boolean
     onfullscreen?: (this: WinBox) => void
-    onmaximize?: (this: WinBox) => void
+    onmaximize?: (this: WinBox, state?: boolean) => void
     onminimize?: (this: WinBox) => void
     onrestore?: (this: WinBox) => void
   }>
