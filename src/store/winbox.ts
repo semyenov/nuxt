@@ -22,8 +22,14 @@ export const useWinboxStore = defineStore('winbox', () => {
   const windows = ref<Map<string, IWindowInfo>>(new Map())
 
   function register(id: string, params: WinBoxParams) {
-    if (params.tether && params.tether.includes('right')) {
-      params.x = window.innerWidth
+    if (params.tether) {
+      if (params.tether.includes('right')) {
+        params.x = window.innerWidth
+      }
+
+      if (params.tether.includes('left')) {
+        params.x = typeof params.width === 'number' ? -params.width : 0
+      }
 
       if (params.tether.includes('bottom')) {
         params.y = window.innerHeight

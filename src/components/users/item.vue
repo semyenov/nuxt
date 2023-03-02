@@ -59,9 +59,9 @@ function handleChange() {
         left: 44,
         right: 0,
         border: 0,
-        width: '550px',
+        width: 550,
         height: '100%',
-        minwidth: '500px',
+        minwidth: 500,
         tether: ['right', 'top', 'bottom'],
       }"
     >

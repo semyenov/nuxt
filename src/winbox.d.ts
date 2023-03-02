@@ -54,8 +54,8 @@ declare module 'winbox' {
     removeClass(classname: string): WinBox
   }
 
-  interface Params {
-    header?: number
+  type Params = Partial<{
+    header: number
     // configuration:
     index: number
     id: string
@@ -76,12 +76,12 @@ declare module 'winbox' {
     hidden: boolean
 
     // dimension:
-    width: number
-    height: number
-    minheight: number
-    minwidth: number
-    maxheight: number
-    maxwidth: number
+    width: number | string
+    height: number | string
+    minheight: number | string
+    minwidth: number | string
+    maxheight: number | string
+    maxwidth: number | string
     autosize: boolean
 
     // position:
@@ -112,5 +112,5 @@ declare module 'winbox' {
     onmaximize?: (this: WinBox) => void
     onminimize?: (this: WinBox) => void
     onrestore?: (this: WinBox) => void
-  }
+  }>
 }
