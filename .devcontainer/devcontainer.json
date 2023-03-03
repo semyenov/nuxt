@@ -30,6 +30,7 @@
         "tombonnike.vscode-status-bar-format-toggle",
         "VisualStudioExptTeam.vscodeintellicode",
         "arcanis.vscode-zipfs"
+        // "Vue.vscode-typescript-vue-plugin"
       ]
     }
   },

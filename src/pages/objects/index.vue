@@ -4,7 +4,6 @@ import { ObjectsItem, VirtualList } from '#components'
 
 definePageMeta({
   layout: 'default',
-  title: 'Page Title',
   middleware: 'authorization',
 })
 
@@ -41,7 +40,7 @@ const listComponent = ref<InstanceType<typeof VirtualList> | null>(null)
 </script>
 
 <template>
-  <Winbox
+  <!-- <Winbox
     show
     teleport-id="teleport-layer--10"
     :params="{
@@ -59,21 +58,21 @@ const listComponent = ref<InstanceType<typeof VirtualList> | null>(null)
       minwidth: 500,
       tether: ['left', 'top', 'bottom'],
     }"
+  > -->
+  <VirtualList
+    ref="listComponent"
+    :keeps="50"
+    :page-mode="false"
+    :data-ids="objectsIds"
+    :data-getter="objectGetter"
+    :data-component="ObjectsItem"
+    data-key="page-objects-index-virtuallist"
+    wrap-class="flex flex-col w-full"
+    class="page page-objects-index flex flex-col items-center gap-8 p-6 flex-grow overflow-y-scroll scrollbar scrollbar-rounded max-h-full h-auto"
+    :estimate-size="70"
+    item-class="mb-6"
   >
-    <VirtualList
-      ref="listComponent"
-      :keeps="50"
-      :page-mode="false"
-      :data-ids="objectsIds"
-      :data-getter="objectGetter"
-      :data-component="ObjectsItem"
-      data-key="page-objects-index-virtuallist"
-      wrap-class="flex flex-col w-full"
-      class="page page-objects-index flex flex-col items-center gap-8 p-6 flex-grow overflow-y-scroll scrollbar scrollbar-rounded max-h-full h-auto"
-      :estimate-size="70"
-      item-class="mb-6"
-    >
-      <!-- <template #header>
+    <!-- <template #header>
         <div class="absolute flex flex-col gap-2 right-16 bottom-20 z-10">
           <Button
             class="h-11"
@@ -97,6 +96,6 @@ const listComponent = ref<InstanceType<typeof VirtualList> | null>(null)
           </Button>
         </div>
       </template> -->
-    </VirtualList>
-  </Winbox>
+  </VirtualList>
+  <!-- </Winbox> -->
 </template>

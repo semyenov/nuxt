@@ -2,3 +2,7 @@ extends:
   - 'stylelint-config-recommended-vue'
   - 'stylelint-config-recommended'
   - 'stylelint-config-prettier'
+plugins:
+  - 'stylelint-csstree-validator'
+rules:
+  'csstree/validator': true

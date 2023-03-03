@@ -43,7 +43,7 @@ const input = ref<string | undefined>(undefined)
 </script>
 
 <template>
-  <Winbox
+  <!-- <Winbox
     show
     teleport-id="teleport-layer--10"
     :params="{
@@ -61,113 +61,109 @@ const input = ref<string | undefined>(undefined)
       minwidth: 500,
       tether: ['left', 'top', 'bottom'],
     }"
+  > -->
+  <div
+    class="page page-test flex flex-col items-center gap-8 p-6 flex-grow overflow-y-scroll scrollbar scrollbar-rounded max-h-full h-auto"
   >
-    <div
-      class="page page-test flex flex-col items-center gap-8 p-6 flex-grow overflow-y-scroll scrollbar scrollbar-rounded max-h-full h-auto"
-    >
-      <PageProse class="max-w-300">
-        <h4 class="mt-0 text-default-500 dark:text-default-400 font-medium">
-          Combobox
-        </h4>
-        <div class="flex flex-row items-center justify-start flex-wrap gap-4">
-          <Combobox
+    <PageProse class="max-w-300">
+      <h4 class="mt-0 text-default-500 dark:text-default-400 font-medium">
+        Combobox
+      </h4>
+      <div class="flex flex-row items-center justify-start flex-wrap gap-4">
+        <Combobox
+          v-for="color in uiColorVariants"
+          :key="`combobox-${color}`"
+          v-model="input"
+          :color="color"
+          :options="objectOptions"
+          :data-component="ObjectsComboboxItem"
+          class="w-full"
+        />
+      </div>
+
+      <h4 class="text-default-500 dark:text-default-400 font-medium">Boxes</h4>
+      <div
+        v-for="color in uiColorVariants"
+        :key="`box-${color}`"
+        class="flex flex-row items-center justify-start flex-wrap mb-6 gap-4"
+      >
+        <div
+          v-for="variant in 9"
+          :key="`box-${variant}`"
+          class="w-26 h-26 border p-2 break-words flex flex-col justify-center items-center"
+          :class="`box-color__${color}--${variant}`"
+        >
+          <div class="-mt-6">{{ color }}</div>
+          <div class="text-4xl font-bold">{{ variant }}</div>
+        </div>
+      </div>
+      <h4 class="text-default-500 dark:text-default-400 font-medium">
+        Buttons
+      </h4>
+      <template
+        v-for="rounded in uiRoundedVariants"
+        :key="`rounded-${rounded}`"
+      >
+        <div
+          v-for="(size, index) in uiSizeVariants"
+          :key="`input-size__${size} input-rounded__${rounded}`"
+          class="flex flex-row items-center justify-start flex-wrap mb-6"
+          :class="`gap-${(index + 4) * 0.5}`"
+        >
+          <Button
             v-for="color in uiColorVariants"
-            :key="`combobox-${color}`"
-            v-model="input"
+            :key="`input-${color}`"
+            :size="size"
             :color="color"
-            :options="objectOptions"
-            :data-component="ObjectsComboboxItem"
-            class="w-full"
+            :rounded="rounded"
+          >
+            <i class="i-carbon:download inline-block" />
+            <span>{{
+              `${color.toUpperCase()}-${size.toUpperCase()}-${rounded.toLocaleUpperCase()}`
+            }}</span>
+          </Button>
+        </div>
+        <div
+          v-for="(size, index) in uiSizeVariants"
+          :key="`input-size__${size} input-rounded__${rounded}`"
+          class="flex flex-row items-center justify-start flex-wrap mb-6"
+          :class="`gap-${(index + 4) * 0.5}`"
+        >
+          <Button
+            v-for="color in uiColorVariants"
+            :key="`input-${color}-outline`"
+            outline
+            :size="size"
+            :color="color"
+            :rounded="rounded"
+          >
+            <i class="i-carbon:download inline-block" />
+            <span>{{
+              `${color.toUpperCase()}-${size.toUpperCase()}-${rounded.toLocaleUpperCase()}`
+            }}</span>
+          </Button>
+        </div>
+      </template>
+      <h4 class="text-default-500 dark:text-default-400 font-medium">Inputs</h4>
+      <template v-for="rounded in uiRoundedVariants">
+        <div
+          v-for="(size, index) in uiSizeVariants"
+          :key="`btn-size__${size} btn-rounded__${rounded}`"
+          class="flex flex-col items-center justify-start flex-wrap mb-6 w-full"
+          :class="`gap-${(index + 4) * 0.5}`"
+        >
+          <Input
+            v-for="color in uiColorVariants"
+            :key="`btn-${color}`"
+            class="flex flex-col w-full"
+            :size="size"
+            :color="color"
+            :rounded="rounded"
+            :model-value="`${color.toUpperCase()}-${size.toUpperCase()}-${rounded.toLocaleUpperCase()}`"
           />
         </div>
-
-        <h4 class="text-default-500 dark:text-default-400 font-medium">
-          Boxes
-        </h4>
-        <div
-          v-for="color in uiColorVariants"
-          :key="`box-${color}`"
-          class="flex flex-row items-center justify-start flex-wrap mb-6 gap-4"
-        >
-          <div
-            v-for="variant in 9"
-            :key="`box-${variant}`"
-            class="w-26 h-26 border p-2 break-words flex flex-col justify-center items-center"
-            :class="`box-color__${color}--${variant}`"
-          >
-            <div class="-mt-6">{{ color }}</div>
-            <div class="text-4xl font-bold">{{ variant }}</div>
-          </div>
-        </div>
-        <h4 class="text-default-500 dark:text-default-400 font-medium">
-          Buttons
-        </h4>
-        <template
-          v-for="rounded in uiRoundedVariants"
-          :key="`rounded-${rounded}`"
-        >
-          <div
-            v-for="(size, index) in uiSizeVariants"
-            :key="`input-size__${size} input-rounded__${rounded}`"
-            class="flex flex-row items-center justify-start flex-wrap mb-6"
-            :class="`gap-${(index + 4) * 0.5}`"
-          >
-            <Button
-              v-for="color in uiColorVariants"
-              :key="`input-${color}`"
-              :size="size"
-              :color="color"
-              :rounded="rounded"
-            >
-              <i class="i-carbon:download inline-block" />
-              <span>{{
-                `${color.toUpperCase()}-${size.toUpperCase()}-${rounded.toLocaleUpperCase()}`
-              }}</span>
-            </Button>
-          </div>
-          <div
-            v-for="(size, index) in uiSizeVariants"
-            :key="`input-size__${size} input-rounded__${rounded}`"
-            class="flex flex-row items-center justify-start flex-wrap mb-6"
-            :class="`gap-${(index + 4) * 0.5}`"
-          >
-            <Button
-              v-for="color in uiColorVariants"
-              :key="`input-${color}-outline`"
-              outline
-              :size="size"
-              :color="color"
-              :rounded="rounded"
-            >
-              <i class="i-carbon:download inline-block" />
-              <span>{{
-                `${color.toUpperCase()}-${size.toUpperCase()}-${rounded.toLocaleUpperCase()}`
-              }}</span>
-            </Button>
-          </div>
-        </template>
-        <h4 class="text-default-500 dark:text-default-400 font-medium">
-          Inputs
-        </h4>
-        <template v-for="rounded in uiRoundedVariants">
-          <div
-            v-for="(size, index) in uiSizeVariants"
-            :key="`btn-size__${size} btn-rounded__${rounded}`"
-            class="flex flex-col items-center justify-start flex-wrap mb-6 w-full"
-            :class="`gap-${(index + 4) * 0.5}`"
-          >
-            <Input
-              v-for="color in uiColorVariants"
-              :key="`btn-${color}`"
-              class="flex flex-col w-full"
-              :size="size"
-              :color="color"
-              :rounded="rounded"
-              :model-value="`${color.toUpperCase()}-${size.toUpperCase()}-${rounded.toLocaleUpperCase()}`"
-            />
-          </div>
-        </template>
-      </PageProse>
-    </div>
-  </Winbox>
+      </template>
+    </PageProse>
+  </div>
+  <!-- </Winbox> -->
 </template>

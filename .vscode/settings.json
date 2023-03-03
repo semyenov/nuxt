@@ -1,8 +1,6 @@
 {
-  "editor.tabCompletion": "on",
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "eslint.alwaysShowStatus": true,
   "eslint.format.enable": false,
   "eslint.lintTask.enable": true,
   "eslint.validate": [
@@ -12,21 +10,22 @@
     "javascriptreact",
     "vue"
   ],
-  "volar.codeLens.scriptSetupTools": true,
+  "volar.completion.normalizeComponentImportName": true,
+  "volar.takeOverMode.extension": "Vue.volar",
+  "volar.doctor.checkVueTsc": true,
+  "volar.inlayHints.eventArgumentInInlineHandlers": true,
+  "volar.codeLens.references": true,
+  "volar.doctor.statusBarItem": true,
   "volar.completion.preferredTagNameCase": "pascal",
   "volar.completion.preferredAttrNameCase": "kebab",
-  "volar.preview.port": 3000,
   "editor.wrappingStrategy": "simple",
   "editor.wordWrap": "bounded",
   "editor.wordWrapColumn": 80,
   "volar.autoWrapParentheses": true,
   "volar.vueserver.petiteVue.processHtmlFile": true,
-  "stylelint.validate": [
-    "css",
-    "less",
-    "postcss",
-    "vue" // necessary for stylelint diagnostics in .vue <style> tag
-  ],
+  "stylelint.enable": true,
+  "stylelint.useLocal": true,
+  "stylelint.autoFixOnSave": true,
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -37,5 +36,11 @@
   "browse-lite.chromeExecutable": "/usr/bin/google-chrome-stable",
   "i18n-ally.localesPaths": ["./locales"],
   "i18n-ally.keystyle": "nested",
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "files.associations": {
+    "*.css": "postcss"
+  }
 }

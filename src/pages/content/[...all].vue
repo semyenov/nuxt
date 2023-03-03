@@ -6,7 +6,7 @@ const contentPath = route.path.replace(/^\/content/s, '/')
 </script>
 
 <template>
-  <Winbox
+  <!-- <Winbox
     show
     teleport-id="teleport-layer--10"
     :params="{
@@ -24,11 +24,11 @@ const contentPath = route.path.replace(/^\/content/s, '/')
       minwidth: 500,
       tether: ['left', 'top', 'bottom'],
     }"
+  > -->
+  <div
+    class="flex flex-col items-start p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded"
   >
-    <div
-      class="flex flex-col items-start p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded"
-    >
-      <ContentDoc :path="contentPath" />
-    </div>
-  </Winbox>
+    <ContentDoc :path="contentPath" />
+  </div>
+  <!-- </Winbox> -->
 </template>

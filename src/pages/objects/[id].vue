@@ -1,12 +1,11 @@
 <script setup lang="ts">
 definePageMeta({
   layout: 'default',
-  title: 'Page Title',
   middleware: 'authorization',
-  validate: (route) => validateUuid(route.params.id as string),
+  // validate: (route) => validateUuid(route.params.id as string),
 })
 
-const route = useRoute('objects-id')
+const route = useRoute('users-id')
 const id = route.params.id as string
 
 const objectsStore = useObjectsStore()

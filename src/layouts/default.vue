@@ -19,12 +19,10 @@ const winboxStore = useWinboxStore()
       v-if="winboxStore.windows.size > 0"
       class="layout-default__current-user flex flex-col z-10 bottom-0 fixed p-4 box-color__default--2 border"
     >
-      <!-- <pre>{{
-        [...winboxStore.windows.entries()]
-          .map(([id, item]) => ` ${id}: ${JSON.stringify(item, undefined, 2)}`)
-          .join('\n')
-      }}</pre> -->
-      <!-- <AuthorizationCurrent /> -->
+      <template v-for="[key, w] in winboxStore.windows.entries()">
+        <Winbox v-if="w" :key="key" :window="w"> {{ w }}</Winbox></template
+      >
+      <AuthorizationCurrent />
     </div>
     <div class="layout-default__left flex flex-row fixed top-0 left-0 bottom-0">
       <div class="box-color__default--2 border-r z-40">

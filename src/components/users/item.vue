@@ -48,7 +48,8 @@ function handleChange() {
         </div>
       </template>
     </Card>
-    <Winbox
+
+    <!-- <Winbox
       v-model:show="showFlag"
       teleport-id="teleport-layer--20"
       :params="{
@@ -66,6 +67,6 @@ function handleChange() {
       }"
     >
       <pre class="p-6 text-sm">{{ item }}</pre>
-    </Winbox>
+    </Winbox> -->
   </div>
 </template>

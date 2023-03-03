@@ -38,10 +38,37 @@ export default defineNuxtConfig({
     shim: false,
     strict: true,
     typeCheck: true,
+    tsConfig: {
+      compilerOptions: {
+        types: ['@nuxtjs/i18n'],
+      },
+      vueCompilerOptions: {
+        target: 3, // or 2.7 for Vue 2
+        plugins: [
+          '@vue-macros/volar/define-model',
+          // ...more feature
+        ],
+        defineModel: {
+          // Only works when target is 2.7.
+          unified: true,
+        },
+      },
+    },
   },
 
   imports: {
     dirs: ['store', 'composables', 'utils'],
+    addons: { vueTemplate: true },
+    collectMeta: true,
+    presets: [
+      // '@vueuse/core',
+      // '@vueuse/head',
+      // 'pinia',
+      // 'vue',
+      // 'vue-i18n',
+      // 'vue-router',
+      // 'vue/macros',
+    ],
   },
 
   css: [
@@ -57,7 +84,7 @@ export default defineNuxtConfig({
       viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
       link: [
         {
-          rel: 'icon',
+          // rel: 'icon',
           type: 'image/svg+xml',
           href: '/favicon.svg',
         },
@@ -69,16 +96,8 @@ export default defineNuxtConfig({
     // },
   },
 
-  i18n: {
-    vueI18n: {
-      legacy: false,
-      locale: 'en',
-      messages: {
-        en,
-        fr,
-      },
-    },
-  },
+  // i18n: { },
+  components: ['@/components', { path: '@/containers' }],
 
   content: {
     // https://content.nuxtjs.org/api/configuration
@@ -98,9 +117,23 @@ export default defineNuxtConfig({
     'magic-regexp/nuxt',
     '@vueuse/motion/nuxt',
     'nuxt-typed-router',
+    '@nuxt/devtools',
 
     '@/modules/test/index',
   ],
+
+  i18n: {
+    strategy: 'prefix_except_default',
+    locales: ['en', 'fr'],
+    defaultLocale: 'en',
+    vueI18n: {
+      fallbackLocale: 'en',
+      messages: {
+        en,
+        fr,
+      },
+    },
+  },
 
   // vite: {
   //   build: {
