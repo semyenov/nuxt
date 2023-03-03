@@ -1,6 +1,12 @@
+<script setup lang="ts">
+import {} from '@typed-router'
+
+// helpers.route( {name: 'users-id', params: {id}})
+</script>
+
 <template>
   <div class="flex flex-col divide-y divide-dashed">
-    <NuxtLink v-slot="{ isActive, navigate }" :to="{ name: 'index' }" custom>
+    <NuxtLink v-slot="{ isActive, navigate }" :custom="true" :to="{ name: '' }">
       <Button
         color="primary"
         :outline="!isActive"
@@ -12,7 +18,11 @@
         <i class="i-carbon:home inline-block h-6.5" />
       </Button>
     </NuxtLink>
-    <NuxtLink v-slot="{ isActive, navigate }" :to="{ name: 'objects' }" custom>
+    <NuxtLink
+      v-slot="{ isActive, navigate }"
+      :custom="true"
+      :to="{ name: 'objects' }"
+    >
       <Button
         color="secondary"
         :outline="!isActive"
@@ -24,7 +34,11 @@
         <i class="i-carbon:data-blob inline-block h-6.5" />
       </Button>
     </NuxtLink>
-    <NuxtLink v-slot="{ isActive, navigate }" :to="{ name: 'users' }" custom>
+    <NuxtLink
+      v-slot="{ isActive, navigate }"
+      :custom="true"
+      :to="{ name: 'users' }"
+    >
       <Button
         color="third"
         :outline="!isActive"
@@ -36,7 +50,11 @@
         <i class="i-carbon:user inline-block h-6.5" />
       </Button>
     </NuxtLink>
-    <NuxtLink v-slot="{ isActive, navigate }" :to="{ name: 'test' }" custom>
+    <NuxtLink
+      v-slot="{ isActive, navigate }"
+      :custom="true"
+      :to="{ name: 'test' }"
+    >
       <Button
         color="fourth"
         size="md"
@@ -48,11 +66,7 @@
         <i class="i-carbon:text-scale inline-block h-6.5" />
       </Button>
     </NuxtLink>
-    <NuxtLink
-      v-slot="{ isActive, navigate }"
-      :to="{ name: 'content-all' }"
-      custom
-    >
+    <NuxtLink v-slot="{ isActive, navigate }" :custom="true" :to="{ path: '' }">
       <Button
         color="primary"
         :outline="!isActive"

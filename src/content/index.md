@@ -1,7 +1,10 @@
 ::test
-[Hello, world!]{.p-4.flex}
 #header
-[Hello, world!]{.px-4.py-2.flex}
+[
+Hello, world!
+]{.px-4.py-2.flex}
+#default
+[Hello, world!]{.p-4.flex}
 #footer
-[Hello, world!]{.px-4.py-2.flex}
+:p{.px-4.py-2.flex}[Hello, world!]
 ::

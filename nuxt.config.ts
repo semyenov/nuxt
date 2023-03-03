@@ -57,7 +57,7 @@ export default defineNuxtConfig({
   },
 
   imports: {
-    dirs: ['store', 'composables', 'utils'],
+    dirs: ['store', 'composables', 'utils', '@typed-router'],
     addons: { vueTemplate: true },
     collectMeta: true,
     presets: [
@@ -84,7 +84,7 @@ export default defineNuxtConfig({
       viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
       link: [
         {
-          // rel: 'icon',
+          rel: 'icon',
           type: 'image/svg+xml',
           href: '/favicon.svg',
         },
@@ -97,7 +97,20 @@ export default defineNuxtConfig({
   },
 
   // i18n: { },
-  components: ['@/components', { path: '@/containers' }],
+  components: [
+    '@/components',
+    {
+      island: true,
+      path: '@/containers',
+      extendComponent(component) {
+        const name = component.kebabName
+
+        component.mode = 'client'
+        component.kebabName = `Teleport${name}`
+        return component
+      },
+    },
+  ],
 
   content: {
     // https://content.nuxtjs.org/api/configuration
@@ -116,10 +129,27 @@ export default defineNuxtConfig({
     '@vue-macros/nuxt',
     'magic-regexp/nuxt',
     '@vueuse/motion/nuxt',
-    'nuxt-typed-router',
-    '@nuxt/devtools',
 
     '@/modules/test/index',
+
+    [
+      'nuxt-typed-router',
+      {
+        strict: true,
+        strategy: 'prefix_except_default',
+        locales: ['en', 'fr'],
+        defaultLocale: 'en',
+        vueI18n: {
+          fallbackLocale: 'en',
+          messages: {
+            en,
+            fr,
+          },
+        },
+      },
+    ],
+
+    '@nuxt/devtools',
   ],
 
   i18n: {
@@ -135,6 +165,20 @@ export default defineNuxtConfig({
     },
   },
 
+  nuxtTypedRouter: {
+    plugin: true,
+    experimentalPathCheck: true,
+    strict: {
+      NuxtLink: {
+        strictRouteLocation: true,
+        strictToArgument: true,
+      },
+      router: {
+        strictRouteLocation: true,
+        strictToArgument: true,
+      },
+    },
+  },
   // vite: {
   //   build: {
   //     rollupOptions: {

@@ -29,8 +29,8 @@
         "ms-vscode.vscode-js-profile-flame",
         "tombonnike.vscode-status-bar-format-toggle",
         "VisualStudioExptTeam.vscodeintellicode",
-        "arcanis.vscode-zipfs"
-        // "Vue.vscode-typescript-vue-plugin"
+        "arcanis.vscode-zipfs",
+        "Nuxt.mdc"
       ]
     }
   },
