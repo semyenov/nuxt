@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { t } = useI18n()
 
-const route = useRoute()
+const route = useRoute('content-all')
 const contentPath = route.path.replace(/^\/content/s, '/')
 </script>
 
@@ -18,13 +18,13 @@ const contentPath = route.path.replace(/^\/content/s, '/')
       left: 45,
       bottom: 0,
       right: '50%',
-      height: '100%',
-      minheight: '100%',
-      width: 550,
-      minwidth: 500,
-      tether: ['left', 'top', 'bottom'],
-    }"
-  > -->
+        height: '100%',
+        minheight: '100%',
+        width: 550,
+        minwidth: 500,
+        tether: ['left', 'top', 'bottom'],
+      }"
+    > -->
   <div
     class="h-full max-h-screen w-full flex flex-col items-start overflow-y-scroll p-6 scrollbar scrollbar-rounded"
   >

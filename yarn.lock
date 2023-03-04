@@ -2731,7 +2731,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/css-tree@npm:^2.3.1":
+"@types/css-tree@npm:^2":
   version: 2.3.1
   resolution: "@types/css-tree@npm:2.3.1"
   checksum: ba8db6f7c15e5bb5069fca55ff8407cb269d5b375f819f89faf98b7ad17acaf7f1d5467a414009bca270418b8082ad9efc3642ea8d39d368f1bb99d5be91f3f0
@@ -13599,7 +13599,7 @@ __metadata:
     "@nuxtjs/i18n": ^8.0.0-beta.9
     "@pinia/nuxt": ^0.4.7
     "@types/chroma-js": ^2.4.0
-    "@types/css-tree": ^2.3.1
+    "@types/css-tree": ^2
     "@types/flexsearch": ^0.7.3
     "@types/qs": ^6.9.7
     "@types/winbox": ^0.2.1

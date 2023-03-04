@@ -39,9 +39,9 @@ export default defineNuxtConfig({
     strict: true,
     typeCheck: true,
     tsConfig: {
-      compilerOptions: {
-        types: ['@nuxtjs/i18n'],
-      },
+      // compilerOptions: {
+      //   types: ['@nuxtjs/i18n', '@typed-router'],
+      // },
       vueCompilerOptions: {
         target: 3, // or 2.7 for Vue 2
         plugins: [
@@ -122,7 +122,6 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/content',
     '@nuxtjs/i18n',
-    // '@unocss/nuxt',
     '@vueuse/nuxt',
     '@pinia/nuxt',
     '@nuxtjs/emotion',

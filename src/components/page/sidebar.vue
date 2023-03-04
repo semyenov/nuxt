@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import {} from '@typed-router'
-
-// helpers.route( {name: 'users-id', params: {id}})
+const localeRoute = useLocaleRoute()
 </script>
 
 <template>
   <div class="flex flex-col divide-y divide-dashed">
-    <NuxtLink v-slot="{ isActive, navigate }" :custom="true" :to="{ name: '' }">
+    <NuxtLink
+      v-slot="{ isActive, navigate }"
+      no-rel
+      :custom="true"
+      :to="localeRoute({ name: 'index' })"
+    >
       <Button
         color="primary"
         :outline="!isActive"
@@ -20,8 +23,9 @@ import {} from '@typed-router'
     </NuxtLink>
     <NuxtLink
       v-slot="{ isActive, navigate }"
+      no-rel
       :custom="true"
-      :to="{ name: 'objects' }"
+      :to="localeRoute({ name: 'objects' })"
     >
       <Button
         color="secondary"
@@ -36,8 +40,9 @@ import {} from '@typed-router'
     </NuxtLink>
     <NuxtLink
       v-slot="{ isActive, navigate }"
+      no-rel
       :custom="true"
-      :to="{ name: 'users' }"
+      :to="localeRoute({ name: 'users' })"
     >
       <Button
         color="third"
@@ -52,8 +57,9 @@ import {} from '@typed-router'
     </NuxtLink>
     <NuxtLink
       v-slot="{ isActive, navigate }"
+      no-rel
       :custom="true"
-      :to="{ name: 'test' }"
+      :to="localeRoute({ name: 'test' })"
     >
       <Button
         color="fourth"
@@ -66,7 +72,12 @@ import {} from '@typed-router'
         <i class="i-carbon:text-scale inline-block h-6.5" />
       </Button>
     </NuxtLink>
-    <NuxtLink v-slot="{ isActive, navigate }" :custom="true" :to="{ path: '' }">
+    <NuxtLink
+      v-slot="{ isActive, navigate }"
+      no-rel
+      :custom="true"
+      :to="localeRoute({ name: 'content-all', params: { all: [] } })"
+    >
       <Button
         color="primary"
         :outline="!isActive"

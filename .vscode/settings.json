@@ -37,10 +37,14 @@
   "i18n-ally.localesPaths": ["./locales"],
   "i18n-ally.keystyle": "nested",
   "typescript.tsdk": "node_modules/typescript/lib",
-  // "css.validate": false,
-  // "less.validate": false,
-  // "scss.validate": false,
   "files.associations": {
     "*.css": "postcss"
+  },
+  "[markdown]": {
+    "editor.formatOnSave": false,
+    "editor.unicodeHighlight.ambiguousCharacters": false,
+    "editor.unicodeHighlight.invisibleCharacters": false,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.wordWrap": "on"
   }
 }
