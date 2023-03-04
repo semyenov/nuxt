@@ -12,6 +12,7 @@ extends:
   - 'plugin:@typescript-eslint/recommended'
   - '@nuxtjs/eslint-config-typescript'
   - 'plugin:vue/vue3-recommended'
+  - '@unocss'
   - '@antfu'
   - prettier
 rules:

@@ -21,7 +21,7 @@ const slots = useSlots()
 
 <template>
   <div
-    class="component-card w-full divide-y border flex flex-col bg-white shadow-xl text-left w-full shadow-opacity-30 relative dark:bg-gray-900 dark:shadow-opacity-30"
+    class="component-card relative w-full w-full flex flex-col border bg-white text-left shadow-xl shadow-opacity-30 divide-y dark:bg-gray-900 dark:shadow-opacity-30"
     :class="[
       props.color && `list-color__${props.color}`,
       props.rounded && `box-rounded__${props.rounded}`,
@@ -30,7 +30,7 @@ const slots = useSlots()
   >
     <div
       v-if="slots.header"
-      class="flex flex-row flex-grow text-base leading-snug gap-1 justify-between items-center font-bold"
+      class="flex flex-grow flex-row items-center justify-between gap-1 text-base font-bold leading-snug"
       :class="[
         props.color && `box-color__${props.color}--3`,
         props.rounded && `list-rounded__${props.rounded}`,
@@ -41,13 +41,13 @@ const slots = useSlots()
     </div>
     <div
       v-if="slots.panel"
-      class="border-b flex flex-row bg-light-400 border-blue-300 dark:text-gray-300 dark:bg-gray-800"
+      class="flex flex-row border-b border-blue-300 bg-light-400 dark:bg-gray-800 dark:text-gray-300"
     >
       <slot name="panel" />
     </div>
     <div
       v-if="slots.default"
-      class="flex flex-col text-sm items-stretch break-normal overflow-auto"
+      class="flex flex-col items-stretch overflow-auto break-normal text-sm"
       :class="[
         props.color && `box-color__${props.color}--1`,
         props.rounded && `list-rounded__${props.rounded}`,
@@ -58,7 +58,7 @@ const slots = useSlots()
     </div>
     <div
       v-if="slots.footer"
-      class="flex-grow flex flex-row w-full text-sm gap-1"
+      class="w-full flex flex-grow flex-row gap-1 text-sm"
       :class="[
         props.color && `box-color__${props.color}--2`,
         props.rounded && `list-rounded__${props.rounded}`,

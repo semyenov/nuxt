@@ -37,7 +37,7 @@ onMounted(() => {
 
 <template>
   <div
-    class="page page-index flex flex-col items-start p-6 w-full h-full overflow-y-scroll max-h-screen scrollbar scrollbar-rounded box-color__default--1"
+    class="page page-index h-full max-h-screen w-full flex flex-col items-start overflow-y-scroll p-6 scrollbar box-color__default--1 scrollbar-rounded"
   >
     <PageProse
       v-if="data"
@@ -55,21 +55,21 @@ onMounted(() => {
       {{ data.text }}
     </PageProse>
 
-    <div class="flex flex-row gap-2 text-3xl justify-center">
+    <div class="flex flex-row justify-center gap-2 text-3xl">
       <i class="i-logos:vue text-9xl" />
       <div
         class="i-twemoji:grinning-face-with-smiling-eyes hover:i-twemoji:face-with-tears-of-joy text-7xl"
       />
       <i
-        class="i-mdi:alarm text-orange-400 text-6xl"
+        class="i-mdi:alarm text-6xl text-orange-400"
         un-hover="text-blue-400"
       />
       <i
-        class="i-ph:airplane-duotone text-blue-600 text-4xl"
+        class="i-ph:airplane-duotone text-4xl text-blue-600"
         un-dark="text-blue-500"
       />
       <i
-        class="i-ph:anchor-simple text-gray-600 text-3xl"
+        class="i-ph:anchor-simple text-3xl text-gray-600"
         un-dark="text-gray-400"
       />
     </div>

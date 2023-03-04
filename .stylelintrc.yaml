@@ -5,4 +5,6 @@ extends:
 plugins:
   - 'stylelint-csstree-validator'
 rules:
-  'csstree/validator': true
+  'csstree/validator':
+    ignoreAtrules:
+      - apply

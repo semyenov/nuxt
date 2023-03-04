@@ -60,18 +60,18 @@ export default defineNuxtConfig({
     dirs: ['store', 'composables', 'utils', '@typed-router'],
     addons: { vueTemplate: true },
     collectMeta: true,
-    presets: [
-      // '@vueuse/core',
-      // '@vueuse/head',
-      // 'pinia',
-      // 'vue',
-      // 'vue-i18n',
-      // 'vue-router',
-      // 'vue/macros',
-    ],
+  },
+
+  postcss: {
+    plugins: {
+      'postcss-current-selector': {},
+      'postcss-nested': {},
+      'postcss-nested-ancestors': {},
+    },
   },
 
   css: [
+    'uno.css',
     '@unocss/reset/antfu.css',
     'assets/styles/main.postcss',
     'assets/styles/winbox.postcss',
@@ -122,7 +122,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/content',
     '@nuxtjs/i18n',
-    '@unocss/nuxt',
+    // '@unocss/nuxt',
     '@vueuse/nuxt',
     '@pinia/nuxt',
     '@nuxtjs/emotion',
@@ -131,6 +131,7 @@ export default defineNuxtConfig({
     '@vueuse/motion/nuxt',
 
     '@/modules/test/index',
+    '@/modules/unocss/index',
 
     [
       'nuxt-typed-router',
@@ -179,6 +180,7 @@ export default defineNuxtConfig({
       },
     },
   },
+
   // vite: {
   //   build: {
   //     rollupOptions: {

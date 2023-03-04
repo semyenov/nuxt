@@ -32,10 +32,10 @@ function handleChange() {
       @click="showToggle()"
     >
       <template v-if="item" #header>
-        <div class="flex flex-row justify-between px-4 py-2 w-full">
+        <div class="w-full flex flex-row justify-between px-4 py-2">
           {{ `# ${item.info.first_name} ${item.info.last_name}` }}
           <div
-            class="inline-flex px-2 box-rounded__md border font-mono font-light text-sm box-color__default--6"
+            class="inline-flex border box-rounded__md px-2 font-mono text-sm font-light box-color__default--6"
             @click="handleChange"
           >
             {{ item.email }}

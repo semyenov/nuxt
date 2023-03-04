@@ -27,12 +27,12 @@ const item = toRef(props, 'item')
       @click="showToggle()"
     >
       <template v-if="item" #header>
-        <div class="flex flex-row justify-between px-4 py-2 w-full">
+        <div class="w-full flex flex-row justify-between px-4 py-2">
           {{ `# ${item.info.name}` }}
 
           <div
             v-if="item.feature && item.feature.geometry.coordinates"
-            class="inline-flex flex-row items-center px-2 box-color__default--6 box-rounded__md border border-dashed font-mono font-light text-sm"
+            class="inline-flex flex-row items-center border box-rounded__md border-dashed px-2 font-mono text-sm font-light box-color__default--6"
           >
             {{ item.feature.geometry.coordinates.join(', ') }}
           </div>

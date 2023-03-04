@@ -68,7 +68,7 @@ const listComponent = ref<InstanceType<typeof VirtualList> | null>(null)
     :data-component="ObjectsItem"
     data-key="page-objects-index-virtuallist"
     wrap-class="flex flex-col w-full"
-    class="page page-objects-index flex flex-col items-center gap-8 p-6 flex-grow overflow-y-scroll scrollbar scrollbar-rounded max-h-full h-auto"
+    class="page page-objects-index h-auto max-h-full flex flex-grow flex-col items-center gap-8 overflow-y-scroll p-6 scrollbar scrollbar-rounded"
     :estimate-size="70"
     item-class="mb-6"
   >

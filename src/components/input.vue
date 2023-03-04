@@ -46,7 +46,7 @@ function handleInput(evt: Event) {
   <input
     v-bind="attrs"
     ref="rootRef"
-    class="c-input flex flex-row items-center justify-center border transition-200 outline-none"
+    class="c-input flex flex-row items-center justify-center border outline-none transition-200"
     :class="[
       props.color &&
         `box-color__${props.color}--2 focus:box-color__${props.color}--3`,

@@ -13,7 +13,7 @@ const props = defineProps({
 
 <template>
   <Teleport v-if="props.window.show" :to="`#${props.window.id} .wb-content`">
-    <pre class="w-full p-6 text-xs box-color__default--2 border-b">{{
+    <pre class="w-full border-b p-6 text-xs box-color__default--2">{{
       props.window
     }}</pre>
     <slot name="default" />

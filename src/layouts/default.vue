@@ -9,38 +9,38 @@ const winboxStore = useWinboxStore()
 
 <template>
   <div
-    class="layout layout-default flex flex-grow box-color__default--3 overflow-hidden"
+    class="layout layout-default flex flex-grow overflow-hidden box-color__default--3"
   >
-    <div class="layout-default__loading h-2 z-100">
+    <div class="layout-default__loading z-100 h-2">
       <NuxtLoadingIndicator />
     </div>
 
     <div
       v-if="winboxStore.windows.size > 0"
-      class="layout-default__current-user flex flex-col z-10 bottom-0 fixed p-4 box-color__default--2 border"
+      class="layout-default__current-user fixed bottom-0 z-10 flex flex-col border p-4 box-color__default--2"
     >
       <template v-for="[key, w] in winboxStore.windows.entries()">
         <Winbox v-if="w" :key="key" :window="w"> {{ w }}</Winbox></template
       >
       <AuthorizationCurrent />
     </div>
-    <div class="layout-default__left flex flex-row fixed top-0 left-0 bottom-0">
-      <div class="box-color__default--2 border-r z-40">
+    <div class="layout-default__left fixed bottom-0 left-0 top-0 flex flex-row">
+      <div class="z-40 border-r box-color__default--2">
         <PageSidebar />
       </div>
       <div
-        class="layout-default__page flex flex-col items-start justify-items-stretch text-left z-10"
+        class="layout-default__page z-10 flex flex-col items-start justify-items-stretch text-left"
       >
         <slot />
       </div>
       <div
         id="teleport-layer--20"
-        class="layout-default__teleport fixed right-0 left-0 flex relative z-20"
+        class="layout-default__teleport fixed relative left-0 right-0 z-20 flex"
       ></div>
 
       <div
         id="teleport-layer--10"
-        class="layout-default__teleport fixed right-0 left-0 flex relative z-10"
+        class="layout-default__teleport fixed relative left-0 right-0 z-10 flex"
       ></div>
     </div>
   </div>

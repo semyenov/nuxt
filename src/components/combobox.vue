@@ -325,7 +325,7 @@ function documentFocusinEventListener() {
         'flex flex-col w-full',
         props.color && `list-color__${props.color}`,
       ]"
-      class="flex flex-col items-center absolute top-full left-0 right-0 max-h-100 overflow-auto scrollbar scrollbar-rounded rounded-t-none border border-t-none z-1"
+      class="absolute left-0 right-0 top-full z-1 max-h-100 flex flex-col items-center overflow-auto border rounded-t-none border-t-none scrollbar scrollbar-rounded"
       :class="[
         props.rounded && `box-rounded__${props.rounded}`,
         props.color && `box-color__${props.color}--4`,
@@ -341,7 +341,7 @@ function documentFocusinEventListener() {
       outline
       tabindex="-1"
       :color="props.color"
-      class="absolute right-0 top-0 bottom-0 rounded-l-none"
+      class="absolute bottom-0 right-0 top-0 rounded-l-none"
       :class="[
         showFlag && `rounded-b-none`,
         focusFlag
@@ -359,7 +359,7 @@ function documentFocusinEventListener() {
       outline
       tabindex="-1"
       :color="props.color"
-      class="absolute right-0 top-0 bottom-0 rounded-l-none"
+      class="absolute bottom-0 right-0 top-0 rounded-l-none"
       :class="[
         showFlag && `rounded-b-none`,
         focusFlag

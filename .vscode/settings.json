@@ -23,7 +23,7 @@
   "editor.wordWrapColumn": 80,
   "volar.autoWrapParentheses": true,
   "volar.vueserver.petiteVue.processHtmlFile": true,
-  "stylelint.enable": true,
+  "stylelint.enable": false,
   "stylelint.useLocal": true,
   "stylelint.autoFixOnSave": true,
   "[typescript]": {
@@ -37,9 +37,9 @@
   "i18n-ally.localesPaths": ["./locales"],
   "i18n-ally.keystyle": "nested",
   "typescript.tsdk": "node_modules/typescript/lib",
-  "css.validate": false,
-  "less.validate": false,
-  "scss.validate": false,
+  // "css.validate": false,
+  // "less.validate": false,
+  // "scss.validate": false,
   "files.associations": {
     "*.css": "postcss"
   }

@@ -5,7 +5,7 @@
 
 <template>
   <div
-    class="component-page-title flex flex-row justify-between items-center border-b border-dashed w-full border-gray-300 text-gray-700 py-2 px-6"
+    class="component-page-title w-full flex flex-row items-center justify-between border-b border-gray-300 border-dashed px-6 py-2 text-gray-700"
     un-dark="border-gray-700 text-gray-200"
   >
     <!-- <div
