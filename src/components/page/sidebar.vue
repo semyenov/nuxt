@@ -6,9 +6,8 @@ const localeRoute = useLocaleRoute()
   <div class="flex flex-col divide-y divide-dashed">
     <NuxtLink
       v-slot="{ isActive, navigate }"
-      no-rel
-      :custom="true"
       :to="localeRoute({ name: 'index' })"
+      custom
     >
       <Button
         color="primary"
@@ -23,9 +22,8 @@ const localeRoute = useLocaleRoute()
     </NuxtLink>
     <NuxtLink
       v-slot="{ isActive, navigate }"
-      no-rel
-      :custom="true"
       :to="localeRoute({ name: 'objects' })"
+      custom
     >
       <Button
         color="secondary"
@@ -40,9 +38,8 @@ const localeRoute = useLocaleRoute()
     </NuxtLink>
     <NuxtLink
       v-slot="{ isActive, navigate }"
-      no-rel
-      :custom="true"
       :to="localeRoute({ name: 'users' })"
+      custom
     >
       <Button
         color="third"
@@ -57,9 +54,8 @@ const localeRoute = useLocaleRoute()
     </NuxtLink>
     <NuxtLink
       v-slot="{ isActive, navigate }"
-      no-rel
-      :custom="true"
       :to="localeRoute({ name: 'test' })"
+      custom
     >
       <Button
         color="fourth"
@@ -74,9 +70,8 @@ const localeRoute = useLocaleRoute()
     </NuxtLink>
     <NuxtLink
       v-slot="{ isActive, navigate }"
-      no-rel
-      :custom="true"
       :to="localeRoute({ name: 'content-all', params: { all: [] } })"
+      custom
     >
       <Button
         color="primary"

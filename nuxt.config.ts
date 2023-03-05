@@ -42,17 +42,17 @@ export default defineNuxtConfig({
       // compilerOptions: {
       //   types: ['@nuxtjs/i18n', '@typed-router'],
       // },
-      vueCompilerOptions: {
-        target: 3, // or 2.7 for Vue 2
-        plugins: [
-          '@vue-macros/volar/define-model',
-          // ...more feature
-        ],
-        defineModel: {
-          // Only works when target is 2.7.
-          unified: true,
-        },
-      },
+      // vueCompilerOptions: {
+      //   target: 3, // or 2.7 for Vue 2
+      //   plugins: [
+      //     '@vue-macros/volar/define-model',
+      //     // ...more feature
+      //   ],
+      //   defineModel: {
+      //     // Only works when target is 2.7.
+      //     unified: true,
+      //   },
+      // },
     },
   },
 
@@ -96,7 +96,6 @@ export default defineNuxtConfig({
     // },
   },
 
-  // i18n: { },
   components: [
     '@/components',
     {
@@ -112,45 +111,29 @@ export default defineNuxtConfig({
     },
   ],
 
+  modules: [
+    '@nuxtjs/emotion',
+    '@vue-macros/nuxt',
+    'magic-regexp/nuxt',
+    '@vueuse/nuxt',
+    '@pinia/nuxt',
+    '@nuxt/content',
+    '@nuxtjs/i18n',
+    '@vueuse/motion/nuxt',
+
+    '@/modules/test/index',
+    '@/modules/unocss/index',
+
+    'nuxt-typed-router',
+    '@nuxt/devtools',
+  ],
+
   content: {
     // https://content.nuxtjs.org/api/configuration
     api: {
       baseURL: '/_content',
     },
   },
-
-  modules: [
-    '@nuxt/content',
-    '@nuxtjs/i18n',
-    '@vueuse/nuxt',
-    '@pinia/nuxt',
-    '@nuxtjs/emotion',
-    '@vue-macros/nuxt',
-    'magic-regexp/nuxt',
-    '@vueuse/motion/nuxt',
-
-    '@/modules/test/index',
-    '@/modules/unocss/index',
-
-    [
-      'nuxt-typed-router',
-      {
-        strict: true,
-        strategy: 'prefix_except_default',
-        locales: ['en', 'fr'],
-        defaultLocale: 'en',
-        vueI18n: {
-          fallbackLocale: 'en',
-          messages: {
-            en,
-            fr,
-          },
-        },
-      },
-    ],
-
-    '@nuxt/devtools',
-  ],
 
   i18n: {
     strategy: 'prefix_except_default',
